@@ -29,6 +29,7 @@ android {
     //뷰 바인딩 활성화
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -43,4 +44,8 @@ dependencies {
 
     //for kakao sdk
     implementation "com.kakao.sdk:v2-user:2.8.6" // 카카오 로그인
+
+    //for using Glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
 }

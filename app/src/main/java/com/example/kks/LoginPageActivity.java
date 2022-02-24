@@ -26,7 +26,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
     private ActivityLoginPageBinding binding;
 
-    String user_id, nickname, userImage;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +74,13 @@ public class LoginPageActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "ID : "+user_id, 0).show();
 
                                     //다음 페이지로 넘기기
-                                    /*
-                                    Intent intent = new Intent(getApplicationContext(), "홈화면".class);
+
+                                    Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
                                     intent.putExtra("user_id", user_id);
                                     intent.putExtra("nickname", nickname);
                                     intent.putExtra("userImage", userImage);
                                     startActivity(intent);
                                     finish();
-                                     */
                                 }
                             }
                             return null;
