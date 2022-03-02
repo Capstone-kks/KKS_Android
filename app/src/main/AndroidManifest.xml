@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MyProfileActivity"
+            android:name=".ProfilePageActivity"
             android:exported="false" />
-        <!-- android:theme="@style/Theme.Kks" -->
+        <activity
+            android:name=".MyProfileActivity"
+            android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".LoginPageActivity"
             android:exported="true">

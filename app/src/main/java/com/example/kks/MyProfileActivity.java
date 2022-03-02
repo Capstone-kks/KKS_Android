@@ -33,10 +33,12 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
+
 
         System.out.println("image url : " + userImg);
 
