@@ -75,8 +75,8 @@ public class LoginPageActivity extends AppCompatActivity {
 
                                     //다음 페이지로 넘기기
 
-                                    Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
-                                    //Intent intent = new Intent(getApplicationContext(), ProfilePageActivity.class);
+                                    //Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                     intent.putExtra("user_id", user_id);
                                     intent.putExtra("nickname", nickname);
                                     intent.putExtra("userImage", userImage);

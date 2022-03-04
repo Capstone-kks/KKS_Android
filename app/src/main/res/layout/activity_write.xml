@@ -159,7 +159,7 @@
             android:id="@+id/imageAddButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/ic_album"
+            android:background="@drawable/calendarimage"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="@+id/contentEt"
             app:layout_constraintTop_toBottomOf="@+id/contentEt"/>
