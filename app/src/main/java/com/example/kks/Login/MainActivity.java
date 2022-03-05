@@ -1,4 +1,4 @@
-package com.example.kks;
+package com.example.kks.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+
+import com.example.kks.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

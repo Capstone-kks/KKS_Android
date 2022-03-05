@@ -9,6 +9,10 @@ import android.view.View;
 
 import com.example.kks.databinding.ActivityHomeBinding;
 import com.example.kks.databinding.ActivityLoginPageBinding;
+import com.example.kks.info.InfoFragment;
+import com.example.kks.info.InfoViewModel;
+import com.example.kks.search.SearchFragment;
+import com.example.kks.search.SearchViewModel;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -49,4 +53,16 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void goMain2(View view){
+        Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+        /*
+        intent.putExtra("user_id", userId);
+        intent.putExtra("nickname", nickname);
+        intent.putExtra("userImage", userImg);
+        */
+        startActivity(intent);
+        finish();
+    }
+
 }

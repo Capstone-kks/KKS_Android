@@ -38,9 +38,7 @@ public class MyProfileActivity extends AppCompatActivity {
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
-
-
-        System.out.println("image url : " + userImg);
+        //System.out.println("image url : " + userImg);
 
         binding = ActivityMyProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();

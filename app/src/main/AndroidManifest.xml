@@ -13,19 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".Controller.NetworkActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".WriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfilePageActivity"
-            android:exported="false" />
-        <activity
             android:name=".MyProfileActivity"
             android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
-            android:name=".LoginPageActivity"
+            android:name=".Login.LoginPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,8 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.MainActivity"
             android:exported="true" /> <!-- for kakao sdk -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"

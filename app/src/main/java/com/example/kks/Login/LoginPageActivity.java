@@ -1,4 +1,4 @@
-package com.example.kks;
+package com.example.kks.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.kks.HomeActivity;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
