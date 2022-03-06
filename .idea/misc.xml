@@ -3,11 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_home.xml" value="0.36822916666666666" />
-        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_main.xml" value="0.36822916666666666" />
-        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_main2.xml" value="0.36822916666666666" />
-        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_write.xml" value="0.4290657439446367" />
-        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_home.xml" value="0.36822916666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_back.xml" value="0.227" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1435" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_bottom_menu_calendar_select.xml" value="0.227" />
@@ -34,6 +29,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/layout/ic_star_select.xml" value="0.20921985815602837" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/layout/item_spinner.xml" value="0.19376899696048633" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.214" />
       </map>
     </option>
   </component>
