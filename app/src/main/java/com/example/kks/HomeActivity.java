@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.kks.Login.myDBAdapter;
 import com.example.kks.databinding.ActivityHomeBinding;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.example.kks.info.InfoFragment;
@@ -18,6 +20,9 @@ public class HomeActivity extends AppCompatActivity {
 
     String userId, nickname;
     String userImg = "no";
+    boolean checking=false;
+
+    myDBAdapter myDBAdapter;
 
     private ActivityHomeBinding binding;
 
@@ -34,6 +39,11 @@ public class HomeActivity extends AppCompatActivity {
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
+        checking = intent.getExtras().getBoolean("checking");
+
+        Toast.makeText(getApplicationContext(), "checking : "+checking, Toast.LENGTH_SHORT).show();
+
+        maintainId(userId, checking);
     }
 
     public void goProfile(View view){
@@ -65,4 +75,16 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
+    public void maintainId(String userId, boolean checking) {
+        myDBAdapter = new myDBAdapter(this);
+
+        if (checking == true) {
+            //id 정보 db에 저장
+            myDBAdapter.open();
+            myDBAdapter.clear();
+            myDBAdapter.insert(userId);
+            myDBAdapter.close();
+            Toast.makeText(getApplicationContext(), "db에 log정보 추가 : " + userId, Toast.LENGTH_LONG).show();
+        }
+    }
 }

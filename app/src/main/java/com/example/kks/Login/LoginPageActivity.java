@@ -1,16 +1,25 @@
 package com.example.kks.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.Option;
 import com.example.kks.HomeActivity;
+import com.example.kks.R;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
@@ -26,28 +35,46 @@ import kotlin.jvm.functions.Function2;
 public class LoginPageActivity extends AppCompatActivity {
 
     private ActivityLoginPageBinding binding;
+    static private boolean checking;
 
     String user_id;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView( R.layout.activity_login_page);
+
+        //myDBAdapter = new myDBAdapter(this);
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //setContentView(R.layout.activity_login_page);
+
+        Switch btn = (Switch) findViewById(R.id.maintainlogBtn);
+        btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    checking = true;
+                    System.out.println("true");
+                } else {
+                    //Toast.makeText(getApplicationContext(), "자동로그인 안함", Toast.LENGTH_LONG).show();
+                    checking = false;
+                }
+            }
+        });
     }
 
 
-    public void autoLog(View view) {
+    public void kakaoLog(View view) {
         login();
     }
 
 
     //카카오계정 로그인
     private void login(){
-        //NetworkUtil.setNetworkPolicy();
+        //myDBAdapter = new myDBAdapter(this);
 
         UserApiClient.getInstance().loginWithKakaoAccount(this, new Function2<OAuthToken, Throwable, Unit>() {
             @Override
@@ -70,17 +97,26 @@ public class LoginPageActivity extends AppCompatActivity {
                                 if(userProfile != null) {
                                     String nickname = userProfile.getNickname();
                                     String userImage = userProfile.getProfileImageUrl();
-                                    //String images[] = userImage.split("/");
+                                    //Toast.makeText(getApplicationContext(), "ID : "+user_id, 0).show();
 
-                                    Toast.makeText(getApplicationContext(), "ID : "+user_id, 0).show();
+                                    /*
+                                    //maintainId(user_id);
+                                    if (maintainId(user_id) == true) {
+                                        myDBAdapter.open();
+                                        myDBAdapter.clear();
+                                        myDBAdapter.insert(user_id);
+                                        myDBAdapter.close();
+                                        Toast.makeText(getApplicationContext(), "db에 log정보 추가 : " + user_id, Toast.LENGTH_LONG).show();
+                                    }
+                                    */
 
                                     //다음 페이지로 넘기기
-
                                     //Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
                                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                     intent.putExtra("user_id", user_id);
                                     intent.putExtra("nickname", nickname);
                                     intent.putExtra("userImage", userImage);
+                                    intent.putExtra("checking", checking);
                                     startActivity(intent);
                                     finish();
                                 }
