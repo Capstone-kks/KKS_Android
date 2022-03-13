@@ -19,7 +19,7 @@ public class SplashPage extends AppCompatActivity {
 
     private ActivitySplashPageBinding binding;
     myDBAdapter myDBAdapter;
-    String userId;
+    String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +35,25 @@ public class SplashPage extends AppCompatActivity {
 
 
         //자동로그인 확인 -> 확인되면 바로 홈으로 넘어감
-        myDBAdapter.open();
-        userId = myDBAdapter.openId();
-        myDBAdapter.close();
+        //server와 연동 전 테스트 시 여기 주석처리하고 할 것
+        //myDBAdapter.open();
+        //userId = myDBAdapter.openId();
+        //myDBAdapter.close();
+
 
         if (!userId.equals("")){
             Toast.makeText(getApplicationContext(), "login됨 : "+userId, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            intent.putExtra("userId", userId);
-            startActivity(intent);
-            finish();
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                    finish();
+                }
+            };
+            timer.schedule(timerTask, 1000);
         }
         else{
             Toast.makeText(getApplicationContext(), "간편로그인 불가능. 카카오로그인 필요.", Toast.LENGTH_LONG).show();
@@ -58,7 +67,7 @@ public class SplashPage extends AppCompatActivity {
                     startActivity(intent);
                 }
             };
-            timer.schedule(timerTask, 3000);
+            timer.schedule(timerTask, 2000);
         }
     }
 }

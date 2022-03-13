@@ -13,4 +13,5 @@
     <color name="DarkGray">#757575</color>
     <color name="red">#C75252</color>
     <color name="second_brown">#785640</color>
+    <color name="invisible">#00000000</color>
 </resources>

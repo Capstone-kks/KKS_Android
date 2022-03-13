@@ -1,6 +1,7 @@
 package com.example.kks;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.ObservableField;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Observable;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -28,6 +30,16 @@ public class MyProfileActivity extends AppCompatActivity {
 
     String userId, nickname;
     String userImg = "no";
+    private ObservableField<String> newName;
+
+
+    public MyProfileActivity(){
+        this.newName = new ObservableField<>("new Nickname");
+    }
+
+    public ObservableField<String> getText(){
+        return newName;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,9 @@ public class MyProfileActivity extends AppCompatActivity {
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
         //System.out.println("image url : " + userImg);
+
+        //dummy data
+        //nickname = "굥";
 
         binding = ActivityMyProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -71,5 +86,14 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         }
         */
+    }
+
+    public void changeName(View view){
+        String editName = binding.editName.getText().toString();
+        nickname = editName;
+
+        //서버에도 닉네임 변경하여 저장하기
+
+
     }
 }

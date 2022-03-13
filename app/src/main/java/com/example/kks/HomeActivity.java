@@ -41,8 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         userImg = intent.getStringExtra("userImage");
         checking = intent.getExtras().getBoolean("checking");
 
-        Toast.makeText(getApplicationContext(), "checking : "+checking, Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getApplicationContext(), "checking : "+checking, Toast.LENGTH_SHORT).show();
         maintainId(userId, checking);
     }
 

@@ -51,6 +51,8 @@ public class LoginPageActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+
+        //자동로그인버튼 체크했는지 확인
         Switch btn = (Switch) findViewById(R.id.maintainlogBtn);
         btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
