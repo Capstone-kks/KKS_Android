@@ -92,18 +92,19 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="새로운 닉네임을 입력하세요"
-                android:text="@={MyProfileActivity.text}"
+                android:text="nickname"
                 android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/button"
-                android:background="@color/main_mint"
-                android:textColor="@android:color/black"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:textStyle="normal"
-                android:text="변경" />
+                android:background="@color/main_mint"
+                android:onClick="changeName"
+                android:text="변경"
+                android:textColor="@android:color/black"
+                android:textStyle="normal" />
         </LinearLayout>
 
     </LinearLayout>

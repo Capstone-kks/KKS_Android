@@ -1,13 +1,16 @@
 package com.example.kks;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ViewDataBinding;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -27,24 +30,14 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class MyProfileActivity extends AppCompatActivity {
 
     private ActivityMyProfileBinding binding;
+    NameViewModel NameViewModel;
 
-    String userId, nickname;
+    String userId, nickname, newName;
     String userImg = "no";
-    private ObservableField<String> newName;
-
-
-    public MyProfileActivity(){
-        this.newName = new ObservableField<>("new Nickname");
-    }
-
-    public ObservableField<String> getText(){
-        return newName;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
@@ -54,11 +47,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
         //dummy data
         //nickname = "굥";
-
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
         binding = ActivityMyProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //setContentView(R.layout.activity_my_profile);
 
         binding.editName.setText(nickname);
 
@@ -89,8 +81,12 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void changeName(View view){
+        //NameViewModel = new NameViewModel();
+
+        //Toast.makeText(getApplicationContext(), "newname : "+newName, Toast.LENGTH_LONG).show();
         String editName = binding.editName.getText().toString();
         nickname = editName;
+        Toast.makeText(getApplicationContext(), "newname : "+nickname, Toast.LENGTH_LONG).show();
 
         //서버에도 닉네임 변경하여 저장하기
 
