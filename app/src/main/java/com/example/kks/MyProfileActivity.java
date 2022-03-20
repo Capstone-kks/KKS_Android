@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -27,6 +28,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -69,8 +71,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private static final int PICK_FROM_CAMERA = 2;
 
     static final int PERMISSIONS_REQUEST_CODE = 1000;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
 
@@ -158,7 +160,6 @@ public class MyProfileActivity extends AppCompatActivity {
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
 
-
     }
 
     private void AlbumPermissionCheck() {
@@ -228,18 +229,12 @@ public class MyProfileActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CameraPermissionCheck();
 
-
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        try {
-                            tempFile = createImageFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                         }
-
-                        if (intent.resolveActivity(getPackageManager()) != null) {
-                            Uri photoUri = Uri.fromFile(tempFile);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                            startActivityForResult(intent, PICK_FROM_CAMERA);
+                        else {
+                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
                         }
                     }
                 });
@@ -250,16 +245,16 @@ public class MyProfileActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AlbumPermissionCheck();
 
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                        startActivityForResult(intent, PICK_FROM_ALBUM);
+                        Intent albumintent = new Intent(Intent.ACTION_PICK);
+                        albumintent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                        startActivityForResult(albumintent, PICK_FROM_ALBUM);
                     }
                 });
 
         dlg.show();
     }
 
-    private void setImage() {
+    private void setAlbumImage() {
         ImageView imageView = findViewById(R.id.profileImg);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -267,29 +262,45 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
         //set on the ui
-        imageView.setImageBitmap(originalBm);
+        //imageView.setImageBitmap(originalBm);
+        Glide.with(this).load(originalBm).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(imageView);
 
         //set on the db
 
 
     }
 
-    private File createImageFile() throws IOException {
+    private void setCameraImage(Bitmap originalBm){
+        ImageView imageView = findViewById(R.id.profileImg);
 
-        // 이미지 파일 이름 ( blackJin_{시간}_ )
-        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        String imageFileName = "blackJin_" + timeStamp + "_";
+        //set on the ui
+        //imageView.setImageBitmap(originalBm);
+        Glide.with(this).load(originalBm).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(imageView);
 
-        // 이미지가 저장될 폴더 이름 ( blackJin )
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/blackJin/");
-        if (!storageDir.exists()) storageDir.mkdirs();
+        //set on the db
 
-        // 빈 파일 생성
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        return image;
+
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
+            }
+            else
+            {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -307,21 +318,16 @@ public class MyProfileActivity extends AppCompatActivity {
                     }
                 }
             }
-
             return;
         }
 
 
         if (requestCode == PICK_FROM_ALBUM) {
-
             Uri photoUri = data.getData();
             Cursor cursor = null;
 
             try {
-                /*
-                 *  Uri 스키마를
-                 *  content:/// 에서 file:/// 로  변경한다.
-                 */
+                //Uri 스키마를 content:/// 에서 file:/// 로  변경
                 String[] proj = {MediaStore.Images.Media.DATA};
 
                 assert photoUri != null;
@@ -339,10 +345,14 @@ public class MyProfileActivity extends AppCompatActivity {
                     cursor.close();
                 }
             }
-            setImage();
+            setAlbumImage();
+
         } else if (requestCode == PICK_FROM_CAMERA) {
-            //Bundle extras = data.getExtras();
-            setImage();
+            if(resultCode == RESULT_OK && data.hasExtra("data"))    // OK 만이 아니라 카메라가 찍은 사진 데이터가 있는지도!
+            {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                setCameraImage(photo);
+            }
 
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
