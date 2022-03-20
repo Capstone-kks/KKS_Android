@@ -55,4 +55,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+
+    //for tedpermission
+    implementation 'gun0912.ted:tedpermission:2.2.3'
+
+
 }

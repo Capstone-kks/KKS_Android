@@ -55,16 +55,17 @@
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/photochangebtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignBottom="@+id/profileImg"
                     android:layout_marginLeft="-30dp"
                     android:layout_marginBottom="20dp"
-                    android:padding="5dp"
-                    android:scaleType="centerInside"
                     android:layout_toRightOf="@+id/profileImg"
                     android:background="@drawable/circularbtn1"
+                    android:onClick="changePhoto"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_photo" />
             </RelativeLayout>
 
@@ -96,7 +97,7 @@
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/namechangebtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
