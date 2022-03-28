@@ -2,19 +2,14 @@ package com.example.kks;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.kks.Login.myDBAdapter;
+import com.example.kks.Pattern.SpendpatternActivity;
 import com.example.kks.databinding.ActivityHomeBinding;
-import com.example.kks.databinding.ActivityLoginPageBinding;
-import com.example.kks.info.InfoFragment;
-import com.example.kks.info.InfoViewModel;
-import com.example.kks.search.SearchFragment;
-import com.example.kks.search.SearchViewModel;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -56,6 +51,16 @@ public class HomeActivity extends AppCompatActivity {
 
     public void goWrite(View view){
         Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("nickname", nickname);
+        intent.putExtra("userImage", userImg);
+        startActivity(intent);
+        finish();
+    }
+
+    public void goPattern(View view){
+        //Intent intent = new Intent(getApplicationContext(), PatternContent.class);
+        Intent intent = new Intent(getApplicationContext(), SpendpatternActivity.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("nickname", nickname);
         intent.putExtra("userImage", userImg);

@@ -58,7 +58,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class MyProfileActivity extends AppCompatActivity {
 
     private ActivityMyProfileBinding binding;
-    NameViewModel NameViewModel;
+    //NameViewModel NameViewModel;
 
     private File tempFile;
 
@@ -98,27 +98,6 @@ public class MyProfileActivity extends AppCompatActivity {
         //get image using Glid lib
         Glide.with(this).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
 
-
-        //get image using url connection... but failed. don't know why
-        /*
-        if (!userImg.equals("no")) {
-            {
-                try {
-                    URL url = new URL(userImg);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true);
-                    conn.connect();
-
-                    //BitmapFactory.Options options = new BitmapFactory.Options();
-                    Bitmap originalBm = BitmapFactory.decodeStream(conn.getInputStream());
-                    binding.profileImg.setImageBitmap(originalBm);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        */
     }
 
     private void CameraPermissionCheck() {

@@ -59,5 +59,7 @@ dependencies {
     //for tedpermission
     implementation 'gun0912.ted:tedpermission:2.2.3'
 
+    //for piechart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

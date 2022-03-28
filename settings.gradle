@@ -7,6 +7,9 @@ dependencyResolutionManagement {
 
         //kakao sdk repository
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
+        //pie chart
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "kks"
