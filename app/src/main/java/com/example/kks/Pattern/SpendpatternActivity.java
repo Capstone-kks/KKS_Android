@@ -1,10 +1,12 @@
 package com.example.kks.Pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.kks.R;
 import com.example.kks.databinding.ActivitySpendpatternBinding;
@@ -25,7 +27,7 @@ public class SpendpatternActivity extends AppCompatActivity {
     //private PatternAdapter adapter1, adapter2;
     //PatternList month, overall;
 
-    String userId, nickname, newName;
+    String userId, nickname;
     String userImg = "no";
 
     PieChart pie1, pie2;
@@ -36,7 +38,7 @@ public class SpendpatternActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spendpattern);
+        //setContentView(R.layout.activity_spendpattern);
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
@@ -44,15 +46,11 @@ public class SpendpatternActivity extends AppCompatActivity {
         userImg = intent.getStringExtra("userImage");
         //System.out.println("image url : " + userImg);
 
-        //dummy data
-        //nickname = "굥";
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
-        //binding = ActivitySpendpatternBinding.inflate(getLayoutInflater());
-        //View view = binding.getRoot();
-        //setContentView(view);
+        binding = ActivitySpendpatternBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-
-
+        binding.fornameview.setText(nickname+"님");
         //값 받아오기
         //한달치 값
         //전체 값
@@ -64,25 +62,6 @@ public class SpendpatternActivity extends AppCompatActivity {
 
         PatternList month = new PatternList(5,15,5,15,5,15,5);
         PatternList overall = new PatternList(5,5,5,5,5,5,5);
-
-        /*
-        month.movie = 5;
-        month.drama = 5;
-        month.doc = 5;
-        month.exhibit = 5;
-        month.musical = 5;
-        month.book = 5;
-        month.music = 5;
-
-        overall.movie = 5;
-        overall.drama = 5;
-        overall.doc = 5;
-        overall.exhibit = 5;
-        overall.musical = 5;
-        overall.book = 5;
-        overall.music = 5;
-        */
-
 
 
         //pie1 = binding.pieChart1;
@@ -112,7 +91,7 @@ public class SpendpatternActivity extends AppCompatActivity {
         pieData = new PieData(pieDataSet);
         // if you want change Label text
         // 안쪽 라벨
-        pie1.setEntryLabelTextSize(8f);
+        pie1.setEntryLabelTextSize(9f);
         pie1.setEntryLabelColor(Color.BLACK);
         pie1.setData(pieData);
         pie1.setDrawHoleEnabled(false);
