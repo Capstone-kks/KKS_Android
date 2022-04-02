@@ -16,4 +16,25 @@ public class PatternList {
         this.book = book;
         this.music = music;
     }
+
+    public int get(int index) {
+        switch (index) {
+            case 0:
+                return movie;
+            case 1:
+                return drama;
+            case 3:
+                return doc;
+            case 4:
+                return exhibit;
+            case 5:
+                return musical;
+            case 6:
+                return book;
+            case 7:
+                return music;
+            default:
+                return 0;
+        }
+    }
 }

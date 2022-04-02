@@ -101,16 +101,8 @@ public class LoginPageActivity extends AppCompatActivity {
                                     String userImage = userProfile.getProfileImageUrl();
                                     //Toast.makeText(getApplicationContext(), "ID : "+user_id, 0).show();
 
-                                    /*
-                                    //maintainId(user_id);
-                                    if (maintainId(user_id) == true) {
-                                        myDBAdapter.open();
-                                        myDBAdapter.clear();
-                                        myDBAdapter.insert(user_id);
-                                        myDBAdapter.close();
-                                        Toast.makeText(getApplicationContext(), "db에 log정보 추가 : " + user_id, Toast.LENGTH_LONG).show();
-                                    }
-                                    */
+                                    //db에 없는 회원이면 회원 table에 추가
+                                    //있는 회원이라면 닉네임, 프로필 사진 값 가져와서 넘기기
 
                                     //다음 페이지로 넘기기
                                     //Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);

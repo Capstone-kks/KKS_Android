@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="000님"
                 android:textSize="18dp"
+                android:textColor="@color/DarkGray"
                 android:textStyle="normal|bold" />
 
             <TextView
