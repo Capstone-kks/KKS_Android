@@ -6,19 +6,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WriteActivity">
-    <LinearLayout
+    tools:context=".record.WriteActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbarLl"
         android:padding="10dp"
         android:background="#27837A"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/backIv"
             android:src="@drawable/ic_back"
             android:layout_width="25dp"
             android:layout_height="25dp"/>
-    </LinearLayout>
+        <TextView
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,6 +52,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:hint="제목을 입력해 주세요."
             android:id="@+id/titleEt"
             android:padding="5dp"
             android:layout_marginStart="60dp"
@@ -83,52 +98,26 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:text="평점"/>
-        <!-- 별 아이콘 -->
-        <ImageView
-            android:id="@+id/writeStarIv1"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_star_no_select"
-            app:layout_constraintTop_toTopOf="@+id/starTv"
+
+        <!-- 평점 -->
+
+        <RatingBar
+            android:isIndicator="false"
+            android:progressTint="#FFEB3B"
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
             app:layout_constraintBottom_toBottomOf="@+id/starTv"
-            app:layout_constraintStart_toStartOf="@id/categorySpinner" />
+            app:layout_constraintStart_toStartOf="@id/categorySpinner"
+            app:layout_constraintTop_toTopOf="@+id/starTv" />
 
-        <ImageView
-            android:id="@+id/writeStarIv2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_star_no_select"
-            app:layout_constraintStart_toEndOf="@id/writeStarIv1"
-            app:layout_constraintTop_toTopOf="@id/writeStarIv1"/>
 
-        <ImageView
-            android:id="@+id/writeStarIv3"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_star_no_select"
-            app:layout_constraintStart_toEndOf="@id/writeStarIv2"
-            app:layout_constraintTop_toTopOf="@id/writeStarIv2"/>
 
-        <ImageView
-            android:id="@+id/writeStarIv4"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_star_no_select"
-            app:layout_constraintStart_toEndOf="@id/writeStarIv3"
-            app:layout_constraintTop_toTopOf="@id/writeStarIv3"/>
 
-        <ImageView
-            android:id="@+id/writeStarIv5"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_star_no_select"
-            app:layout_constraintStart_toEndOf="@id/writeStarIv4"
-            app:layout_constraintTop_toTopOf="@id/writeStarIv4"/>
-
+        <!-- 내용 -->
         <TextView
             android:id="@+id/contentTv"
             app:layout_constraintStart_toStartOf="parent"
@@ -157,8 +146,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imageAddButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/ic_album"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="@+id/contentEt"
@@ -178,10 +167,8 @@
         <TextView
             android:textColor="#3C3C3C"
             android:layout_marginTop="7dp"
-            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@+id/imageAddButton"
             app:layout_constraintTop_toBottomOf="@+id/imageAddButton"
-            app:layout_constraintEnd_toEndOf="@+id/imageAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이미지 추가"/>

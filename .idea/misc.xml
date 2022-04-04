@@ -3,6 +3,41 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/background_calendar.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_archive_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_calendar_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_feed_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_home_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_profile_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/bottom_menu_search_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/comment_input_background.xml" value="0.1045" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_archive_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_archive_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_calendar_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_calendar_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_feed_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_feed_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_home_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_profile_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_profile_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_search_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_bottom_menu_search_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_like.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/ic_liked.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable-v24/main_btm_color_selector.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable/circularbtn1.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable/ic_baseline_folder_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/drawable/ic_bottom_menu_home_no_select.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_login_page.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_record.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/activity_write.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_calendar.xml" value="0.2" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_feed.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_info.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_back.xml" value="0.227" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1435" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_bottom_menu_calendar_select.xml" value="0.227" />
