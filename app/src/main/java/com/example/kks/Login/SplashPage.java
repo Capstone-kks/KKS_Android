@@ -35,7 +35,7 @@ public class SplashPage extends AppCompatActivity {
 
 
         //자동로그인 확인 -> 확인되면 바로 홈으로 넘어감
-        //server와 연동 전 테스트 시 여기 주석처리하고 할 것
+        //server와 연동 전 테스트 시 여기 주석처리 or 체크하지 말 것
         myDBAdapter.open();
         userId = myDBAdapter.openId();
         myDBAdapter.close();
