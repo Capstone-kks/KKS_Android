@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:drawable="@drawable/ic_bottom_menu_profile_no_select" android:state_checked="false" />
+  <item android:drawable="@drawable/ic_bottom_menu_profile_select" android:state_checked="true" />
+</selector>

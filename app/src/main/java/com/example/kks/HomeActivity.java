@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.kks.Login.myDBAdapter;
 import com.example.kks.Pattern.SpendpatternActivity;
 import com.example.kks.databinding.ActivityHomeBinding;
+import com.example.kks.record.WriteActivity;
 
 public class HomeActivity extends AppCompatActivity {
 

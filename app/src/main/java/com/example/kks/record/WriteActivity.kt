@@ -1,4 +1,4 @@
-package com.example.kks
+package com.example.kks.record
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.example.kks.R
 import com.example.kks.databinding.ActivityWriteBinding
 
 class WriteActivity : AppCompatActivity() {
@@ -102,7 +103,7 @@ class WriteActivity : AppCompatActivity() {
 
     private fun setupSpinner(){
         val groups = resources.getStringArray(R.array.pick_category)
-        val adapter = object : ArrayAdapter<String>(this,R.layout.item_spinner){
+        val adapter = object : ArrayAdapter<String>(this, R.layout.item_spinner){
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
                 if(position==count){

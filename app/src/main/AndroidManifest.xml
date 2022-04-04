@@ -40,6 +40,18 @@
         <activity
             android:name=".Login.SplashPage"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".Controller.NetworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true" >
+        </activity>
+
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,23 +59,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.NetworkActivity"
+            android:name=".record.WriteActivity"
             android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".WriteActivity"
-            android:exported="false" />
+        <activity android:name=".record.RecordActivity"/>
         <activity
             android:name=".MyProfileActivity"
             android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".Login.LoginPageActivity"
             android:exported="true" />
-        <activity
-            android:name=".Login.MainActivity"
-            android:exported="true" /> <!-- for kakao sdk -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="7afffc6d5513e685abc067fe17f07310" />
