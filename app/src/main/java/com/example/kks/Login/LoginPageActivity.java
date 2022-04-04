@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.Option;
 import com.example.kks.HomeActivity;
+import com.example.kks.MainActivity;
 import com.example.kks.R;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -106,7 +107,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
                                     //다음 페이지로 넘기기
                                     //Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
-                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user_id", user_id);
                                     intent.putExtra("nickname", nickname);
                                     intent.putExtra("userImage", userImage);
