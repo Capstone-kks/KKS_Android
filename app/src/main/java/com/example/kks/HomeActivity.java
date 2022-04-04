@@ -15,7 +15,7 @@ public class HomeActivity extends AppCompatActivity {
 
     String userId, nickname;
     String userImg = "no";
-    boolean checking=false;
+    boolean checking = false;
 
     myDBAdapter myDBAdapter;
 
