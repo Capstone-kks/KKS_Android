@@ -1,6 +1,8 @@
 package com.example.kks
 
+import android.content.pm.PackageInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kks.calendar.CalendarFragment
 import com.example.kks.databinding.ActivityMainBinding
@@ -8,6 +10,7 @@ import com.example.kks.databinding.ActivityMainBinding
 import com.example.kks.feed.FeedFragment
 import com.example.kks.info.InfoFragment
 import com.example.kks.search.SearchFragment
+import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
@@ -17,6 +20,12 @@ class MainActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         initNavigation()
+
+        // 해쉬값 구하기
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash",keyHash)
+
+
 
         binding.mainBottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -59,5 +68,6 @@ class MainActivity : AppCompatActivity(){
         supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,CalendarFragment())
             .commitAllowingStateLoss()
     }
+
 
 }
