@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kks.Archive.ArchiveFolderFragment
 import com.example.kks.calendar.CalendarFragment
 import com.example.kks.databinding.ActivityMainBinding
 
@@ -47,12 +48,12 @@ class MainActivity : AppCompatActivity(){
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-//                R.id.archiveFragment->{
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.mainFrameLayout, )
-//                        .commitAllowingStateLoss()
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.archiveFragment->{
+                    supportFragmentManager.beginTransaction()
+                       .replace(R.id.mainFrameLayout, ArchiveFolderFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
                 R.id.profileFragment->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.mainFrameLayout,InfoFragment())
