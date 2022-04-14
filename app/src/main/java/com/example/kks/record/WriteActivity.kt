@@ -67,6 +67,10 @@ class WriteActivity : AppCompatActivity() {
 
         }
 
+        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            Toast.makeText(this,rating.toString(),Toast.LENGTH_SHORT).show()
+        }
+
 
 
 
