@@ -18,6 +18,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.Option;
+import com.example.kks.Controller.RetrofitAPI;
+import com.example.kks.Controller.RetrofitClient;
 import com.example.kks.HomeActivity;
 import com.example.kks.MainActivity;
 import com.example.kks.R;
@@ -32,6 +34,11 @@ import java.net.MalformedURLException;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginPageActivity extends AppCompatActivity {
 
@@ -51,7 +58,6 @@ public class LoginPageActivity extends AppCompatActivity {
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
 
         //자동로그인버튼 체크했는지 확인
         Switch btn = (Switch) findViewById(R.id.maintainlogBtn);
@@ -102,6 +108,37 @@ public class LoginPageActivity extends AppCompatActivity {
                                     String userImage = userProfile.getProfileImageUrl();
                                     //Toast.makeText(getApplicationContext(), "ID : "+user_id, 0).show();
 
+                                    //새로운 회원이면 server에 추가
+                                    PostUser postUser = new PostUser();
+                                    
+                                    postUser.setUserId(user_id);
+                                    postUser.setNickName(nickname);
+                                    postUser.setUserImg(userImage);
+
+                                    System.out.println("POST USER"+postUser.getUserId());
+
+                                    //retrofit
+                                    RetrofitClient client = new RetrofitClient();
+                                    Retrofit retrofit = client.setRetrofit();
+                                    RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+                                    retrofitAPI.postData(postUser).enqueue(new Callback<PostUser>() {
+                                        @Override
+                                        public void onResponse(Call<PostUser> call, Response<PostUser> response) {
+                                            if(response.isSuccessful()){
+                                                PostUser data = response.body();
+                                                Log.d("내정보", user_id);
+                                                Log.d("sever 보내기 성공", data.getNickName());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<PostUser> call, Throwable t) {
+                                            Log.d("실패", user_id);
+                                            t.printStackTrace();
+                                        }
+                                    });
+                                    
                                     //db에 없는 회원이면 회원 table에 추가
                                     //있는 회원이라면 닉네임, 프로필 사진 값 가져와서 넘기기
 
