@@ -1,19 +1,27 @@
 package com.example.kks
 
-import android.content.pm.PackageInfo
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kks.Archive.ArchiveFolderFragment
+import com.example.kks.archive.ArchiveFolderFragment
+import com.example.kks.login.myDBAdapter
 import com.example.kks.calendar.CalendarFragment
 import com.example.kks.databinding.ActivityMainBinding
-
 import com.example.kks.feed.FeedFragment
 import com.example.kks.info.InfoFragment
 import com.example.kks.search.SearchFragment
 import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity(){
+
+    //yk variables
+    var userId: String? = null
+    var nickname: String? = null
+    var userImg: String? = "no"
+    var checking = false
+
+    var myDBAdapter: myDBAdapter? = null
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +34,15 @@ class MainActivity : AppCompatActivity(){
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash",keyHash)
 
+
+        //yk code
+        val intent = intent
+        userId = intent.getStringExtra("user_id")
+        //nickname = intent.getStringExtra("nickname")
+        //userImg = intent.getStringExtra("userImage")
+        checking = intent.extras!!.getBoolean("checking")
+
+        maintainId(userId!!, checking)
 
 
         binding.mainBottomNavigationView.setOnItemSelectedListener {
@@ -49,8 +66,13 @@ class MainActivity : AppCompatActivity(){
                     return@setOnItemSelectedListener true
                 }
                 R.id.archiveFragment->{
+                    var fragment2 = ArchiveFolderFragment()
+                    var bundle = Bundle()
+                    bundle.putString("userId",userId)
+                    fragment2.arguments = bundle
+
                     supportFragmentManager.beginTransaction()
-                       .replace(R.id.mainFrameLayout, ArchiveFolderFragment())
+                       .replace(R.id.mainFrameLayout, fragment2)
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
@@ -68,6 +90,19 @@ class MainActivity : AppCompatActivity(){
     private fun initNavigation(){
         supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,CalendarFragment())
             .commitAllowingStateLoss()
+    }
+
+    //yk code
+    fun maintainId(userId: String, checking: Boolean) {
+        myDBAdapter = myDBAdapter(this)
+        if (checking == true) {
+            //id 정보 db에 저장
+            myDBAdapter!!.open()
+            myDBAdapter!!.clear()
+            myDBAdapter!!.insert(userId)
+            myDBAdapter!!.close()
+            Toast.makeText(applicationContext, "db에 log정보 추가 : $userId", Toast.LENGTH_LONG).show()
+        }
     }
 
 

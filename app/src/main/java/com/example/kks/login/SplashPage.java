@@ -1,4 +1,4 @@
-package com.example.kks.Login;
+package com.example.kks.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kks.HomeActivity;
-import com.example.kks.R;
-import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.example.kks.databinding.ActivitySplashPageBinding;
 
 import java.util.Timer;

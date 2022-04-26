@@ -1,7 +1,8 @@
-package com.example.kks.Pattern;
+package com.example.kks.pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.kks.R;
@@ -18,6 +19,7 @@ import java.util.List;
 public class PatternContent extends AppCompatActivity {
 
     private PatternContentBinding binding;
+
     PieChart pieChart;
     PieData pieData;
     List<PieEntry> pieEntryList = new ArrayList<>();

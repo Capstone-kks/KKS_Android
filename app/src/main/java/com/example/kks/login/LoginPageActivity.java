@@ -1,26 +1,18 @@
-package com.example.kks.Login;
+package com.example.kks.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import com.bumptech.glide.load.Option;
-import com.example.kks.Controller.RetrofitAPI;
-import com.example.kks.Controller.RetrofitClient;
-import com.example.kks.HomeActivity;
+import com.example.kks.controller.RetrofitAPI;
+import com.example.kks.controller.RetrofitClient;
 import com.example.kks.MainActivity;
 import com.example.kks.R;
 import com.example.kks.databinding.ActivityLoginPageBinding;
@@ -30,15 +22,12 @@ import com.kakao.sdk.user.model.Account;
 import com.kakao.sdk.user.model.Profile;
 import com.kakao.sdk.user.model.User;
 
-import java.net.MalformedURLException;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginPageActivity extends AppCompatActivity {
 

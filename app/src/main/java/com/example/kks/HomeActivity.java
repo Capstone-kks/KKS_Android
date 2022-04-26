@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.kks.Login.myDBAdapter;
-import com.example.kks.Pattern.SpendpatternActivity;
+import com.example.kks.login.myDBAdapter;
+import com.example.kks.pattern.SpendpatternActivity;
 import com.example.kks.databinding.ActivityHomeBinding;
 import com.example.kks.record.WriteActivity;
 

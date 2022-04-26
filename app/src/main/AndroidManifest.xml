@@ -22,10 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".Pattern.PatternContent"
+            android:name=".pattern.PatternContent"
             android:exported="false" />
         <activity
-            android:name=".Pattern.SpendpatternActivity"
+            android:name=".pattern.SpendpatternActivity"
             android:exported="false" /> <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -38,7 +38,7 @@
         </provider>
 
         <activity
-            android:name=".Login.SplashPage"
+            android:name=".login.SplashPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +63,7 @@
             android:name=".MyProfileActivity"
             android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
-            android:name=".Login.LoginPageActivity"
+            android:name=".login.LoginPageActivity"
             android:exported="true" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"

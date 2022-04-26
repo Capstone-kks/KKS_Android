@@ -1,7 +1,6 @@
-package com.example.kks.Pattern;
+package com.example.kks.pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,7 +14,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,9 @@ public class SpendpatternActivity extends AppCompatActivity {
         setContentView(view);
 
         //서버에서 닉네임 받아오기기
-        binding.fornameview.setText(nickname + "님");
+        //binding.fornameview.setText(nickname + "님");
+        //임시로 id
+        binding.fornameview.setText(userId + "님");
 
         month = getMonth();
         overall = getOverall();
