@@ -3,6 +3,7 @@ package com.example.kks.login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.MainActivity;
 import com.example.kks.R;
+import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
@@ -33,6 +35,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
     private ActivityLoginPageBinding binding;
     static private boolean checking;
+    static private Context context;
 
     String user_id;
 
@@ -43,6 +46,8 @@ public class LoginPageActivity extends AppCompatActivity {
         //setContentView( R.layout.activity_login_page);
 
         //myDBAdapter = new myDBAdapter(this);
+
+        context = this;
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -103,6 +108,14 @@ public class LoginPageActivity extends AppCompatActivity {
                                     postUser.setUserId(user_id);
                                     postUser.setNickName(nickname);
                                     postUser.setUserImg(userImage);
+
+                                    //sharedpreference
+                                    SharedPreference.saveString(context, "userId", user_id);
+                                    SharedPreference.saveString(context, "userImg", userImage);
+                                    //String prefId = SharedPreference.getString(context, "userId");
+                                    //String prefImg = SharedPreference.getString(context, "userImg");
+                                    //Log.d("저장된", prefId);
+                                    //Log.d("저장된", prefImg);
 
                                     System.out.println("POST USER"+postUser.getUserId());
 

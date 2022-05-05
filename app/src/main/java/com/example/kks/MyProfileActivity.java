@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivityMyProfileBinding;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -73,6 +74,8 @@ public class MyProfileActivity extends AppCompatActivity {
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
+    static private Context mcontext;
+
 
 
 
@@ -80,11 +83,16 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
         //System.out.println("image url : " + userImg);
+
+        //userId = SharedPreference.getString(mcontext, "userId");
+        //Log.d("저장된", userId);
+        mcontext = this;
 
         //dummy data
         //nickname = "굥";
@@ -195,9 +203,22 @@ public class MyProfileActivity extends AppCompatActivity {
 
     }
 
+    public void kakaoPhoto(View view){
+
+        Toast.makeText(getApplicationContext(), "카카오 프로필 이미지로 세팅합니다.", Toast.LENGTH_LONG).show();
+
+        String prefImg = SharedPreference.getString(mcontext, "userImg");
+        Log.d("저장된", prefImg);
+
+        Glide.with(this).load(prefImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
+
+
+        //디비에 저장
+
+    }
+
     public void changePhoto(View view) {
         Context context;
-
         AlertDialog.Builder dlg = new AlertDialog.Builder(MyProfileActivity.this);
         dlg.setTitle("사진 가져오기");
         dlg.setIcon(R.drawable.calendarimage);
