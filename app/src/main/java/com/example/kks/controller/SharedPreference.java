@@ -23,4 +23,11 @@ public class SharedPreference {
         return value;
     }
 
+    public static void deleteAll(Context context, String key){
+        SharedPreferences pref = context.getSharedPreferences(key, AppCompatActivity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 }

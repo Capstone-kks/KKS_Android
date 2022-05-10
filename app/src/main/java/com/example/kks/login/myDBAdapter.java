@@ -65,4 +65,18 @@ public class myDBAdapter {
         cursor.close();;
         return dbId;
     }
+
+    /*
+    public String openImg(){
+        String dbImg;
+        Cursor cursor = getCursor();
+        myDB = myDBHelper.getReadableDatabase();
+        dbImg = "";
+        while(cursor.moveToNext()){
+            dbImg += cursor.getString(0);
+        }
+        cursor.close();;
+        return dbImg;
+    }
+    */
 }

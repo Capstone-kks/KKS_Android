@@ -109,7 +109,11 @@ public class LoginPageActivity extends AppCompatActivity {
                                     postUser.setNickName(nickname);
                                     postUser.setUserImg(userImage);
 
-                                    //sharedpreference
+                                    //sharedpreference 초기화
+                                    SharedPreference.deleteAll(context, "userId");
+                                    SharedPreference.deleteAll(context, "userImg");
+
+                                    //sharedpreference 저장
                                     SharedPreference.saveString(context, "userId", user_id);
                                     SharedPreference.saveString(context, "userImg", userImage);
                                     //String prefId = SharedPreference.getString(context, "userId");
@@ -148,8 +152,8 @@ public class LoginPageActivity extends AppCompatActivity {
                                     //Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("user_id", user_id);
-                                    intent.putExtra("nickname", nickname);
-                                    intent.putExtra("userImage", userImage);
+                                    //intent.putExtra("nickname", nickname);
+                                    //intent.putExtra("userImage", userImage);
                                     intent.putExtra("checking", checking);
                                     startActivity(intent);
                                     finish();

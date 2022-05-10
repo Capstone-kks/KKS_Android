@@ -13,7 +13,7 @@ public class myDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL("CREATE TABLE groupTBL ( gName CHAR(20) PRIMARY KEY);");
-        //db.execSQL("CREATE TABLE groupTBL (gName CHAR(20) PRIMARY KEY);");
+        //db.execSQL("CREATE TABLE groupTBL ( gImg CHAR(20) PRIMARY KEY);");
     }
 
     //DELETE&CREATE TABLE
