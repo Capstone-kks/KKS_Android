@@ -20,13 +20,19 @@ class FeedService {
         feedView.onGetFeedLoading()
 
         feedService.getFeed(sort = 1,isFollowing = false)
-            .enqueue(object :retrofit2.Callback<Record>{
-                override fun onResponse(call: Call<Record>, response: Response<Record>) {
-                    TODO("Not yet implemented")
+            .enqueue(object :retrofit2.Callback<FeedResponse>{
+                override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
+
+                    val resp = response.body()!!
+                    when(resp.code){
+                        1000->{
+
+                        }
+                    }
                 }
 
-                override fun onFailure(call: Call<Record>, t: Throwable) {
-
+                override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
+                    feedView.onGetFeedFailure(400,"네트워크 오류가 발생했습니다.")
                 }
 
             })
