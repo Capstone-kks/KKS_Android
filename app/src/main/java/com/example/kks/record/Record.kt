@@ -11,7 +11,7 @@ data class Record(
     @SerializedName("rate") val rate : Double, // 레코드 평점
     @SerializedName("content") val content : String, // 레코드 내용
     @SerializedName("postPublic") val postPublic : Boolean, // 공개 여부
-    @SerializedName("imgUrl") val recordImgUrl : String, // 이미지
+    @SerializedName("imgUrl") val recordImgUrl : Int, // 이미지
     @SerializedName("postDate") val postDate : String, // 작성한 날짜
     @SerializedName("commentCount") val commentCount : Int, // 댓글 수
 )
