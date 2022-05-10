@@ -104,6 +104,7 @@
                     <!-- RecyclerView 글 목록 -->
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/feed_recyclerView"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="25dp"

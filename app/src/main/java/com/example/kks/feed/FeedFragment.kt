@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kks.R
 import com.example.kks.databinding.FragmentFeedBinding
 import com.example.kks.record.Record
@@ -19,6 +20,7 @@ class FeedFragment:Fragment() {
     private var recentCheck : Boolean = true // 최신순
     private var hotCheck : Boolean = false // 인기순
     private var isFollowingRecord : Boolean = false // following 글들만 보기
+    private lateinit var records:ArrayList<Record>  // 더미 데이터
 
     private lateinit var recordListAdapter : RecordListAdapter
 
@@ -34,6 +36,20 @@ class FeedFragment:Fragment() {
 //        }
 
         initView() // view 초기화
+
+        records=ArrayList<Record>()
+        records.add(Record(1,2,"홍길동","요기고 전시회",2,3.0,"요시고 전시회에 다녀왔습니다. 생각보다 볼거리가 많았던 전시회 였네요.",
+        true,R.drawable.sample,"2022-03-13",3))
+        records.add(Record(2,2,"사용자22","국립 현대 미술관",2,5.0,"국립 현대 미술관에 다녀왔습니다. 입장료도 비싸지 않고 굉장히 만족한 전시였습니다.",
+            true,R.drawable.sample1,"2021-12-13",2))
+        records.add(Record(3,2,"닉네임0","닥터스트레인지",3,4.0,"기대하던 닥터스트레인지 2가 개봉이 되자마자 보러갔다 왔습니다. ",
+            true,R.drawable.sample2,"2022-05-05",1))
+        initRecyclerView(records)
+
+
+
+
+
 
         binding.refreshLayout.setOnClickListener{
             // todo 서버에서 데이터 reload
@@ -55,7 +71,7 @@ class FeedFragment:Fragment() {
             sort=1
             // todo api 다시 호출
             getRecordList()
-            initRecyclerView()
+           // initRecyclerView()
 
         }
 
@@ -67,7 +83,7 @@ class FeedFragment:Fragment() {
             sort=2
             // todo api 다시 호출
             getRecordList()
-            initRecyclerView()
+           // initRecyclerView()
 
         }
 
@@ -76,7 +92,7 @@ class FeedFragment:Fragment() {
             isFollowingRecord =!isFollowingRecord
             initCheckFollowingButton()
             getRecordList()
-            initRecyclerView()
+         //   initRecyclerView()
 
 
         }
@@ -88,7 +104,7 @@ class FeedFragment:Fragment() {
 
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView(records:ArrayList<Record>){
         // recyclerView <-> adapter 연결
         recordListAdapter = RecordListAdapter(context)
         recordListAdapter.setRecordClickListener(object : RecordListAdapter.RecordClickListener{
@@ -97,6 +113,10 @@ class FeedFragment:Fragment() {
             }
 
         })
+        binding.feedRecyclerView.adapter=recordListAdapter
+        binding.feedRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+        recordListAdapter.addRecords(records)
 
     }
 
