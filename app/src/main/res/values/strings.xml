@@ -2,12 +2,14 @@
     <string name="app_name">kks</string>
 
     <string-array name="pick_category">
-        <item>영화</item>
-        <item>드라마</item>
-        <item>다큐</item>
-        <item>전시회</item>
-        <item>뮤지컬</item>
+        <item>공연</item>
+        <item>연극/뮤지컬</item>
         <item>도서</item>
+        <item>드라마</item>
+        <item>영화</item>
+        <item>음악</item>
+        <item>전시</item>
+        <item>기타</item>
     </string-array>
 
     <string name="title_home">Home</string>
