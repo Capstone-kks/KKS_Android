@@ -1,13 +1,19 @@
 package com.example.kks.pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.kks.MyProfileActivity;
 import com.example.kks.R;
+import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
+import com.example.kks.archive.ArchiveFolderFragment;
 import com.example.kks.databinding.ActivitySpendpatternBinding;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -27,6 +33,7 @@ public class SpendpatternActivity extends AppCompatActivity {
     PieChart pie1, pie2;
 
     String userId, nickname;
+    public static Activity act;
 
 
     @Override
@@ -37,6 +44,8 @@ public class SpendpatternActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
+
+        act = this;
 
         binding = ActivitySpendpatternBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -131,6 +140,15 @@ public class SpendpatternActivity extends AppCompatActivity {
         PatternList list = new PatternList(5, 15, 5, 0, 5, 15, 5);
 
         return list;
+    }
+
+    public void finish(View view){
+        //Fragment fragment = new ArchiveFolderFragment();
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
+
+        Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
+        startActivity(intent);
     }
 }
 

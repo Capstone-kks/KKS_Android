@@ -5,8 +5,6 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,49 +15,29 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
-import android.graphics.SurfaceTexture;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CameraMetadata;
-import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.params.StreamConfigurationMap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Size;
-import android.view.Surface;
-import android.view.TextureView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivityMyProfileBinding;
-import com.example.kks.login.LoginPageActivity;
 import com.example.kks.login.PostUser;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
@@ -86,6 +64,9 @@ public class MyProfileActivity extends AppCompatActivity {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     static private Context mcontext;
+    public static Activity act;
+
+    private ImageButton backButton;
 
     Handler handler = new Handler();
 
@@ -101,6 +82,7 @@ public class MyProfileActivity extends AppCompatActivity {
         //System.out.println("image url : " + userImg);
 
         mcontext = this;
+        act = this;
 
         prefId = SharedPreference.getString(mcontext, "userId");
         Log.d("저장된", prefId);
@@ -130,8 +112,6 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
         //dummy data
         //nickname = "굥";
         //binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
@@ -153,6 +133,9 @@ public class MyProfileActivity extends AppCompatActivity {
                         public void run() {
                             binding.editName.setText(nickname);
                             //get image using Glid lib
+                            Activity activity = (Activity) mcontext;
+                            if (activity.isFinishing())
+                                return;
                             Glide.with(mcontext).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
                         }
                     });
@@ -168,6 +151,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         //get image using Glid lib
         //Glide.with(this).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
+
 
     }
 
@@ -421,9 +405,14 @@ public class MyProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             return;
         }
-
     }
 
+    public void finish(View view){
+        Intent intent = new Intent(MyProfileActivity.this, ActForFragmentArchiveFolderActivity.class);
+        startActivity(intent);
+        //Fragment fragment = new ArchiveFolderFragment();
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
 
-
+    }
 }

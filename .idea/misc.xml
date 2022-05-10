@@ -38,15 +38,6 @@
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_feed.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_info.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_check_no.xml" value="0.115" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_check_ok.xml" value="0.115" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/record_list_background.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_main.xml" value="0.221875" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_record.xml" value="0.171875" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_write.xml" value="0.171875" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/fragment_feed.xml" value="0.264" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/item_spinner.xml" value="0.171875" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/record_list_item.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_back.xml" value="0.227" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1435" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_bottom_menu_calendar_select.xml" value="0.227" />
@@ -79,7 +70,7 @@
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_login_page.xml" value="0.2864583333333333" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_main.xml" value="0.11499493414387031" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_main2.xml" value="0.11499493414387031" />
-        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_my_profile.xml" value="0.5142857142857143" />
+        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_my_profile.xml" value="0.2857142857142857" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_network.xml" value="0.11499493414387031" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_pattern_content.xml" value="0.3903966597077244" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_record.xml" value="0.11499493414387031" />
