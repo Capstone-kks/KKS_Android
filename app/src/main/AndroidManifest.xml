@@ -26,7 +26,10 @@
             android:exported="false" />
         <activity
             android:name=".pattern.SpendpatternActivity"
-            android:exported="false" /> <!-- 사진 촬영을 위한 provide -->
+            android:noHistory="false"
+            android:exported="false" />
+
+        <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.kks.provider"
@@ -42,7 +45,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,6 +54,7 @@
         </activity>
 
         <activity android:name=".MainActivity"
+            android:noHistory="false"
             android:exported="true">
 
         </activity>
@@ -61,7 +64,8 @@
         <activity android:name=".record.RecordActivity"/>
         <activity
             android:name=".MyProfileActivity"
-            android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
+            android:noHistory="false"
+            /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".login.LoginPageActivity"
             android:exported="true" />

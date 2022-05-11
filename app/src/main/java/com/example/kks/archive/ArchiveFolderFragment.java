@@ -71,20 +71,20 @@ public class ArchiveFolderFragment extends Fragment {
 
     public void goProfile(View view){
         Intent intent = new Intent(getActivity(), MyProfileActivity.class);
-        intent.putExtra("user_id", userId);
+        //intent.putExtra("user_id", userId);
         //intent.putExtra("nickname", nickname);
         //intent.putExtra("userImage", userImg);
         startActivity(intent);
-        getActivity().finish();
+        //getActivity().finish();
     }
 
     public void goPattern(View view){
         //Intent intent = new Intent(getApplicationContext(), PatternContent.class);
         Intent intent = new Intent(getActivity(), SpendpatternActivity.class);
-        intent.putExtra("user_id", userId);
+        //intent.putExtra("user_id", userId);
         //intent.putExtra("nickname", nickname);
         //intent.putExtra("userImage", userImg);
         startActivity(intent);
-        getActivity().finish();
+        //getActivity().finish();
     }
 }
