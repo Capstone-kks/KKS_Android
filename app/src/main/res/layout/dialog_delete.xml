@@ -27,7 +27,7 @@
         android:id="@+id/dialog_content_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="한번 삭제한 글은 되돌릴수 없습니다."
+        android:text="한번 삭제한 글은 되돌릴수 없습니다."
         android:layout_marginTop="20dp"
         android:textSize="16sp"
         android:textColor="@color/DarkGray"
