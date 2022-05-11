@@ -65,9 +65,6 @@ public class MyProfileActivity extends AppCompatActivity {
 
     static private Context mcontext;
     public static Activity act;
-
-    private ImageButton backButton;
-
     Handler handler = new Handler();
 
 
@@ -408,11 +405,6 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void finish(View view){
-        Intent intent = new Intent(MyProfileActivity.this, ActForFragmentArchiveFolderActivity.class);
-        startActivity(intent);
-        //Fragment fragment = new ArchiveFolderFragment();
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
-
+        act.finish();
     }
 }
