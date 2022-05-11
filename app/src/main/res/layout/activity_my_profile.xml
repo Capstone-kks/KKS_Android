@@ -29,6 +29,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:onClick="finish"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -64,6 +73,20 @@
                     android:layout_toRightOf="@+id/profileImg"
                     android:background="@drawable/circularbtn1"
                     android:onClick="changePhoto"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_photo" />
+
+                <ImageButton
+                    android:id="@+id/photokakaobtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@+id/profileImg"
+                    android:layout_marginLeft="-16dp"
+                    android:layout_marginBottom="100dp"
+                    android:layout_toRightOf="@+id/profileImg"
+                    android:background="@drawable/kakaolink_btn_small"
+                    android:onClick="kakaoPhoto"
                     android:padding="5dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_photo" />

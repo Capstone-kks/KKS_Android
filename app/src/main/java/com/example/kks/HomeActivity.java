@@ -33,12 +33,13 @@ public class HomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
-        nickname = intent.getStringExtra("nickname");
-        userImg = intent.getStringExtra("userImage");
+        //nickname = intent.getStringExtra("nickname");
+        //userImg = intent.getStringExtra("userImage");
         checking = intent.getExtras().getBoolean("checking");
 
         //Toast.makeText(getApplicationContext(), "checking : "+checking, Toast.LENGTH_SHORT).show();
         maintainId(userId, checking);
+        //maintainImg(userId, userImg, checking);
     }
 
     public void goProfile(View view){

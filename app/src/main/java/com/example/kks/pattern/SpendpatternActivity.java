@@ -1,14 +1,29 @@
 package com.example.kks.pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.kks.MyProfileActivity;
 import com.example.kks.R;
+import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
+import com.example.kks.archive.ArchiveFolderFragment;
+import com.example.kks.controller.RetrofitAPI;
+import com.example.kks.controller.RetrofitClient;
+import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivitySpendpatternBinding;
+import com.example.kks.login.PostUser;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -17,6 +32,12 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class SpendpatternActivity extends AppCompatActivity {
 
@@ -27,6 +48,9 @@ public class SpendpatternActivity extends AppCompatActivity {
     PieChart pie1, pie2;
 
     String userId, nickname;
+    public static Activity act;
+    static private Context mcontext;
+    Handler handler = new Handler();
 
 
     @Override
@@ -35,27 +59,76 @@ public class SpendpatternActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_spendpattern);
 
         Intent intent = getIntent();
-        userId = intent.getStringExtra("user_id");
-        nickname = intent.getStringExtra("nickname");
+        //userId = intent.getStringExtra("user_id");
+        //nickname = intent.getStringExtra("nickname");
+
+        act = this;
+        mcontext = this;
+
+        userId = SharedPreference.getString(mcontext, "userId");
+        Log.d("저장된", userId);
 
         binding = ActivitySpendpatternBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
         //서버에서 닉네임 받아오기기
-        //binding.fornameview.setText(nickname + "님");
-        //임시로 id
-        binding.fornameview.setText(userId + "님");
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        month = getMonth();
-        overall = getOverall();
+        Call<PostUser> call = retrofitAPI.getUser(userId);
+        call.enqueue(new Callback<PostUser>() {
+            @Override
+            public void onResponse(Call<PostUser> call, Response<PostUser> response) {
+                if(response.isSuccessful()){
+                    PostUser data = response.body();
+                    nickname = data.getNickName();
+                    //userImg = data.getUserImg();
+                    Log.d("이름", nickname);
+                    //Log.d("이미지", userImg);
+                }
+            }
 
-        pie1 = findViewById(R.id.pieChart1);
-        pie2 = findViewById(R.id.pieChart2);
+            @Override
+            public void onFailure(Call<PostUser> call, Throwable t) {
+                Log.d("실패", userId);
+                t.printStackTrace();
+            }
+        });
 
-        viewPie(pie1, month);
-        viewPie(pie2, overall);
 
+        new Thread(new Runnable() {
+            boolean isRun = false;
+            int value = 0;
+
+            @Override
+            public void run() {
+                isRun = true;
+                while ((isRun)) {
+                    value += 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.fornameview.setText(nickname + "님");
+
+                            month = getMonth();
+                            overall = getOverall();
+
+                            pie1 = findViewById(R.id.pieChart1);
+                            pie2 = findViewById(R.id.pieChart2);
+
+                            viewPie(pie1, month);
+                            viewPie(pie2, overall);
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start(); //start()붙이면 바로실행시킨다.
 
     }
 
@@ -131,6 +204,15 @@ public class SpendpatternActivity extends AppCompatActivity {
         PatternList list = new PatternList(5, 15, 5, 0, 5, 15, 5);
 
         return list;
+    }
+
+    public void finish(View view){
+        //Fragment fragment = new ArchiveFolderFragment();
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
+
+        Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
+        startActivity(intent);
     }
 }
 
