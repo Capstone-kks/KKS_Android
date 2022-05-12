@@ -69,9 +69,11 @@ class RecordActivity : AppCompatActivity() {
         // 글 수정 처리
         binding.editButton.setOnClickListener {
             val intent = Intent(this,ModifyActivity::class.java)
-            intent.putExtra("title",binding.recordContentTitle.text) // 제목
+            intent.putExtra("title",binding.recordTitle.text) // 제목
             intent.putExtra("content",binding.recordContent.text) // 내용
             intent.putExtra("rate",binding.ratingBar.rating) // 평점
+            intent.putExtra("imgUrl",binding.recordPicture.id) // 이미지
+          //  intent.putExtra("category",binding.)
             startActivity(intent)
 
         }
