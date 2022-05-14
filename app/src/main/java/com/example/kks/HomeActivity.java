@@ -42,6 +42,15 @@ public class HomeActivity extends AppCompatActivity {
         //maintainImg(userId, userImg, checking);
     }
 
+    public void goProfile(View view){
+        Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
+        intent.putExtra("user_id", userId);
+        intent.putExtra("nickname", nickname);
+        intent.putExtra("userImage", userImg);
+        startActivity(intent);
+        finish();
+    }
+
     public void goWrite(View view){
         Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
         intent.putExtra("user_id", userId);

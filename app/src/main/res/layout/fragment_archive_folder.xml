@@ -28,12 +28,14 @@
                 android:id="@+id/goprofilebtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{ArchiveFolderFragment::goProfile}"
                 android:text="profile확인" />
 
             <Button
                 android:id="@+id/gopatternbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{ArchiveFolderFragment::goPattern}"
                 android:text="문화패턴" />
 
         </LinearLayout>
