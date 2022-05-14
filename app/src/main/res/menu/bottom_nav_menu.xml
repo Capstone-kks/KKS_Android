@@ -29,7 +29,7 @@
         app:showAsAction="always"
         android:title="archive" />
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/info_fragment"
         android:icon="@drawable/bottom_menu_profile_selector"
         app:showAsAction="always"
         android:title="프로필" />

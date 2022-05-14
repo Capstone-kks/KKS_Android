@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kks.login.myDBAdapter;
-import com.example.kks.pattern.SpendpatternActivity;
+import com.example.kks.info.pattern.SpendpatternActivity;
 import com.example.kks.databinding.ActivityHomeBinding;
 import com.example.kks.record.WriteActivity;
 
@@ -40,15 +40,6 @@ public class HomeActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), "checking : "+checking, Toast.LENGTH_SHORT).show();
         maintainId(userId, checking);
         //maintainImg(userId, userImg, checking);
-    }
-
-    public void goProfile(View view){
-        Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("nickname", nickname);
-        intent.putExtra("userImage", userImg);
-        startActivity(intent);
-        finish();
     }
 
     public void goWrite(View view){
