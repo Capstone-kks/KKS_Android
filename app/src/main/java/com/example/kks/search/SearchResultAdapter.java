@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kks.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
 
@@ -27,9 +26,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @NonNull
     @Override
-    public SearchResultAdapter.SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_recyclerview_item,parent,false);
-        SearchResultAdapter.SearchViewHolder viewHolder = new SearchResultAdapter.SearchViewHolder(view);
+        SearchViewHolder viewHolder = new SearchViewHolder(view);
         return viewHolder;
     }
 

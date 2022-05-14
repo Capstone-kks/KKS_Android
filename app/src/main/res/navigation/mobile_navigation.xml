@@ -6,8 +6,8 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_peed"
-        android:name="com.example.myapplication.ui.home.HomeFragment"
+        android:id="@+id/navigation_feed"
+        android:name="com.example.kks.feed.FeedFragment"
         android:label="peed"
         tools:layout="@layout/fragment_home" />
 

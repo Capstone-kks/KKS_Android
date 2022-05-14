@@ -13,4 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="switch_style" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/second_brown</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#E4C97E
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/DarkGray
+        </item>
+    </style>
 </resources>

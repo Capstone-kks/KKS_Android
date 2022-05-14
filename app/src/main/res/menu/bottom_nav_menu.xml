@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/navigation_peed"
-        android:icon="@drawable/ic_baseline_people_alt_24"
-        android:title="peed" />
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/bottom_menu_calendar_selector"
+        app:showAsAction="always"
+        android:title="달력" />
+    <item
+        android:id="@+id/feedFragment"
+        android:icon="@drawable/bottom_menu_feed_selector"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="피드"
+        tools:ignore="AlwaysShowAction" />
+
 
     <item
-        android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="search" />
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/bottom_menu_search_selector"
+        app:showAsAction="always"
+        android:title="검색" />
 
     <item
-        android:id="@+id/navigation_homeCalender"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="home" />
-
-    <item
-        android:id="@+id/navigation_archive"
+        android:id="@+id/archiveFragment"
         android:icon="@drawable/ic_baseline_folder_24"
+        app:showAsAction="always"
         android:title="archive" />
-
     <item
-<<<<<<< Updated upstream
-        android:id="@+id/navigation_info"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="info" />
-=======
         android:id="@+id/info_fragment"
         android:icon="@drawable/bottom_menu_profile_selector"
         app:showAsAction="always"
         android:title="프로필" />
-<!--    <item-->
-<!--        android:id="@+id/navigation_info"-->
-<!--        android:icon="@drawable/ic_baseline_settings_24"-->
-<!--        app:showAsAction="always"-->
-<!--        android:title="info" />-->
->>>>>>> Stashed changes
+    <!--    <item-->
+    <!--        android:id="@+id/navigation_info"-->
+    <!--        android:icon="@drawable/ic_baseline_settings_24"-->
+    <!--        app:showAsAction="always"-->
+    <!--        android:title="info" />-->
 
 </menu>
