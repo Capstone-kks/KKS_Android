@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(){
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-                R.id.info_fragment->{
+                R.id.profileFragment->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.mainFrameLayout,InfoFragment())
                         .commitAllowingStateLoss()

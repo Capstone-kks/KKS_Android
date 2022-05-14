@@ -36,6 +36,7 @@ class FeedFragment:Fragment() {
 //        }
 
         initView() // view 초기화
+        initRecentOrHotTextButton()
 
         records=ArrayList<Record>()
         records.add(Record(1,2,"홍길동","요기고 전시회",2,3.0,"요시고 전시회에 다녀왔습니다. 생각보다 볼거리가 많았던 전시회 였네요.",

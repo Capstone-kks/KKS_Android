@@ -22,10 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".info.pattern.PatternContent"
+            android:name=".pattern.PatternContent"
             android:exported="false" />
         <activity
-            android:name=".info.pattern.SpendpatternActivity"
+            android:name=".pattern.SpendpatternActivity"
             android:noHistory="false"
             android:exported="false" />
 
@@ -62,7 +62,10 @@
             android:name=".record.WriteActivity"
             android:exported="false" />
         <activity android:name=".record.RecordActivity"/>
-        <!-- android:theme="@style/Theme.Kks" -->
+        <activity
+            android:name=".MyProfileActivity"
+            android:noHistory="false"
+            /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".login.LoginPageActivity"
             android:exported="true" />
@@ -86,7 +89,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".record.ModifyActivity"/>
-        <activity android:name=".info.follow.FollowActivity"/>
     </application>
 
 </manifest>
