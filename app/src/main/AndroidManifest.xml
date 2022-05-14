@@ -62,10 +62,7 @@
             android:name=".record.WriteActivity"
             android:exported="false" />
         <activity android:name=".record.RecordActivity"/>
-        <activity
-            android:name=".MyProfileActivity"
-            android:noHistory="false"
-            /> <!-- android:theme="@style/Theme.Kks" -->
+        <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".login.LoginPageActivity"
             android:exported="true" />
@@ -88,6 +85,7 @@
                     android:scheme="kakao7afffc6d5513e685abc067fe17f07310" />
             </intent-filter>
         </activity>
+        <activity android:name=".record.ModifyActivity"/>
     </application>
 
 </manifest>

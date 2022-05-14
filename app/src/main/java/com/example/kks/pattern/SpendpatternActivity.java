@@ -1,8 +1,6 @@
 package com.example.kks.pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,12 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.kks.MyProfileActivity;
 import com.example.kks.R;
-import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
-import com.example.kks.archive.ArchiveFolderFragment;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
@@ -33,7 +26,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -211,8 +203,8 @@ public class SpendpatternActivity extends AppCompatActivity {
         //FragmentManager fragmentManager = getSupportFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
 
-        Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
+        //startActivity(intent);
     }
 }
 

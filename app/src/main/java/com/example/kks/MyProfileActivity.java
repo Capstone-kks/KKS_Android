@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,35 +17,44 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
+import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraMetadata;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Size;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
-import com.example.kks.controller.RetrofitAPI;
-import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivityMyProfileBinding;
-import com.example.kks.login.PostUser;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MyProfileActivity extends AppCompatActivity {
 
@@ -52,8 +63,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private File tempFile;
 
-    String userId, nickname, newName, prefId;
-    String userImg = null;
+    String userId, nickname, newName;
+    String userImg = "no";
 
     private static final int SINGLE_PERMISSION = 1004; //권한 변수
     private static final int REQUEST_CODE = 0;
@@ -64,50 +75,24 @@ public class MyProfileActivity extends AppCompatActivity {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     static private Context mcontext;
-    public static Activity act;
-    Handler handler = new Handler();
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent intent = getIntent();
-        //userId = intent.getStringExtra("user_id");
-        //nickname = intent.getStringExtra("nickname");
-        //userImg = intent.getStringExtra("userImage");
+        userId = intent.getStringExtra("user_id");
+        nickname = intent.getStringExtra("nickname");
+        userImg = intent.getStringExtra("userImage");
         //System.out.println("image url : " + userImg);
 
+        //userId = SharedPreference.getString(mcontext, "userId");
+        //Log.d("저장된", userId);
         mcontext = this;
-        act = this;
-
-        prefId = SharedPreference.getString(mcontext, "userId");
-        Log.d("저장된", prefId);
-
-        //서버에서 닉네임, 이미지 가져오기
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        Call<PostUser> call = retrofitAPI.getUser(prefId);
-        call.enqueue(new Callback<PostUser>() {
-            @Override
-            public void onResponse(Call<PostUser> call, Response<PostUser> response) {
-                if(response.isSuccessful()){
-                    PostUser data = response.body();
-                    nickname = data.getNickName();
-                    userImg = data.getUserImg();
-                    Log.d("이름", nickname);
-                    Log.d("이미지", userImg);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PostUser> call, Throwable t) {
-                Log.d("실패", prefId);
-                t.printStackTrace();
-            }
-        });
 
         //dummy data
         //nickname = "굥";
@@ -116,39 +101,10 @@ public class MyProfileActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        new Thread(new Runnable() {
-            boolean isRun = false;
-            int value = 0;
-
-            @Override
-            public void run() {
-                isRun = true;
-                while ((isRun)) {
-                    value += 1;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            binding.editName.setText(nickname);
-                            //get image using Glid lib
-                            Activity activity = (Activity) mcontext;
-                            if (activity.isFinishing())
-                                return;
-                            Glide.with(mcontext).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }).start(); //start()붙이면 바로실행시킨다.
-
-        //binding.editName.setText(nickname);
+        binding.editName.setText(nickname);
 
         //get image using Glid lib
-        //Glide.with(this).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
-
+        Glide.with(this).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(binding.profileImg);
 
     }
 
@@ -402,9 +358,9 @@ public class MyProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             return;
         }
+
     }
 
-    public void finish(View view){
-        act.finish();
-    }
+
+
 }
