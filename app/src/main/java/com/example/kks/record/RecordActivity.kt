@@ -24,8 +24,6 @@ class RecordActivity : AppCompatActivity() {
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        // 좋아요 처리
         binding.likeImage.setOnClickListener {
             isLike =!isLike
 
@@ -38,14 +36,12 @@ class RecordActivity : AppCompatActivity() {
             }
 
         }
-
-
         // 글 삭제 처리
         binding.deleteButton.setOnClickListener {
             val builder = AlertDialog.Builder(this).create()
             val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete,null)
 
-           builder?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            builder?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             builder.setCancelable(false)
             builder.setCanceledOnTouchOutside(false)
 
@@ -73,7 +69,7 @@ class RecordActivity : AppCompatActivity() {
             intent.putExtra("content",binding.recordContent.text) // 내용
             intent.putExtra("rate",binding.ratingBar.rating) // 평점
             intent.putExtra("imgUrl",binding.recordPicture.id) // 이미지
-          //  intent.putExtra("category",binding.)
+            //  intent.putExtra("category",binding.)
             startActivity(intent)
 
         }
@@ -85,15 +81,6 @@ class RecordActivity : AppCompatActivity() {
 
 
     }// end of onCreate
-
-
-
-
-
-
-
-
-
 
 
 }// end of class

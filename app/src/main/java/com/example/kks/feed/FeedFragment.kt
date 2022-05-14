@@ -36,11 +36,10 @@ class FeedFragment:Fragment() {
 //        }
 
         initView() // view 초기화
-        initRecentOrHotTextButton()
 
         records=ArrayList<Record>()
         records.add(Record(1,2,"홍길동","요기고 전시회",2,3.0,"요시고 전시회에 다녀왔습니다. 생각보다 볼거리가 많았던 전시회 였네요.",
-        true,R.drawable.sample,"2022-03-13",3))
+            true,R.drawable.sample,"2022-03-13",3))
         records.add(Record(2,2,"사용자22","국립 현대 미술관",2,5.0,"국립 현대 미술관에 다녀왔습니다. 입장료도 비싸지 않고 굉장히 만족한 전시였습니다.",
             true,R.drawable.sample1,"2021-12-13",2))
         records.add(Record(3,2,"닉네임0","닥터스트레인지",3,4.0,"기대하던 닥터스트레인지 2가 개봉이 되자마자 보러갔다 왔습니다. ",
@@ -72,7 +71,7 @@ class FeedFragment:Fragment() {
             sort=1
             // todo api 다시 호출
             getRecordList()
-           // initRecyclerView()
+            // initRecyclerView()
 
         }
 
@@ -84,7 +83,7 @@ class FeedFragment:Fragment() {
             sort=2
             // todo api 다시 호출
             getRecordList()
-           // initRecyclerView()
+            // initRecyclerView()
 
         }
 
@@ -93,7 +92,7 @@ class FeedFragment:Fragment() {
             isFollowingRecord =!isFollowingRecord
             initCheckFollowingButton()
             getRecordList()
-         //   initRecyclerView()
+            //   initRecyclerView()
 
 
         }

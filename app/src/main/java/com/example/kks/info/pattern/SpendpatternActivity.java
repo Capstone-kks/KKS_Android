@@ -1,28 +1,18 @@
-package com.example.kks.pattern;
+package com.example.kks.info.pattern;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.kks.MyProfileActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.kks.R;
-import com.example.kks.archive.ActForFragmentArchiveFolderActivity;
-import com.example.kks.archive.ArchiveFolderFragment;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
-import com.example.kks.databinding.ActivitySpendpatternBinding;
 import com.example.kks.login.PostUser;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -33,7 +23,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,36 +30,24 @@ import retrofit2.Retrofit;
 
 public class SpendpatternActivity extends AppCompatActivity {
 
-    private ActivitySpendpatternBinding binding;
-
     //private PatternAdapter adapter1, adapter2;
     PatternList month, overall;
     PieChart pie1, pie2;
 
     String userId, nickname;
-    public static Activity act;
-    static private Context mcontext;
     Handler handler = new Handler();
 
+    private TextView username_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_spendpattern);
+        setContentView(R.layout.activity_spendpattern);
 
-        Intent intent = getIntent();
-        //userId = intent.getStringExtra("user_id");
-        //nickname = intent.getStringExtra("nickname");
-
-        act = this;
-        mcontext = this;
-
-        userId = SharedPreference.getString(mcontext, "userId");
+        userId = SharedPreference.getString(this, "userId");
         Log.d("저장된", userId);
 
-        binding = ActivitySpendpatternBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        username_txt = findViewById(R.id.fornameview);
 
         //서버에서 닉네임 받아오기기
         RetrofitClient client = new RetrofitClient();
@@ -110,7 +87,7 @@ public class SpendpatternActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            binding.fornameview.setText(nickname + "님");
+                            username_txt.setText(nickname + "님");
 
                             month = getMonth();
                             overall = getOverall();
@@ -211,8 +188,8 @@ public class SpendpatternActivity extends AppCompatActivity {
         //FragmentManager fragmentManager = getSupportFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
 
-        Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
+        //startActivity(intent);
     }
 }
 

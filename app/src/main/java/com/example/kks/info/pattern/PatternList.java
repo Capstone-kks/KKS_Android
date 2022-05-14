@@ -1,4 +1,4 @@
-package com.example.kks.pattern;
+package com.example.kks.info.pattern;
 
 public class PatternList {
 
