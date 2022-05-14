@@ -16,10 +16,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+<<<<<<< Updated upstream
             android:name=".Controller.NetworkActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+=======
+            android:name=".info.pattern.PatternContent"
+            android:exported="false" />
+        <activity
+            android:name=".info.pattern.SpendpatternActivity"
+            android:noHistory="false"
+            android:exported="false" />
+
+        <!-- 사진 촬영을 위한 provide -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.kks.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".login.SplashPage"
+>>>>>>> Stashed changes
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +53,7 @@
         <activity
             android:name=".WriteActivity"
             android:exported="false" />
+<<<<<<< Updated upstream
         <activity
             android:name=".MyProfileActivity"
             android:exported="false" /> <!-- android:theme="@style/Theme.Kks" -->
@@ -39,6 +63,10 @@
 
         </activity>
 
+=======
+        <activity android:name=".record.RecordActivity"/>
+        <!-- android:theme="@style/Theme.Kks" -->
+>>>>>>> Stashed changes
         <activity
             android:name=".Login.MainActivity"
             android:exported="true" /> <!-- for kakao sdk -->
@@ -61,6 +89,8 @@
                     android:scheme="kakao7afffc6d5513e685abc067fe17f07310" />
             </intent-filter>
         </activity>
+        <activity android:name=".record.ModifyActivity"/>
+        <activity android:name=".info.follow.FollowActivity"/>
     </application>
 
 </manifest>

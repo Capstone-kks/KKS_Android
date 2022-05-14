@@ -7,6 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+<<<<<<< Updated upstream
+=======
+import com.example.kks.login.myDBAdapter;
+import com.example.kks.info.pattern.SpendpatternActivity;
+>>>>>>> Stashed changes
 import com.example.kks.databinding.ActivityHomeBinding;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.example.kks.info.InfoFragment;
@@ -34,15 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         userId = intent.getStringExtra("user_id");
         nickname = intent.getStringExtra("nickname");
         userImg = intent.getStringExtra("userImage");
-    }
-
-    public void goProfile(View view){
-        Intent intent = new Intent(getApplicationContext(), MyProfileActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("nickname", nickname);
-        intent.putExtra("userImage", userImg);
-        startActivity(intent);
-        finish();
     }
 
     public void goWrite(View view){
