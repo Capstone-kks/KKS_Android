@@ -4,9 +4,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -14,15 +18,34 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import com.example.kks.MainActivity
 import com.example.kks.R
 import com.example.kks.databinding.ActivityWriteBinding
+import com.example.kks.getNickname
+import com.example.kks.getUserIdx
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 
-class WriteActivity : AppCompatActivity() {
+class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
     private lateinit var binding: ActivityWriteBinding
     private lateinit var resultLauncher : ActivityResultLauncher<Intent>
     private var selectedUri : Uri? =null
+    private var writeRecordService = WriteRecordService()
+    private var radioSelect : Int = 0
+
+
+    private  var multibody : MultipartBody.Part? = null
+
+    // bitmap 변수
+    private var path:Bitmap?=null
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteBinding.inflate(layoutInflater)
@@ -30,20 +53,9 @@ class WriteActivity : AppCompatActivity() {
 
         setupSpinner()
 
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result->
-            if(result.resultCode== Activity.RESULT_OK){
-                val intent = result.data
-                selectedUri = intent?.data
-                if(selectedUri!=null){
-                    binding.imageView.setImageURI(selectedUri)
-                }else{
-                    Toast.makeText(this ,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
-                }
+        writeRecordService.setWriteRecordView(this)
 
 
-            }else return@registerForActivityResult
-        }
 
         binding.backIv.setOnClickListener {
             finish()
@@ -67,8 +79,142 @@ class WriteActivity : AppCompatActivity() {
 
         }
 
+//        binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//               Log.d("write-position: ",position.toString())
+//                selectCategory=true
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                selectCategory=false
+//
+//            }
+//        }
+
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             Toast.makeText(this,rating.toString(),Toast.LENGTH_SHORT).show()
+        }
+//
+//        binding.publicRadioGroup.setOnClickListener {
+//            radioSelect=1 // 라디오 버튼 클릭 체크
+//        }
+
+        binding.publicRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.openRadioButton -> radioSelect=0 // 공개
+                R.id.closeRadioButton -> radioSelect=1 // 비공개
+            }
+        }
+
+        binding.postRecordButton.setOnClickListener {  // 작성하기 버튼
+
+            val title=binding.titleEt.text.toString() // 제목 가져옴
+            val categoryName = binding.categorySpinner.selectedItem.toString() // 카테고리
+            var categoryIdx:Int=-1
+            if(categoryName=="공연"){
+                categoryIdx=1
+            }else if(categoryName=="도서"){
+                categoryIdx=10
+            }else if(categoryName=="드라마"){
+                categoryIdx=11
+            }else if(categoryName=="연극/뮤지컬"){
+                categoryIdx=12
+            }else if(categoryName=="영화"){
+                categoryIdx=13
+            }else if(categoryName=="음악"){
+                categoryIdx=14
+            }else if(categoryName=="전시"){
+                categoryIdx=15
+            }else if(categoryName=="기타"){
+                categoryIdx=16
+            }
+
+            var rate = binding.ratingBar.numStars // 평점
+
+            var content = binding.contentEt.text.toString()
+
+            Log.d("write-title: ",title)
+            Log.d("write-categoryName: ",categoryName)
+            Log.d("write-categoryIdx: ",categoryIdx.toString())
+            Log.d("write-rate: ",rate.toString())
+            Log.d("write-content: ",content)
+            Log.d("write-path: ",path.toString())
+            Log.d("write-radioSelect: ",radioSelect.toString())
+
+
+            if(title==""){
+                Toast.makeText(this,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
+                binding.warningTv.text="제목을 입력해주세요"
+
+            }else if(content==""){
+                Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
+                binding.warningTv.text = "내용을 입력해주세요"
+            }else if(path==null){
+                binding.warningTv.text = "사진을 선택해주세요"
+
+            }else if(categoryIdx==-1){
+
+                binding.warningTv.text = "카테고리를 선택해주세요"
+
+            }else{
+                binding.warningTv.text=""
+                Toast.makeText(this,"API 호출",Toast.LENGTH_SHORT).show()
+
+
+
+                //todo 이미지 multipart로 전송하기
+//                val uploadBitmap = Bitmap.createScaledBitmap(path!!,500,400,true)
+//                val stream = ByteArrayOutputStream()
+//                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+//                val byteArray = stream.toByteArray()
+//                val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+//                multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
+
+                var currentTime : LocalDate = LocalDate.now()
+                val postDate = currentTime.toString()
+
+                // todo userId는 나중에 sharedPreference에서 가져오는걸로 변경
+
+                writeRecordService.getWriteRecord(RecordReq("123",title,categoryIdx,rate,content,radioSelect,"image",postDate,0))
+            }
+
+
+
+
+
+
+            // API 호출
+
+
+        }
+
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result->
+            if(result.resultCode==Activity.RESULT_OK){
+                result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
+                    uri->
+                    path=null // 앨범에서 가져올때마다 초기화
+                    val inputStream = uri.let{
+                        contentResolver.openInputStream(
+                            it
+                        )
+                    }
+                    val bitmap=BitmapFactory.decodeStream(inputStream)
+                    inputStream!!.close()
+                    path=bitmap
+                }
+                if(result.data?.data==null){
+                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
+                }else{
+                    binding.imageView.setImageURI(result.data!!.data)
+                }
+            }else return@registerForActivityResult
         }
 
 
@@ -137,4 +283,21 @@ class WriteActivity : AppCompatActivity() {
 //        // droplist를 스피너와 간격을 두고 나오게 함 -> 아이템 크기 = 125px
 //        binding.categorySpinner.dropDownVerticalOffset = dipToPixels(45f).toInt()
     } // end of setupSpinner
+
+    override fun onGetWriteRecordLoading() {
+        Log.d("글작성/API","로딩중...")
+    }
+
+    override fun onGetWriteRecordSuccess(result: WriteRecordResult) {
+        Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
+        val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onGetWriteRecordFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("글작성/API",message)
+        }
+    }
 }
