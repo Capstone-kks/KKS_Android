@@ -24,10 +24,14 @@ class WriteRecordService {
             .enqueue(object:retrofit2.Callback<PostRecordResponse>{
                 override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>)
                 {
-                    Log.d("banana/response.body()",response.body().toString())
-                    Log.d("banana/response.body()",response.body().toString())
+                    Log.d("response.body()",response.body().toString())
 
                     val resp = response.body()!!
+                    when(resp.code){
+                        1000->{
+                            writeRecordView.onGetWriteRecordSuccess(resp.result)
+                        }else-> writeRecordView.onGetWriteRecordFailure(resp.code,resp.message)
+                    }
 
 
 
