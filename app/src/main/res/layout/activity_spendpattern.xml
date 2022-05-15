@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pattern.SpendpatternActivity">
+    tools:context=".info.pattern.SpendpatternActivity">
 
 
     <LinearLayout
@@ -24,10 +24,6 @@
             android:onClick="finish"
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
 
         <LinearLayout
@@ -78,9 +74,6 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
 
         <LinearLayout
             android:id="@+id/pattern2"

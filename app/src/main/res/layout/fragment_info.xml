@@ -170,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_analysis"
-            android:text="문화 소비 분석"
+            android:text="문화 패턴 분석"
             android:textAlignment="viewStart"
             android:textStyle="bold"
             android:textColor="@color/DarkGray"

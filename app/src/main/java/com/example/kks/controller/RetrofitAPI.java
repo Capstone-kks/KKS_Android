@@ -17,4 +17,7 @@ public interface RetrofitAPI {
 
     @GET("/api/login/get")
     Call<PostUser> getUser(@Query("userId") String userId);
+
+    @GET("/api/record/countall")
+    Call<String> getcountall(@Query("userId") String userId);
 }
