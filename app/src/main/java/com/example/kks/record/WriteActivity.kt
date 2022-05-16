@@ -148,17 +148,16 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
 
             if(title==""){
-                Toast.makeText(this,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(this,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text="제목을 입력해주세요"
 
             }else if(content==""){
-                Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text = "내용을 입력해주세요"
             }else if(path==null){
                 binding.warningTv.text = "사진을 선택해주세요"
 
             }else if(categoryIdx==-1){
-
                 binding.warningTv.text = "카테고리를 선택해주세요"
 
             }else{
@@ -288,8 +287,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
         Log.d("글작성/API","로딩중...")
     }
 
-    override fun onGetWriteRecordSuccess(result: WriteRecordResult) {
-        Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
+    override fun onGetWriteRecordSuccess(result: String) {
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
         val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
         startActivity(intent)
         finish()
