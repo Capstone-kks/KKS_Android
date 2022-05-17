@@ -2,12 +2,14 @@ package com.example.kks.info.pattern;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kks.R;
@@ -21,6 +23,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,15 +39,17 @@ public class SpendpatternActivity extends AppCompatActivity {
     PatternList month, overall;
     PieChart pie1, pie2;
 
-    String userId, nickname;
-    String str1, str2;
+    String userId;
+    String nickname ="      ";
     Handler handler = new Handler();
 
     private TextView username_txt;
     public static Activity act;
 
     int[] numlist1 = new int[8];
+    int[] numlist2 = new int[8];
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,45 +88,18 @@ public class SpendpatternActivity extends AppCompatActivity {
         });
 
         //서버에서 전체기간 카테고리별 개수 받아오기
-        client = new RetrofitClient();
-        retrofit = client.setRetrofit();
-        retrofitAPI = retrofit.create(RetrofitAPI.class);
+        numlist1 = getAllCount(userId);
 
-        Call<String> call2 = retrofitAPI.getcountall(userId);
-        call2.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()){
-                    str1 = response.body().toString();
-                    Log.d("카운트", str1);
-                    str1 += "";
-                    String[] arr = str1.split(",");
-                    System.out.println(Arrays.toString(arr));
+        //서버에서 이번달 카테고리별 개수 받아오기
+        //오늘의 연월 받기
+        LocalDate now = LocalDate.now();
+        String y = Integer.toString(now.getYear());
+        String m = String.format("%02d", now.getMonthValue());
 
-                    for (int i=0; i<8;i++){
-                         numlist1[i] = Integer.parseInt(arr[i]);
-                    }
-                    System.out.println(Arrays.toString(numlist1));
-                }
-            }
+        String date = y + "-" + m;
+        Log.d("오늘 연월", date);
 
-            @Override
-            public void onFailure(Call<String>  call, Throwable t) {
-                Log.d("카운트 실패", userId);
-                t.printStackTrace();
-            }
-        });
-
-
-        //Log.d("어레이7", arr[7]);
-
-        //System.out.println(""+str.charAt(0)+str.charAt(2));
-        //PatternList list = new PatternList(5, 15, 5, 15, 5, 15, 5);
-        //String[] g = str.split(",");
-        //for (int i = 0; i<9; i++){
-        //    System.out.println("g임 "+ g[i]);
-        //}
-
+        numlist2 = getMonthCount(userId, date);
 
 
         new Thread(new Runnable() {
@@ -138,7 +116,7 @@ public class SpendpatternActivity extends AppCompatActivity {
                         public void run() {
                             username_txt.setText(nickname + "님");
 
-                            month = getMonth();
+                            month = getMonth(numlist2);
                             overall = getOverall(numlist1);
 
                             pie1 = findViewById(R.id.pieChart1);
@@ -219,9 +197,10 @@ public class SpendpatternActivity extends AppCompatActivity {
     }
 
 
-    public PatternList getMonth() {
+    public PatternList getMonth(int[] numlist) {
         //db에 들어가서 카테고리별 개수 받아오기
-        PatternList list = new PatternList(5, 15, 5, 15, 5, 15, 5, 4);
+        //PatternList list = new PatternList(5, 15, 5, 15, 5, 15, 5, 4);
+        PatternList list = new PatternList(numlist[0], numlist[1], numlist[2], numlist[3], numlist[4], numlist[5], numlist[6], numlist[7]);
 
         return list;
     }
@@ -240,6 +219,76 @@ public class SpendpatternActivity extends AppCompatActivity {
         //Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
         //startActivity(intent);
         act.finish();
+    }
+
+    public int[] getAllCount(String userId){
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        int[] numlist = new int[8];
+
+        Call<String> call2 = retrofitAPI.getcountall(userId);
+        call2.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    String str = response.body().toString();
+                    Log.d("카운트", str);
+                    str += "";
+                    String[] arr = str.split(",");
+                    System.out.println(Arrays.toString(arr));
+
+                    for (int i=0; i<8;i++){
+                        numlist[i] = Integer.parseInt(arr[i]);
+                    }
+                    System.out.println(Arrays.toString(numlist));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String>  call, Throwable t) {
+                Log.d("카운트 실패", userId);
+                t.printStackTrace();
+            }
+        });
+
+        return numlist;
+    }
+
+    public int[] getMonthCount(String userId, String date){
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        int[] numlist = new int[8];
+
+        Call<String> call = retrofitAPI.getcountmonth(userId, date);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    String getstr = response.body().toString();
+                    Log.d("월카운트", getstr);
+                    getstr += "";
+                    String[] arr = getstr.split(",");
+                    System.out.println(Arrays.toString(arr));
+
+                    for (int i=0; i<8;i++){
+                        numlist[i] = Integer.parseInt(arr[i]);
+                    }
+                    System.out.println(Arrays.toString(numlist));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String>  call, Throwable t) {
+                Log.d("카운트 실패", userId);
+                t.printStackTrace();
+            }
+        });
+
+        return numlist;
     }
 }
 

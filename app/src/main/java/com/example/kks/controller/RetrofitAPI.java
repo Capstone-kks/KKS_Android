@@ -20,4 +20,7 @@ public interface RetrofitAPI {
 
     @GET("/api/record/countall")
     Call<String> getcountall(@Query("userId") String userId);
+
+    @GET("/api/record/countmonth")
+    Call<String> getcountmonth(@Query("userId") String userId, @Query("postDate") String date);
 }
