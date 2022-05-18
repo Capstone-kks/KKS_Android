@@ -57,9 +57,11 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/btn1"
                         android:layout_width="wrap_content"
                         android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go0}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
@@ -80,14 +82,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:layout_height="140dp"
+                        android:id="@+id/btn2"
                         android:layout_width="wrap_content"
+                        android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go1}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/folder"
-                        />
+                        app:srcCompat="@drawable/folder" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -105,14 +108,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:layout_height="140dp"
+                        android:id="@+id/btn3"
                         android:layout_width="wrap_content"
+                        android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go2}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/folder"
-                        />
+                        app:srcCompat="@drawable/folder" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -132,9 +136,11 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/btn4"
                         android:layout_width="wrap_content"
                         android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go3}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
@@ -155,14 +161,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:layout_height="140dp"
+                        android:id="@+id/btn5"
                         android:layout_width="wrap_content"
+                        android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go4}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/folder"
-                        />
+                        app:srcCompat="@drawable/folder" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -180,14 +187,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:layout_height="140dp"
+                        android:id="@+id/btn6"
                         android:layout_width="wrap_content"
+                        android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go5}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/folder"
-                        />
+                        app:srcCompat="@drawable/folder" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -207,9 +215,11 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/btn7"
                         android:layout_width="wrap_content"
                         android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go6}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
@@ -230,14 +240,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:layout_height="140dp"
+                        android:id="@+id/btn8"
                         android:layout_width="wrap_content"
+                        android:layout_height="140dp"
                         android:background="@android:color/transparent"
+                        android:onClick="@{ArchiveFolderFragment::go7}"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/folder"
-                        />
+                        app:srcCompat="@drawable/folder" />
 
                     <TextView
                         android:id="@+id/textView8"
