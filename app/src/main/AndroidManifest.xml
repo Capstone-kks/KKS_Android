@@ -13,23 +13,27 @@
         android:required="true" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".archive.SearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".archive.GridActivity"
+            android:exported="false" />
         <activity
             android:name=".info.pattern.PatternContent"
             android:exported="false" />
         <activity
             android:name=".info.pattern.SpendpatternActivity"
-            android:noHistory="false"
-            android:exported="false" />
-
-        <!-- 사진 촬영을 위한 provide -->
+            android:exported="false"
+            android:noHistory="false" /> <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.kks.provider"
@@ -45,27 +49,25 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:exported="true" >
-        </activity>
-
-        <activity android:name=".MainActivity"
-            android:noHistory="false"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:noHistory="false" />
         <activity
             android:name=".record.WriteActivity"
             android:exported="false" />
-        <activity android:name=".record.RecordActivity"/>
-        <!-- android:theme="@style/Theme.Kks" -->
+        <activity android:name=".record.RecordActivity" /> <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".login.LoginPageActivity"
             android:exported="true" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="7afffc6d5513e685abc067fe17f07310" />
@@ -85,8 +87,8 @@
                     android:scheme="kakao7afffc6d5513e685abc067fe17f07310" />
             </intent-filter>
         </activity>
-        <activity android:name=".record.ModifyActivity"/>
-        <activity android:name=".info.follow.FollowActivity"/>
+        <activity android:name=".record.ModifyActivity" />
+        <activity android:name=".info.follow.FollowActivity" />
     </application>
 
 </manifest>
