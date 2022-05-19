@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".archive.ArchiveFolderFragment">
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="ArchiveFolderFragment"
@@ -28,14 +27,12 @@
                 android:id="@+id/goprofilebtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{ArchiveFolderFragment::goProfile}"
                 android:text="profile확인" />
 
             <Button
                 android:id="@+id/gopatternbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{ArchiveFolderFragment::goPattern}"
                 android:text="문화패턴" />
 
         </LinearLayout>

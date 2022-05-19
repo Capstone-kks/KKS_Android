@@ -1,6 +1,13 @@
 package com.example.kks.controller;
 
+import com.example.kks.info.follow.Follow;
+import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
+import com.example.kks.record.Record;
+import com.example.kks.search.Search;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,4 +24,16 @@ public interface RetrofitAPI {
 
     @GET("/api/login/get")
     Call<PostUser> getUser(@Query("userId") String userId);
+
+    @GET("/api/record/search/keyword")
+    Call<ArrayList<Search>> getSearchResult(@Query("keyword") String keyword);
+
+    @GET("api/follower")
+    Call<ArrayList<Follow>> getFollower(@Query("userId") String userId);
+
+    @GET("api/following")
+    Call<ArrayList<Follow>> getFollowing(@Query("userId") String userId);
+
+    @GET("api/record/myrecord")
+    Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);
 }
