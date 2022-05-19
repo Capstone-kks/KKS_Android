@@ -18,18 +18,18 @@ fun getJwt(context: Context): String {
     return spf.getString("jwt", "")!!
 }
 
-fun saveUserIdx(context: Context, userIdx: Long) {
+fun saveUserIdx(context: Context, userIdx: String) {
     val spf = context.getSharedPreferences("profile", AppCompatActivity.MODE_PRIVATE)
     val editor = spf.edit()
 
-    editor.putLong("userIdx", userIdx)
+    editor.putString("userIdx", userIdx)
     editor.apply()
 }
 
-fun getUserIdx(context: Context): Long {
+fun getUserIdx(context: Context): String {
     val spf = context.getSharedPreferences("profile", AppCompatActivity.MODE_PRIVATE)
 
-    return spf.getLong("userIdx", 0)
+    return spf.getString("userIdx","")!!
 }
 fun saveNickname(context: Context, nickname: String) {
     val spf = context.getSharedPreferences("profile", AppCompatActivity.MODE_PRIVATE)

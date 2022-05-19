@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.Toast
@@ -14,10 +15,12 @@ import com.example.kks.databinding.ActivityRecordBinding
 
 
 // 작성한 글을 볼수있는 화면
-class RecordActivity : AppCompatActivity() {
+class RecordActivity : AppCompatActivity(),RecordView {// end of class
 
     private lateinit var binding : ActivityRecordBinding
     private var isLike = false
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,5 +85,21 @@ class RecordActivity : AppCompatActivity() {
 
     }// end of onCreate
 
+    override fun onRecordLoading() {
+        Log.d("글확인/API","로딩중...")
+    }
 
-}// end of class
+    override fun onRecordSuccess(result: Record) {
+        Log.d("글확인/API","성공")
+        //todo 화면에 정보 띄움.
+
+    }
+
+    override fun onRecordFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("글확인/API",message)
+        }
+    }
+
+
+}

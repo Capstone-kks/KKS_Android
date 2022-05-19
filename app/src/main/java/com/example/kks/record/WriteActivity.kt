@@ -39,6 +39,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private var selectedUri : Uri? =null
     private var writeRecordService = WriteRecordService()
     private var radioSelect : Int = 0
+    private var rate :Int=0
 
 
     private  var multibody : MultipartBody.Part? = null
@@ -97,7 +98,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 //        }
 
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            Toast.makeText(this,rating.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
+         //   rate=rating.toInt()
         }
 //
 //        binding.publicRadioGroup.setOnClickListener {
@@ -106,8 +108,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
         binding.publicRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
-                R.id.openRadioButton -> radioSelect=0 // 공개
-                R.id.closeRadioButton -> radioSelect=1 // 비공개
+                R.id.openRadioButton -> radioSelect=1 // 공개
+                R.id.closeRadioButton -> radioSelect=0 // 비공개
             }
         }
 
@@ -134,9 +136,11 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                 categoryIdx=16
             }
 
-            var rate = binding.ratingBar.numStars // 평점
+//            var rate = binding.ratingBar.numStars // 평점
 
             var content = binding.contentEt.text.toString()
+
+            rate= binding.ratingBar.rating.toInt()
 
             Log.d("write-title: ",title)
             Log.d("write-categoryName: ",categoryName)
@@ -162,7 +166,9 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
             }else{
                 binding.warningTv.text=""
-                Toast.makeText(this,"API 호출",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"API 호출",Toast.LENGTH_SHORT).show()
+
+
 
 
 
@@ -179,7 +185,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
                 // todo userId는 나중에 sharedPreference에서 가져오는걸로 변경
 
-                writeRecordService.getWriteRecord(RecordReq("123",title,categoryIdx,rate,content,radioSelect,"image",postDate,0))
+                writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"image",postDate,0))
             }
 
 
@@ -288,7 +294,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     }
 
     override fun onGetWriteRecordSuccess(result: String) {
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+        Log.d("글작성/API","성공")
+        Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
         val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
         startActivity(intent)
         finish()

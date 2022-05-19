@@ -14,14 +14,14 @@ import com.example.kks.getUserIdx
 class ModifyActivity:AppCompatActivity() {
 
     lateinit var binding : ActivityModifyBinding
-    private var userIdx: Long = -1
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityModifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userIdx= getUserIdx(this) // 현재 로그인한 사용자 id
+        userId= getUserIdx(this) // 현재 로그인한 사용자 id(string)
 
         var recordTitle =intent.getStringExtra("title") // 제목
         var recordContent = intent.getStringExtra("content") // 내용
