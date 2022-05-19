@@ -2,6 +2,8 @@ package com.example.kks.controller;
 
 import com.example.kks.login.PostUser;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -23,4 +25,8 @@ public interface RetrofitAPI {
 
     @GET("/api/record/countmonth")
     Call<String> getcountmonth(@Query("userId") String userId, @Query("postDate") String date);
+
+    @GET("/api/archive/category")
+    Call<List<CatImg>> getcatimg(@Query("userId") String userId, @Query("categoryId") int categoryId);
+
 }

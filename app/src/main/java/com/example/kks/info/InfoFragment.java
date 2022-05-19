@@ -200,7 +200,7 @@ public class InfoFragment extends Fragment {
                 isRun = true;;
                 binding = FragmentInfoBinding.inflate(inflater, container, false);
                 root = binding.getRoot();
-                editName_edt = root.findViewById(R.id.editName);
+                editName_edt = root.findViewById(R.id.edt_nikname);
                     while ((isRun)) {
                         value += 1;
                         handler.post(new Runnable() {
