@@ -33,7 +33,7 @@ interface RecordRetrofitInterface {
 
 
     // 글 삭제 API
-    @DELETE("/api/record/{userId}/{recordIdx}")
+    @DELETE("/api/record/deletion/{userId}/{recordIdx}")
     fun getDeleteRecord(
         @Path("userId") userId : String, // 삭제를 시도하는 user id
         @Path("recordIdx") recordIdx : Int //

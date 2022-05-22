@@ -18,12 +18,13 @@ import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
-class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
+class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{// end of class
 
     private lateinit var binding : ActivityRecordBinding
     private var isLike = false
     private var recordIdx :Int =0
     private var userId:String=""
+    private lateinit var _record:Record
 
 
 
@@ -51,7 +52,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
             }
 
         }
-        // 글 삭제 처리
+        // 글 삭제 버튼
         binding.deleteButton.setOnClickListener {
             val builder = AlertDialog.Builder(this).create()
             val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete,null)
@@ -62,9 +63,14 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
 
             val approve = dialogView.findViewById<Button>(R.id.dialog_approve_btn)
             approve.setOnClickListener {
-                // todo 글 삭제 api 호출
+                // 삭제 api
+                val deleteRecordService=DeleteRecordService()
+                deleteRecordService.setDeleteRecordView(this)
+                deleteRecordService.getDeleteRecord(userId,recordIdx)
+
 
                 builder.dismiss()
+                finish() // feed 목록으로
             }
 
             val cancel = dialogView.findViewById<Button>(R.id.dialog_cancel_btn)
@@ -77,14 +83,16 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
         }
 
 
-        // 글 수정 처리
+        // 글 수정 버튼
         binding.editButton.setOnClickListener {
             val intent = Intent(this,ModifyActivity::class.java)
-            intent.putExtra("title",binding.recordTitle.text) // 제목
-            intent.putExtra("content",binding.recordContent.text) // 내용
-            intent.putExtra("rate",binding.ratingBar.rating) // 평점
-            intent.putExtra("imgUrl",binding.recordPicture.id) // 이미지
-            //  intent.putExtra("category",binding.)
+            intent.putExtra("recordIdx",_record.recordIdx) // 글 id
+            intent.putExtra("categoryId",_record.categoryId) // 카테고리 id
+            intent.putExtra("postPublic",_record.postPublic) // 공개 여부
+            intent.putExtra("title",_record.title) // 제목
+            intent.putExtra("content",_record.content) // 내용
+            intent.putExtra("rate",_record.rate) // 평점
+            intent.putExtra("imgUrl",_record.imgUrl) // 이미지
             startActivity(intent)
 
         }
@@ -96,6 +104,11 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
 
 
     }// end of onCreate
+
+    override fun onStart() {
+        super.onStart()
+        getRecordDetails() // API 호출
+    }
 
     private fun getRecordDetails(){
         val recordService=RecordService()
@@ -114,6 +127,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
         Toast.makeText(this,"글확인API 성공...",Toast.LENGTH_SHORT).show()
         Log.d("글확인/API",record.toString())
 
+        _record= record
         //todo comment api 호출
 
         if(record.userId==userId){
@@ -147,6 +161,21 @@ class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
     override fun onRecordFailure(code: Int, message: String) {
         when(code){
             400->Log.d("글확인/API",message)
+        }
+    }
+
+    override fun onGetDeletedLoading() {
+        Log.d("글삭제/API","로딩중...")
+    }
+
+    override fun onGetDeleteRecordSuccess(result: String) {
+        Log.d("글삭제/API","성공")
+        Log.d("글삭제/API",result)
+    }
+
+    override fun onGetDeleteRecordFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("글삭제/API",message)
         }
     }
 
