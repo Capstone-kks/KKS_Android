@@ -44,12 +44,12 @@ class MainActivity : AppCompatActivity(){
 
         //yk code
         val intent = intent
-        userId = intent.getStringExtra("user_id")
+ //       userId = intent.getStringExtra("user_id")
         //nickname = intent.getStringExtra("nickname")
         //userImg = intent.getStringExtra("userImage")
-        checking = intent.extras!!.getBoolean("checking")
+//        checking = intent.extras!!.getBoolean("checking")
 
-        maintainId(userId!!, checking)
+ //       maintainId(userId!!, checking)
 
         /*
         //sharedpreference

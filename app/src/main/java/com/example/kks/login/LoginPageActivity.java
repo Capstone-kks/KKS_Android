@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
+import com.example.kks.SharedPreferenceManagerKt;
 public class LoginPageActivity extends AppCompatActivity {
 
     private ActivityLoginPageBinding binding;
@@ -122,6 +122,12 @@ public class LoginPageActivity extends AppCompatActivity {
                                     //Log.d("저장된", prefImg);
 
                                     System.out.println("POST USER"+postUser.getUserId());
+
+                                    // eunkyung
+                                    SharedPreferenceManagerKt.saveNickname(context,nickname);
+                                    SharedPreferenceManagerKt.saveUserIdx(context,user_id);
+
+
 
                                     //retrofit
                                     RetrofitClient client = new RetrofitClient();

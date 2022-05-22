@@ -9,14 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.bumptech.glide.Glide;
 import com.example.kks.R;
 import com.example.kks.controller.CatImg;
 import com.example.kks.controller.GlideApp;
-import com.example.kks.controller.MyGlideApp;
-import com.example.kks.record.RecordActivity;
+import com.example.kks.record.DetailRecordActivity;
 
 import org.json.JSONException;
 
@@ -95,7 +91,7 @@ public class PhotoListAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 //기록 확인 activity intent하기
-                Intent intent = new Intent(context, RecordActivity.class);
+                Intent intent = new Intent(context, DetailRecordActivity.class);
                 //intent.putExtra("recordIdx", recordIdx);
                 //intent.putExtra("categoryId", categoryId);
                 //입력받은 text 넘기기

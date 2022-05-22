@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".record.RecordActivity"
+    tools:context=".record.DetailRecordActivity"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
@@ -28,7 +28,7 @@
             <TextView
                 android:id="@+id/recordDate"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -38,6 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="2022.03.28"/>
             <TextView
+                android:textColor="#035049"
+                android:textSize="18sp"
                 android:id="@+id/recordCategory"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -76,6 +78,7 @@
                 android:textColor="@color/black"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/editButton"
+                android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/deleteButton"
                 android:textSize="11sp"
@@ -83,6 +86,7 @@
                 android:layout_height="40dp"
                 android:text="수정"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:visibility="invisible"
                 android:backgroundTint="@color/black"
                 android:textColor="@color/white"
                 android:id="@+id/deleteButton"

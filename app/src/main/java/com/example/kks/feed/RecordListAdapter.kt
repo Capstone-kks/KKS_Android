@@ -1,5 +1,6 @@
 package com.example.kks.feed
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,11 +11,11 @@ import com.example.kks.record.Record
 
 class RecordListAdapter(val context: Context?):RecyclerView.Adapter<RecordListAdapter.ViewHolder>() {
 
-    private val recordList = ArrayList<Record>()
+    private val recordList = ArrayList<FeedResponse>()
 
     // 클릭 인터페이스 정의
     interface RecordClickListener{
-        fun onItemClick(record:Record)
+        fun onItemClick(record:FeedResponse)
     }
 
     private lateinit var recordClickListener : RecordClickListener
@@ -42,7 +43,8 @@ class RecordListAdapter(val context: Context?):RecyclerView.Adapter<RecordListAd
         return recordList.size
     }
 
-    fun addRecords(records:ArrayList<Record>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun addRecords(records:ArrayList<FeedResponse>){
         this.recordList.clear()
         this.recordList.addAll(records)
         notifyDataSetChanged()
@@ -50,13 +52,13 @@ class RecordListAdapter(val context: Context?):RecyclerView.Adapter<RecordListAd
 
     inner class ViewHolder(val binding:RecordListItemBinding):RecyclerView.ViewHolder(binding.root){
 
-        fun bind(record: Record){
-            Glide.with(context!!).load(record.recordImgUrl).into(binding.itemRecordIv) // 글 이미지
+        fun bind(record: FeedResponse){
+            Glide.with(context!!).load(record.imgUrl).into(binding.itemRecordIv) // 글 이미지
 
             binding.itemRecordTitleTv.text = record.title // 글 제목
             binding.itemRecordContentTv.text = record.content // 글 내용
             binding.itemRecordDate.text = record.postDate // 글 작성 날짜
-            binding.itemRecordWriterTv.text = record.userNickname // 글 작성자
+            binding.itemRecordWriterTv.text = record.nickName // 글 작성자
 
         }
     }
