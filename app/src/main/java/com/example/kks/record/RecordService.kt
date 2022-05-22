@@ -22,9 +22,7 @@ class RecordService {
 
         recordService.getRecordDetail(recordIdx)
             .enqueue(object : retrofit2.Callback<DetailRecordResponse>{
-                override fun onResponse(
-                    call: Call<DetailRecordResponse>,
-                    response: Response<DetailRecordResponse>
+                override fun onResponse(call: Call<DetailRecordResponse>, response: Response<DetailRecordResponse>
                 ) {
                     val resp = response.body()!!
                     when(resp.code){
@@ -35,7 +33,7 @@ class RecordService {
                 }
 
                 override fun onFailure(call: Call<DetailRecordResponse>, t: Throwable) {
-                    recordView.onRecordFailure(400,"네트워크 오류입니다.")
+                    recordView.onRecordFailure(400,"네트워크 오류가 발생했습니다.")
                 }
 
             } )

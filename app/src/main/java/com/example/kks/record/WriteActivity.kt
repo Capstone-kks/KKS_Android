@@ -39,7 +39,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private var selectedUri : Uri? =null
     private var writeRecordService = WriteRecordService()
     private var radioSelect : Int = 0
-    private var rate :Int=0
+    private var rate :Float= 0.0F
 
 
     private  var multibody : MultipartBody.Part? = null
@@ -140,7 +140,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
             var content = binding.contentEt.text.toString()
 
-            rate= binding.ratingBar.rating.toInt()
+            rate= binding.ratingBar.rating
 
             Log.d("write-title: ",title)
             Log.d("write-categoryName: ",categoryName)
@@ -183,9 +183,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                 var currentTime : LocalDate = LocalDate.now()
                 val postDate = currentTime.toString()
 
-                // todo userId는 나중에 sharedPreference에서 가져오는걸로 변경
 
-                writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"image",postDate,0))
+                writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"image",0))
             }
 
 

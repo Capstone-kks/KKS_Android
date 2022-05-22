@@ -6,19 +6,24 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.kks.R
 import com.example.kks.databinding.ActivityRecordBinding
+import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
-class RecordActivity : AppCompatActivity(),RecordView {// end of class
+class DetailRecordActivity : AppCompatActivity(),RecordView {// end of class
 
     private lateinit var binding : ActivityRecordBinding
     private var isLike = false
+    private var recordIdx :Int =0
+    private var userId:String=""
 
 
 
@@ -26,6 +31,13 @@ class RecordActivity : AppCompatActivity(),RecordView {// end of class
         super.onCreate(savedInstanceState)
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userId= getUserIdx(this)
+
+        recordIdx=intent.getIntExtra("recordIdx",0)
+        Log.d("check:",recordIdx.toString())
+
+        getRecordDetails() // API 호출
 
         binding.likeImage.setOnClickListener {
             isLike =!isLike
@@ -85,13 +97,50 @@ class RecordActivity : AppCompatActivity(),RecordView {// end of class
 
     }// end of onCreate
 
-    override fun onRecordLoading() {
-        Log.d("글확인/API","로딩중...")
+    private fun getRecordDetails(){
+        val recordService=RecordService()
+        recordService.setRecordView(this)
+        recordService.getRecord(recordIdx)
+
     }
 
-    override fun onRecordSuccess(result: Record) {
+    override fun onRecordLoading() {
+        Log.d("글확인/API","로딩중...")
+        Toast.makeText(this,"글확인API 로딩중...",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRecordSuccess(record: Record) {
         Log.d("글확인/API","성공")
-        //todo 화면에 정보 띄움.
+        Toast.makeText(this,"글확인API 성공...",Toast.LENGTH_SHORT).show()
+        Log.d("글확인/API",record.toString())
+
+        //todo comment api 호출
+
+        if(record.userId==userId){
+            binding.editButton.visibility= View.VISIBLE
+            binding.deleteButton.visibility=View.VISIBLE
+        }
+        var category=record.categoryId
+        var categoryName=""
+        when(category){
+            1->categoryName="공연"
+            10->categoryName="도서"
+            11->categoryName="드라마"
+            12->categoryName="연극/뮤지컬"
+            13->categoryName="영화"
+            14->categoryName="음악"
+            15->categoryName="전시"
+            16->categoryName="기타"
+        }
+        binding.recordDate.text = record.postDate.subSequence(0,10)
+        binding.recordCategory.text = categoryName // 카테고리
+        binding.recordTitle.text=record.title // 제목
+        Glide.with(this).load(record.imgUrl).into(binding.recordPicture) // 사진
+        binding.ratingBar.rating=record.rate // 평점
+        binding.recordContent.text=record.content // 내용
+
+
+
 
     }
 
