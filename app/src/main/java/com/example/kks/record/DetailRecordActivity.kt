@@ -13,14 +13,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.kks.R
-import com.example.kks.databinding.ActivityRecordBinding
+import com.example.kks.databinding.ActivityDetailRecordBinding
+
 import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
 class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{// end of class
 
-    private lateinit var binding : ActivityRecordBinding
+    private lateinit var binding : ActivityDetailRecordBinding
     private var isLike = false
     private var recordIdx :Int =0
     private var userId:String=""
@@ -30,7 +31,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRecordBinding.inflate(layoutInflater)
+        binding = ActivityDetailRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         userId= getUserIdx(this)
@@ -119,12 +120,11 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
 
     override fun onRecordLoading() {
         Log.d("글확인/API","로딩중...")
-        Toast.makeText(this,"글확인API 로딩중...",Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onRecordSuccess(record: Record) {
         Log.d("글확인/API","성공")
-        Toast.makeText(this,"글확인API 성공...",Toast.LENGTH_SHORT).show()
         Log.d("글확인/API",record.toString())
 
         _record= record
