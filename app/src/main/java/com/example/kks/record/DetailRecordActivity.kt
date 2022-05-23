@@ -23,7 +23,7 @@ import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
-class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,CommentView,DeleteCommentView{// end of class
+class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,CommentView,DeleteCommentView,PostCommentView{// end of class
 
     private lateinit var binding : ActivityDetailRecordBinding
     private var isLike = false
@@ -104,6 +104,19 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
         }
 
+        binding.commentButton.setOnClickListener {
+
+            val commentContent = binding.commentEt.text.toString()
+
+            if(commentContent==""){
+                Toast.makeText(this,"댓글을 입력해 주세요.",Toast.LENGTH_SHORT).show()
+            }else{
+
+                postComment(PostCommentReq(recordIdx,userId,commentContent))
+
+            }
+        }
+
 
         binding.backIv.setOnClickListener {
             finish()
@@ -111,6 +124,8 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
         binding.refreshLayout.setOnRefreshListener {
             getRecordDetails()
+
+            binding.refreshLayout.isRefreshing=false
         }
 
 
@@ -181,6 +196,14 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
             LinearLayoutManager.VERTICAL,false)
     }
 
+    private fun postComment(postCommentReq: PostCommentReq){
+        val postCommentService = PostCommentService()
+        postCommentService.setPostCommentView(this)
+        postCommentService.getPostComment(postCommentReq)
+    }
+
+    // ---------- 글 조회 -------------------
+
     override fun onRecordFailure(code: Int, message: String) {
         when(code){
             400->Log.d("글확인/API",message)
@@ -193,7 +216,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
     override fun onGetDeleteRecordSuccess(result: String) {
         Log.d("글삭제/API","성공")
-        Log.d("글삭제/API",result)
+
     }
 
     override fun onGetDeleteRecordFailure(code: Int, message: String) {
@@ -252,11 +275,29 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
     override fun onGetDeleteCommentSuccess(result: String) {
         Log.d("댓글삭제/API","성공")
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
     }
 
     override fun onGetDeleteCommentFailure(code: Int, message: String) {
         when(code){
             400->Log.d("댓글삭제/API",message)
+        }
+    }
+
+    override fun onGetPostCommentLoading() {
+        Log.d("댓글작성/API","로딩중...")
+    }
+
+    override fun onGetPostCommentSuccess(result: String) {
+        Log.d("댓글작성/API","성공")
+        getRecordDetails()
+        binding.commentEt.text.clear()
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onGetPostCommentFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("댓글작성/API",message)
         }
     }
 
