@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,21 +13,25 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kks.R
+import com.example.kks.comment.*
 import com.example.kks.databinding.ActivityDetailRecordBinding
 
 import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
-class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{// end of class
+class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,CommentView,DeleteCommentView{// end of class
 
     private lateinit var binding : ActivityDetailRecordBinding
     private var isLike = false
     private var recordIdx :Int =0
     private var userId:String=""
     private lateinit var _record:Record
+
+    private lateinit var commentsForRecordAdapter: CommentsForRecordAdapter
 
 
 
@@ -103,6 +109,10 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
             finish()
         }
 
+        binding.refreshLayout.setOnRefreshListener {
+            getRecordDetails()
+        }
+
 
     }// end of onCreate
 
@@ -128,7 +138,9 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
         Log.d("글확인/API",record.toString())
 
         _record= record
-        //todo comment api 호출
+
+        getCommentsForRecord(record.recordIdx)
+        initRecyclerView()
 
         if(record.userId==userId){
             binding.editButton.visibility= View.VISIBLE
@@ -154,8 +166,19 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
         binding.recordContent.text=record.content // 내용
 
 
+    }
+    private fun getCommentsForRecord(_recordIdx:Int){
+        val commentService = CommentService()
+        commentService.setCommentView(this)
+        commentService.getComments(_recordIdx)
 
+    }
 
+    private fun initRecyclerView(){
+        commentsForRecordAdapter= CommentsForRecordAdapter(this)
+        binding.commentRecyclerView.adapter = commentsForRecordAdapter
+        binding.commentRecyclerView.layoutManager =  LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL,false)
     }
 
     override fun onRecordFailure(code: Int, message: String) {
@@ -176,6 +199,64 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView{//
     override fun onGetDeleteRecordFailure(code: Int, message: String) {
         when(code){
             400->Log.d("글삭제/API",message)
+        }
+    }
+
+
+
+    // -------------- 댓글 목록 조회 ---------------------
+
+    override fun onGetCommentLoading() {
+        Log.d("댓글목록/API","로딩중...")
+    }
+
+    override fun onGetCommentSuccess(result: ArrayList<CommentList>) {
+        Log.d("댓글목록/API","성공")
+        commentsForRecordAdapter.addComments(result)
+        commentsForRecordAdapter.setCommentsClickListener(object : CommentsForRecordAdapter.CommentsItemClickListener{
+            override fun onDeleteButton(commentIdx: Int) {
+
+                getDeleteComment(commentIdx)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    getCommentsForRecord(recordIdx)
+                    initRecyclerView()
+                },500)
+
+            }
+
+        })
+    }
+
+    override fun onGetCommentFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("댓글목록/API",message)
+        }
+    }
+
+    private fun getDeleteComment(commentIdx:Int){
+        val deleteCommentService = DeleteCommentService()
+        deleteCommentService.setDeleteCommentView(this)
+        deleteCommentService.getDeleteComment(commentIdx)
+
+    }
+
+
+
+
+    //-------------  댓글 삭제 ------------------------------
+
+    override fun onGetDeleteCommentLoading() {
+        Log.d("댓글삭제/API","로딩중...")
+    }
+
+    override fun onGetDeleteCommentSuccess(result: String) {
+        Log.d("댓글삭제/API","성공")
+    }
+
+    override fun onGetDeleteCommentFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("댓글삭제/API",message)
         }
     }
 
