@@ -13,14 +13,14 @@
         android:background="#27837A"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/backIv"
-            android:src="@drawable/ic_back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"/>
+<!--        <ImageView-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:id="@+id/backIv"-->
+<!--            android:src="@drawable/ic_back"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"/>-->
         <TextView
             android:layout_weight="1"
             android:textSize="18sp"
@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record"/>
+            android:text="글 수정"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,7 +148,7 @@
             android:id="@+id/imageAddButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/ic_album"
+            android:background="@drawable/ic_album2"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="@+id/contentEt"
             app:layout_constraintTop_toBottomOf="@+id/contentEt"/>
@@ -157,29 +157,64 @@
             android:scaleType="centerCrop"
             android:layout_marginStart="10dp"
             android:id="@+id/imageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             app:layout_constraintTop_toTopOf="@+id/imageAddButton"
             app:layout_constraintBottom_toBottomOf="@+id/imageAddButton"
             app:layout_constraintStart_toEndOf="@+id/imageAddButton"/>
 
 
         <TextView
+            android:id="@+id/tv"
             android:textColor="#3C3C3C"
             android:layout_marginTop="7dp"
             app:layout_constraintStart_toStartOf="@+id/imageAddButton"
             app:layout_constraintTop_toBottomOf="@+id/imageAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이미지 추가"/>
+            android:text="이미지 변경"/>
 
+        <TextView
+            android:id="@+id/setPublicTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글 공개 여부"/>
+
+        <RadioGroup
+            app:layout_constraintStart_toEndOf="@+id/setPublicTv"
+            app:layout_constraintTop_toTopOf="@+id/setPublicTv"
+            app:layout_constraintBottom_toBottomOf="@+id/setPublicTv"
+            android:layout_marginStart="30dp"
+            android:id="@+id/publicRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:checked="true"
+                android:text="공개"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/openRadioButton"
+                android:layout_marginEnd="10dp"/>
+            <RadioButton
+                android:text="비공개"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/closeRadioButton"/>
+
+        </RadioGroup>
 
         <Button
             android:id="@+id/recordSaveButton"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="@+id/imageAddButton"
             app:layout_constraintEnd_toEndOf="@+id/contentEt"
-            app:layout_constraintTop_toBottomOf="@+id/imageAddButton"
+            app:layout_constraintTop_toBottomOf="@+id/setPublicTv"
             android:backgroundTint="@color/splash_background"
             android:textColor="@color/black"
             android:layout_width="0dp"
@@ -188,7 +223,7 @@
 
         <TextView
             android:id="@+id/cancelTv"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/recordSaveButton"
             app:layout_constraintEnd_toEndOf="@+id/recordSaveButton"
             app:layout_constraintTop_toBottomOf="@+id/recordSaveButton"
@@ -196,7 +231,7 @@
             android:textColor="@color/DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소하기"/>
+            android:text="취소"/>
 
 
 

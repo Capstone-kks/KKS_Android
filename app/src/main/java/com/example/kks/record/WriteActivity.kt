@@ -20,11 +20,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import com.example.kks.MainActivity
-import com.example.kks.R
+import com.example.kks.*
 import com.example.kks.databinding.ActivityWriteBinding
-import com.example.kks.getNickname
-import com.example.kks.getUserIdx
+import com.example.kks.feed.FeedFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -38,7 +36,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private lateinit var resultLauncher : ActivityResultLauncher<Intent>
     private var selectedUri : Uri? =null
     private var writeRecordService = WriteRecordService()
-    private var radioSelect : Int = 0
+    private var radioSelect : Int = 1
+    private var rate :Float= 0.0F
 
 
     private  var multibody : MultipartBody.Part? = null
@@ -97,7 +96,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 //        }
 
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            Toast.makeText(this,rating.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
+         //   rate=rating.toInt()
         }
 //
 //        binding.publicRadioGroup.setOnClickListener {
@@ -106,8 +106,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
         binding.publicRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
-                R.id.openRadioButton -> radioSelect=0 // 공개
-                R.id.closeRadioButton -> radioSelect=1 // 비공개
+                R.id.openRadioButton -> radioSelect=1 // 공개
+                R.id.closeRadioButton -> radioSelect=0 // 비공개
             }
         }
 
@@ -134,16 +134,18 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                 categoryIdx=16
             }
 
-            var rate = binding.ratingBar.numStars // 평점
+//            var rate = binding.ratingBar.numStars // 평점
 
             var content = binding.contentEt.text.toString()
+
+            rate= binding.ratingBar.rating
 
             Log.d("write-title: ",title)
             Log.d("write-categoryName: ",categoryName)
             Log.d("write-categoryIdx: ",categoryIdx.toString())
             Log.d("write-rate: ",rate.toString())
             Log.d("write-content: ",content)
-            Log.d("write-path: ",path.toString())
+            Log.d("write-path: ",selectedUri.toString())
             Log.d("write-radioSelect: ",radioSelect.toString())
 
 
@@ -154,7 +156,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
             }else if(content==""){
               //  Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text = "내용을 입력해주세요"
-            }else if(path==null){
+            }else if(selectedUri==null){
                 binding.warningTv.text = "사진을 선택해주세요"
 
             }else if(categoryIdx==-1){
@@ -162,7 +164,9 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
             }else{
                 binding.warningTv.text=""
-                Toast.makeText(this,"API 호출",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"API 호출",Toast.LENGTH_SHORT).show()
+
+
 
 
 
@@ -174,12 +178,11 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 //                val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
 //                multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
 
-                var currentTime : LocalDate = LocalDate.now()
-                val postDate = currentTime.toString()
+//                var currentTime : LocalDate = LocalDate.now()
+//                val postDate = currentTime.toString()
 
-                // todo userId는 나중에 sharedPreference에서 가져오는걸로 변경
 
-                writeRecordService.getWriteRecord(RecordReq("123",title,categoryIdx,rate,content,radioSelect,"image",postDate,0))
+           //     writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,selectedUri.toString(),0))
             }
 
 
@@ -204,9 +207,10 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                             it
                         )
                     }
-                    val bitmap=BitmapFactory.decodeStream(inputStream)
+                  //  val bitmap=BitmapFactory.decodeStream(inputStream)
                     inputStream!!.close()
-                    path=bitmap
+                  //  path=bitmap
+                    selectedUri=result.data!!.data
                 }
                 if(result.data?.data==null){
                     Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
@@ -288,10 +292,16 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     }
 
     override fun onGetWriteRecordSuccess(result: String) {
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+        Log.d("글작성/API","성공")
+        Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
         val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
         startActivity(intent)
         finish()
+        supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,FeedFragment())
+            .commitAllowingStateLoss()
+
+
+
     }
 
     override fun onGetWriteRecordFailure(code: Int, message: String) {

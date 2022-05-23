@@ -1,9 +1,7 @@
 package com.example.kks.feed
 
-import com.example.kks.record.Record
-
 interface FeedView {
     fun onGetFeedLoading()
-    fun onGetFeedSuccess(result: ArrayList<Record>)
+    fun onGetFeedSuccess(result: ArrayList<FeedResponse>)
     fun onGetFeedFailure(code : Int, message: String)
 }
