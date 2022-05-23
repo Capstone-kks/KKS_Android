@@ -43,21 +43,22 @@
             android:textColor="@color/DarkGray" />
     </LinearLayout>
 
+<!--    <TextView-->
+<!--        android:id="@+id/modifyCommentTv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/slash"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:text="수정"/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/slash"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="/"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/deleteCommentTv"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
     <TextView
-        android:id="@+id/modifyCommentTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/slash"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="수정"/>
-    <TextView
-        android:id="@+id/slash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="/"
-        app:layout_constraintEnd_toStartOf="@+id/deleteCommentTv"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
+        android:visibility="invisible"
         android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
