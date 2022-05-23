@@ -5,7 +5,7 @@ import retrofit2.http.*
 
 interface CommentRetrofitInterface {
 
-    // 댓글 작성
+    // 댓글 조회
     @GET("/api/comment/{recordIdx}")
     fun getCommentList(
         @Path("recordIdx") recordIdx:Int
@@ -13,7 +13,7 @@ interface CommentRetrofitInterface {
 
 
 
-//
+
     // 댓글 삭제
     @DELETE("/api/comment/{commentIdx}")
     fun deleteComment(
