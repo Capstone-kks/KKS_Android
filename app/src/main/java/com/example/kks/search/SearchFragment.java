@@ -2,24 +2,16 @@ package com.example.kks.search;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,10 +20,8 @@ import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.FragmentSearchBinding;
-import com.example.kks.record.Record;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +40,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
 
-    private ArrayList<Search> SearchList;
+    private ArrayList<SearchTest> SearchList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
@@ -65,9 +55,12 @@ public class SearchFragment extends Fragment {
         SharedPreferences sharedPreferences = root.getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","");
 
-        SearchList = new ArrayList<Search>();
+        SearchList = new ArrayList<SearchTest>();
 
         //사용자 추천
+
+
+        //TODO 검색 정렬 순
 
 
         //검색 결과
@@ -80,11 +73,11 @@ public class SearchFragment extends Fragment {
                 RetrofitClient client = new RetrofitClient();
                 Retrofit retrofit = client.setRetrofit();
                 RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-                retrofitAPI.getSearchResult(keyword).enqueue(new Callback<ArrayList<Search>>() {
+                retrofitAPI.getSearchResultTest(keyword, userId, 1).enqueue(new Callback<ArrayList<SearchTest>>() {
                     @Override
-                    public void onResponse(Call<ArrayList<Search>> call, Response<ArrayList<Search>> response) {
+                    public void onResponse(Call<ArrayList<SearchTest>> call, Response<ArrayList<SearchTest>> response) {
                         if(response.isSuccessful()){
-                            ArrayList<Search> data = response.body();
+                            ArrayList<SearchTest> data = response.body();
                             SearchList.clear();
 
                             for(int i = 0; i < data.size();i++)
@@ -96,7 +89,7 @@ public class SearchFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<ArrayList<Search>> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<SearchTest>> call, Throwable t) {
                         Log.e("검색 결과 가져오기 실패",keyword);
                         t.printStackTrace();
                     }

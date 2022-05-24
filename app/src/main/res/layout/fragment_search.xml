@@ -31,6 +31,30 @@
             android:background="@drawable/ic_baseline_search_ui"/>
     </LinearLayout>
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_gravity="end"
+        android:id="@+id/search_sort_rg">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_sort_date_rb"
+            android:text="최신순"
+            android:checked="true"
+            android:buttonTint="@color/main_mint"
+            android:layout_marginRight="10dp"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_sort_like_rb"
+            android:text="인기순"
+            android:buttonTint="@color/main_mint"/>
+    </RadioGroup>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_result_recyclerview"
         android:layout_width="match_parent"

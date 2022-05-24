@@ -56,11 +56,12 @@
         <activity android:name=".MainActivity"
             android:noHistory="false"
             android:exported="true">
-
         </activity>
+
         <activity
             android:name=".record.WriteActivity"
             android:exported="false" />
+
         <activity android:name=".record.RecordActivity"/>
         <!-- android:theme="@style/Theme.Kks" -->
         <activity
