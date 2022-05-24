@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kks.R;
 
 import java.util.ArrayList;
-
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
 
     private Context context;
-    private ArrayList<Search> datalist = null;
+    private ArrayList<SearchTest> datalist = null;
 
-    public SearchResultAdapter(Context c, ArrayList<Search> list){
+    public SearchResultAdapter(Context c, ArrayList<SearchTest> list){
         context = c;
         datalist = list;
     }
@@ -37,7 +37,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         //holder.img.setImageBitmap(datalist.get(position).getImg());
         holder.title.setText(datalist.get(position).getTitle());
-        holder.userId.setText(datalist.get(position).getUserId());
+        holder.userNickName.setText(datalist.get(position).getNickName());
         holder.rate.setText(String.valueOf(datalist.get(position).getRate()));
         if(datalist.get(position).getLiked() == 0)
             holder.liked.setImageResource(R.drawable.ic_baseline_favorite_24);
@@ -54,15 +54,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     public class SearchViewHolder extends RecyclerView.ViewHolder {
-        ImageView img, liked;
-        TextView title, userId, rate, likedCnt, text, date;
+        ImageView img;
+        TextView title, userNickName, rate, text, date;
 
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img = itemView.findViewById(R.id.search_result_recyclerview_item_imgView);
             title = itemView.findViewById(R.id.search_result_recyclerview_item_title);
-            userId = itemView.findViewById(R.id.search_result_recyclerview_item_user);
+            userNickName = itemView.findViewById(R.id.search_result_recyclerview_item_user);
             rate = itemView.findViewById(R.id.search_result_recyclerview_item_rate);
             liked = itemView.findViewById(R.id.search_result_recyclerview_item_like);
             likedCnt = itemView.findViewById(R.id.search_result_recyclerview_item_likeCount);

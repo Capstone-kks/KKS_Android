@@ -1,7 +1,5 @@
 package com.example.kks.search;
 
-import android.graphics.Bitmap;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

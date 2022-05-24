@@ -5,6 +5,7 @@ import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
 import com.example.kks.record.Record;
 import com.example.kks.search.Search;
+import com.example.kks.search.SearchTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,9 @@ public interface RetrofitAPI {
 
     @GET("/api/record/search/keyword")
     Call<ArrayList<Search>> getSearchResult(@Query("keyword") String keyword);
+
+    @GET("/api/record/search/keywordtest")
+    Call<ArrayList<SearchTest>> getSearchResultTest(@Query("keyword") String keyword, @Query("loginUserId") String loginUserId, @Query("sort") int sort);
 
     @GET("api/follower")
     Call<ArrayList<Follow>> getFollower(@Query("userId") String userId);
