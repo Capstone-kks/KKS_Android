@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kks.databinding.FragmentCalendarBinding
 import com.example.kks.record.WriteActivity
 
@@ -23,11 +24,19 @@ class CalendarFragment():Fragment() {
     ): View? {
         binding = FragmentCalendarBinding.inflate(inflater,container,false)
 
-        binding.writeFb.setOnClickListener {
-            startActivity(Intent(context,WriteActivity::class.java))
+//        binding.writeFb.setOnClickListener {
+//            startActivity(Intent(context,WriteActivity::class.java))
+//
+//        }
 
+        val monthListManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        val monthListAdapter = AdapterMonth(requireContext())
+
+        binding.calendarRecyclerView.apply{
+            layoutManager = monthListManager
+            adapter = monthListAdapter
+            scrollToPosition(Int.MAX_VALUE/2)
         }
-
 
         return binding.root
     }
