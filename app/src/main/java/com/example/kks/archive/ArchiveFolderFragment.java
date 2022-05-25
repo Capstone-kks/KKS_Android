@@ -141,4 +141,6 @@ public class ArchiveFolderFragment extends Fragment {
         intent.putExtra("categoryId", categories[7]);
         startActivity(intent);
     }
+
+
 }
