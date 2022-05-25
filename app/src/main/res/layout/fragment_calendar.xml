@@ -113,10 +113,7 @@
 <!--    android:layout_height="wrap_content"-->
 <!--    app:layout_constraintStart_toStartOf="parent"-->
 <!--    app:layout_constraintEnd_toEndOf="parent">-->
-     <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/calendarRecyclerView"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"/>
+
 <!--    </LinearLayout>-->
 
 
@@ -130,4 +127,12 @@
 <!--        app:layout_constraintBottom_toBottomOf="parent"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        android:layout_margin="30dp"/>-->
+
+     <androidx.recyclerview.widget.RecyclerView
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         android:id="@+id/calendarRecyclerView"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:background="@drawable/background_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -76,14 +77,15 @@
             android:textSize="18sp"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="3dp"
-        android:background="#bbb"/>
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginHorizontal="5dp"-->
+<!--        android:layout_marginVertical="3dp"-->
+<!--        android:background="#bbb"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@drawable/background_calendar"
         android:id="@+id/item_month_day_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

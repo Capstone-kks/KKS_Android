@@ -2,8 +2,10 @@ package com.example.kks.feed
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kks.databinding.RecordListItemBinding
@@ -36,7 +38,10 @@ class RecordListAdapter(val context: Context?):RecyclerView.Adapter<RecordListAd
         //recyclerView 의 각 아이템을 클릭할때
         holder.itemView.setOnClickListener {
             recordClickListener.onItemClick(recordList[position])
+            Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show()
+
         }
+
     }
 
     override fun getItemCount(): Int {
