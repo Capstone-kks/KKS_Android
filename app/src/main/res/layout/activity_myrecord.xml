@@ -102,5 +102,15 @@
             android:layout_height="match_parent"
             android:id="@+id/myrecord_gv"
             android:numColumns="3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:id="@+id/NoRecord_tv"
+            android:text="게시물이 없습니다."
+            android:textSize="35dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

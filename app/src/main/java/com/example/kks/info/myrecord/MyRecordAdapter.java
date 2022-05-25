@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -40,11 +41,13 @@ public class MyRecordAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ImageView imageView = new ImageView(c);
         //imageView.setPadding(5, 5, 5, 5);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Glide.with(c).load(list.get(position).getImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(imageView);
-
+        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
+        //TODO 그리드뷰 이미지 셋팅
+        //Glide.with(c).load(list.get(position).getImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(imageView);
         return imageView;
     }
 }

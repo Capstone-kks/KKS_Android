@@ -3,17 +3,18 @@ package com.example.kks.search;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchTest {
+public class Recommend {
     @SerializedName("recordIdx") @Expose private int recordIdx;
     @SerializedName("userId") @Expose private String userId;
     @SerializedName("nickName") @Expose private String nickName;
     @SerializedName("title") @Expose private String title;
-    @SerializedName("rate") @Expose private float rate;
+    @SerializedName("rate") @Expose private float rate;//////////////
     @SerializedName("content") @Expose private String content;
     @SerializedName("postDate") @Expose private String postDate;
     @SerializedName("imgUrl") @Expose private String imgUrl;
+    //@SerializedName("likeCnt") @Expose private int likeCnt;
 
-    public SearchTest(int recordIdx, String userId, String nickName, String title, float rate, String content, String postDate, String imgUrl) {
+    public Recommend(int recordIdx, String userId, String nickName, String title, float rate, String content, String postDate, String imgUrl) {
         this.recordIdx = recordIdx;
         this.userId = userId;
         this.nickName = nickName;

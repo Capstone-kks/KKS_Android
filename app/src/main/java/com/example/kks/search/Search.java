@@ -1,12 +1,14 @@
 package com.example.kks.search;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Search {
     @SerializedName("key") @Expose
     private int key;
-    @SerializedName("img") @Expose private Bitmap img;
+    @SerializedName("imgUrl") @Expose private Bitmap img;
     @SerializedName("title") @Expose private String title;
     @SerializedName("userid") @Expose private String userId;
     @SerializedName("id") @Expose private String id;

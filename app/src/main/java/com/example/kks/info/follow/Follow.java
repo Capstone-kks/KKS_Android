@@ -1,5 +1,7 @@
 package com.example.kks.info.follow;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -67,7 +67,6 @@
             android:name=".record.WriteActivity"
             android:exported="false" />
 
-        <activity android:name=".record.RecordActivity" />
         <!-- android:theme="@style/Theme.Kks" -->
 
         <activity android:name=".record.DetailRecordActivity" /> 
@@ -95,9 +94,10 @@
                     android:scheme="kakao7afffc6d5513e685abc067fe17f07310" />
             </intent-filter>
         </activity>
-        <activity android:name=".record.ModifyActivity" />
-        <activity android:name=".info.follow.FollowActivity" />
+        <activity android:name=".record.ModifyActivity"/>
+        <activity android:name=".info.follow.FollowActivity"/>
         <activity android:name=".info.myrecord.MyRecordActivity"/>
+        <activity android:name=".info.liked.LikedActivity"/>
     </application>
 
 </manifest>

@@ -137,7 +137,7 @@ public class GridActivity extends AppCompatActivity {
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
         Call<List<CatImg>> call = retrofitAPI.getcatimg(userId, categoryId);
-        call.enqueue(new Callback<List<CatImg>>() {
+        call.enqueue(new Callback<List<CatImg>>() { 
             @Override
             public void onResponse(Call<List<CatImg>> call, Response<List<CatImg>> response) {
                 if(response.isSuccessful()){
