@@ -5,34 +5,38 @@ public class PatternList {
     //필요한 것
     //각 카테고리마다의 수
 
-    int movie, drama, doc, exhibit, music, musical, book;
+    //int movie, drama, doc, exhibit, music, musical, book;
+    int show, etc, book, drama, play, movie, music, exhibit;
 
-    public PatternList(int movie, int drama, int doc, int exhibit, int musical, int book, int music){
+    public PatternList(int show, int book, int drama, int play, int movie, int music, int exhibit, int etc) {
         this.movie = movie;
         this.drama = drama;
-        this.doc = doc;
+        this.show = show;
         this.exhibit = exhibit;
-        this.musical = musical;
+        this.play = play;
         this.book = book;
         this.music = music;
+        this.etc = etc;
     }
 
     public int get(int index) {
         switch (index) {
             case 0:
-                return movie;
+                return show;
             case 1:
+                return book;
+            case 2:
                 return drama;
             case 3:
-                return doc;
+                return play;
             case 4:
-                return exhibit;
+                return movie;
             case 5:
-                return musical;
-            case 6:
-                return book;
-            case 7:
                 return music;
+            case 6:
+                return exhibit;
+            case 7:
+                return etc;
             default:
                 return 0;
         }

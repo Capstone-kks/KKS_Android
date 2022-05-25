@@ -44,7 +44,9 @@ import com.example.kks.databinding.FragmentInfoBinding;
 import com.example.kks.info.liked.LikedActivity;
 import com.example.kks.info.myrecord.MyRecordActivity;
 import com.example.kks.info.pattern.SpendpatternActivity;
+import com.example.kks.login.LoginPageActivity;
 import com.example.kks.login.PostUser;
+import com.example.kks.login.myDBAdapter;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -92,7 +94,7 @@ public class InfoFragment extends Fragment {
     /*
     * 예슬
     * */
-    private Button myrecord_btn, liked_btn, analysis_btn, withdrawal_btn;
+    private Button myrecord_btn, liked_btn, analysis_btn, withdrawal_btn, logout_btn;
 
     private LinearLayout layout;
 
@@ -113,6 +115,7 @@ public class InfoFragment extends Fragment {
         liked_btn = root.findViewById(R.id.btn_likedlist);
         withdrawal_btn = root.findViewById(R.id.btn_withdrawal);
         layout = root.findViewById(R.id.info_fragment);
+        logout_btn = root.findViewById(R.id.btn_logout);
 
         //서버에서 닉네임, 이미지 가져오기
         RetrofitClient client = new RetrofitClient();
@@ -275,6 +278,37 @@ public class InfoFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+
+        //유경
+        //로그아웃 버튼 클릭시
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+                builder.setTitle("로그아웃");
+                builder.setMessage("로그아웃 하시겠습니까?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        myDBAdapter adapter = new myDBAdapter(root.getContext());
+                        //adapter.clear();
+                        adapter.open();
+                        adapter.delete("userId");
+                        adapter.close();
+
+                        Intent intent = new Intent(root.getContext(), LoginPageActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //((Activity)root.getContext()).finish();
+                    }
+                });
+                builder.create().show();
             }
         });
 
