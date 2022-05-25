@@ -203,6 +203,23 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_logout"
+            android:text="로그아웃"
+            android:textAlignment="viewStart"
+            android:textStyle="bold"
+            android:textColor="@color/DarkGray"
+            android:backgroundTint="@color/white"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/LightGray"
+            android:layout_marginVertical="10dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/btn_withdrawal"
             android:text="회원 탈퇴"
             android:textAlignment="viewStart"

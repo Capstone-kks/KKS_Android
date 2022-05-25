@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kks.MainActivity;
 import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
@@ -42,7 +44,10 @@ import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.FragmentInfoBinding;
 import com.example.kks.info.follow.FollowActivity;
 import com.example.kks.info.pattern.SpendpatternActivity;
+import com.example.kks.login.LoginPageActivity;
 import com.example.kks.login.PostUser;
+import com.example.kks.login.myDBAdapter;
+import com.example.kks.login.myDBHelper;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -92,7 +97,7 @@ public class InfoFragment extends Fragment {
      * */
     private ImageButton following_btn, follower_btn;
     private TextView following_txt, follower_txt;
-    private Button liked_btn, analysis_btn, withdrawal_btn;
+    private Button liked_btn, analysis_btn, withdrawal_btn, logout_btn;
 
     private LinearLayout layout;
 
@@ -116,6 +121,7 @@ public class InfoFragment extends Fragment {
         follower_txt = root.findViewById(R.id.tv_followercount);
         liked_btn = root.findViewById(R.id.btn_likedlist);
         withdrawal_btn = root.findViewById(R.id.btn_withdrawal);
+        logout_btn = root.findViewById(R.id.btn_logout);
         layout = root.findViewById(R.id.info_fragment);
 
         //서버에서 닉네임, 이미지 가져오기
@@ -259,6 +265,37 @@ public class InfoFragment extends Fragment {
                 FollowActivity.follow_num = 1;//사용자를 팔로우 하는 List 띄워야 함
                 Intent intent = new Intent(root.getContext(), FollowActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //유경
+        //로그아웃 버튼 클릭시
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+                builder.setTitle("로그아웃");
+                builder.setMessage("로그아웃 하시겠습니까?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        myDBAdapter adapter = new myDBAdapter(root.getContext());
+                        //adapter.clear();
+                        adapter.open();
+                        adapter.delete("userId");
+                        adapter.close();
+
+                        Intent intent = new Intent(root.getContext(), LoginPageActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //((Activity)root.getContext()).finish();
+                    }
+                });
+                builder.create().show();
             }
         });
 
