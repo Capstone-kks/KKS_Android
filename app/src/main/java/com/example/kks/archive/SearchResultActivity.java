@@ -16,13 +16,16 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.example.kks.R;
+import com.example.kks.controller.Records;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.ActivityGridBinding;
 import com.example.kks.databinding.ActivitySearchResultBinding;
+import com.example.kks.login.PostUser;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchResultAdapter;
 import com.example.kks.search.SearchTest;
+
 
 import java.util.ArrayList;
 
@@ -35,17 +38,18 @@ public class SearchResultActivity extends AppCompatActivity {
 
     public static Activity act;
     int recordIdx=0;
-    int categoryId;
+    static int categoryId;
     static String exentered;
-    static String entered;
-    String userId;
+    static String userId;
+    static String nickname;
 
     private ActivitySearchResultBinding binding;
     private RecyclerView recyclerView;
 
     private RadioGroup Sort_rg;
-    private ArrayList<SearchTest> SearchList;
-    private SearchResultAdapter SearchAdapter;
+    //private ArrayList<SearchTest> SearchList;
+    private ArrayList<Records> SearchList;
+    private aSearchResultAdapter aSearchAdapter;
 
     //retrofit
     RetrofitClient client = new RetrofitClient();
@@ -86,9 +90,34 @@ public class SearchResultActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","");
 
+        //서버에서 닉네임 가져오기
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<PostUser> call = retrofitAPI.getUser(userId);
+        call.enqueue(new Callback<PostUser>() {
+            @Override
+            public void onResponse(Call<PostUser> call, Response<PostUser> response) {
+                if(response.isSuccessful()){
+                    PostUser data = response.body();
+                    nickname = data.getNickName();
+                    //userImg = data.getUserImg();
+                    Log.d("이름", nickname);
+                    //Log.d("이미지", userImg);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostUser> call, Throwable t) {
+                Log.d("실패", userId);
+                t.printStackTrace();
+            }
+        });
+
 
         //이전 검색어로 검색
-        SearchList = new ArrayList<SearchTest>();
+        SearchList = new ArrayList<Records>();
         NewSearchResult(exentered, view);
 
         new Thread(new Runnable() {
@@ -105,7 +134,7 @@ public class SearchResultActivity extends AppCompatActivity {
                         public void run() {
                             //그리드뷰 넣어주기
                             //adapter = new PhotoListAdapter(GridActivity.this, arr);
-                            binding.searchResultRecyclerview.setAdapter(SearchAdapter);
+                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
 
                         }
                     });
@@ -134,41 +163,59 @@ public class SearchResultActivity extends AppCompatActivity {
         String keyword = binding.edtSearch.getText().toString();
         Log.d("검색 버튼 클릭",keyword);
 
-        SearchList = new ArrayList<SearchTest>();
+        //SearchList = new ArrayList<SearchTest>();
+        SearchList = new ArrayList<Records>();
         NewSearchResult(keyword, view);
 
-        /*
-        Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
-        intent.putExtra("recordIdx", recordIdx);
-        intent.putExtra("categoryId", categoryId);
-        //입력받은 text 넘기기
-        entered = binding.edtSearch.getText().toString();
-        Log.i("입력", entered);
-        intent.putExtra("entered", entered);
-        startActivity(intent);
-        act.finish();
-         */
+        new Thread(new Runnable() {
+            boolean isRun = false;
+            int value = 0;
+
+            @Override
+            public void run() {
+                isRun = true;
+                while ((isRun)) {
+                    value += 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //그리드뷰 넣어주기
+                            //adapter = new PhotoListAdapter(GridActivity.this, arr);
+                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start();
+
     }
 
     private void NewSearchResult(String keyword, View view){
-        retrofitAPI.getSearchResultTest(keyword, userId, 1).enqueue(new Callback<ArrayList<SearchTest>>() {
+        //retrofitAPI.getSearchResultTest(keyword, userId, 1).enqueue(new Callback<ArrayList<SearchTest>>() {
+        retrofitAPI.getArchiveSearch(userId, categoryId, keyword).enqueue(new Callback<ArrayList<Records>>() {
             @Override
-            public void onResponse(Call<ArrayList<SearchTest>> call, Response<ArrayList<SearchTest>> response) {
+            public void onResponse(Call<ArrayList<Records>> call, Response<ArrayList<Records>> response) {
+                Log.e("서버아이디",userId);
                 if(response.isSuccessful()){
-                    ArrayList<SearchTest> data = response.body();
+                    ArrayList<Records> data = response.body();
                     SearchList.clear();
 
                     for(int i = 0; i < data.size();i++)
                         SearchList.add(data.get(i));
 
-                    SearchAdapter = new SearchResultAdapter(view.getContext(), SearchList);
-                    recyclerView.setAdapter(SearchAdapter);
+                    aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname);
+                    recyclerView.setAdapter(aSearchAdapter);
 
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<SearchTest>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Records>> call, Throwable t) {
                 Log.e("검색 결과 가져오기 실패",keyword);
                 t.printStackTrace();
             }

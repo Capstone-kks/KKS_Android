@@ -68,4 +68,8 @@ public interface RetrofitAPI {
 
     @POST("api/info/withdrawal")
     Call<String> postWithdrawalUser(@Body String userId);
+
+    //아카이브
+    @GET("/api/archive/search")
+    Call<ArrayList<Records>> getArchiveSearch(@Query("userId") String userId, @Query("categoryId") int categoryId, @Query("keyword") String keyword);
 }
