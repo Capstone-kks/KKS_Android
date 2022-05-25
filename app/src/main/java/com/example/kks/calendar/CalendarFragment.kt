@@ -3,12 +3,15 @@ package com.example.kks.calendar
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.kks.databinding.FragmentCalendarBinding
 import com.example.kks.record.WriteActivity
 
@@ -35,8 +38,14 @@ class CalendarFragment():Fragment() {
         binding.calendarRecyclerView.apply{
             layoutManager = monthListManager
             adapter = monthListAdapter
-            scrollToPosition(Int.MAX_VALUE/2)
+
+                scrollToPosition(Int.MAX_VALUE/2)
+
+
         }
+
+        val snap = PagerSnapHelper()
+        snap.attachToRecyclerView(binding.calendarRecyclerView)
 
         return binding.root
     }
