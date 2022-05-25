@@ -23,7 +23,7 @@ import com.example.kks.getUserIdx
 
 
 // 작성한 글을 볼수있는 화면
-class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,CommentView,DeleteCommentView,PostCommentView{// end of class
+class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,CommentView,DeleteCommentView,PostCommentView,LikeRecordView{// end of class
 
     private lateinit var binding : ActivityDetailRecordBinding
     private var isLike = false
@@ -51,11 +51,13 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
             isLike =!isLike
 
             if(isLike){
-                Toast.makeText(this,"해당 글에 좋아요를 눌렀습니다.",Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(this,"해당 글에 좋아요를 눌렀습니다.",Toast.LENGTH_SHORT).show()
                 binding.likeImage.setImageResource(R.drawable.ic_liked)
+                postLikeRecord()
             }else{
-                Toast.makeText(this,"해당 글에 좋아요를 취소했습니다.",Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this,"해당 글에 좋아요를 취소했습니다.",Toast.LENGTH_SHORT).show()
                 binding.likeImage.setImageResource(R.drawable.ic_like)
+                postLikeRecord()
             }
 
         }
@@ -131,15 +133,23 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
     }// end of onCreate
 
+
+
     override fun onStart() {
         super.onStart()
         getRecordDetails() // API 호출
     }
 
+    private fun postLikeRecord(){
+        val likeRecordService = LikeRecordService()
+        likeRecordService.setLikeRecordView(this)
+        likeRecordService.postLikeRecord(LikeRecordReq(recordIdx,userId))
+    }
+
     private fun getRecordDetails(){
-        val recordService=RecordService()
+        val recordService=DetailRecordService()
         recordService.setRecordView(this)
-        recordService.getRecord(recordIdx)
+        recordService.getRecord(recordIdx,userId)
 
     }
 
@@ -179,6 +189,11 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
         Glide.with(this).load(record.imgUrl).into(binding.recordPicture) // 사진
         binding.ratingBar.rating=record.rate // 평점
         binding.recordContent.text=record.content // 내용
+
+        if(record.isLiked=="Y"){
+            binding.likeImage.setImageResource(R.drawable.ic_liked)
+            isLike=true
+        }
 
 
     }
@@ -298,6 +313,21 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
     override fun onGetPostCommentFailure(code: Int, message: String) {
         when(code){
             400->Log.d("댓글작성/API",message)
+        }
+    }
+
+    override fun onLikeRecordLoading() {
+        Log.d("글좋아요/API","로딩중..")
+    }
+
+    override fun onLikeRecordSuccess(result: String) {
+        Log.d("글좋아요/API","성공")
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLikeRecordFailure(code: Int, message: String) {
+        when(code){
+            400->Log.d("글좋아요/API",message)
         }
     }
 

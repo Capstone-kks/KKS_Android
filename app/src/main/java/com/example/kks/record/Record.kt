@@ -13,4 +13,5 @@ data class Record(
     @SerializedName("imgUrl") val imgUrl : String, // 이미지
     @SerializedName("postDate") val postDate : String, // 작성한 날짜
     @SerializedName("commentCount") val commentCount : Int, // 댓글 수
+    @SerializedName("isLiked") val isLiked : String, // 좋아요 여부
 )

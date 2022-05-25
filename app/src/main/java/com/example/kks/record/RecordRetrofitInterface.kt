@@ -13,9 +13,10 @@ interface RecordRetrofitInterface {
 
 
     // 글 조회 API
-    @GET("/api/record/detail/{recordIdx}")
+    @GET("/api/record/detail/{recordIdx}/{userId}")
     fun getRecordDetail(
-        @Path("recordIdx") recordIdx : Int
+        @Path("recordIdx") recordIdx : Int,
+        @Path("userId") userId : String
     ):Call<DetailRecordResponse>
 
 
@@ -39,6 +40,11 @@ interface RecordRetrofitInterface {
         @Path("recordIdx") recordIdx : Int //
     ):Call<DeleteRecordResponse>
 
+
+    @POST("/api/likes")
+    fun postLikeRecord(
+        @Body likeRecordReq: LikeRecordReq
+    ):Call<LikeRecordResponse>
 
 
 }
