@@ -31,10 +31,64 @@
             android:background="@drawable/ic_baseline_search_ui"/>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_result_recyclerview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"/>
+        android:orientation="vertical"
+        android:id="@+id/search_layout"
+        android:layout_marginHorizontal="20dp"
+        android:visibility="gone">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:layout_gravity="end"
+            android:id="@+id/search_sort_rg">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_sort_date_rb"
+                android:text="최신순"
+                android:checked="true"
+                android:buttonTint="@color/main_mint"
+                android:layout_marginRight="10dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_sort_like_rb"
+                android:text="인기순"
+                android:buttonTint="@color/main_mint"/>
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_result_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/recommend_layout"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recommend_tv"
+            android:text="사용자 님 이런 게시물은 어떠세요?"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <Gallery
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recommend_gr"
+            android:layout_marginVertical="20dp"
+            android:spacing="10dp"/>
+    </LinearLayout>
 
 </LinearLayout>

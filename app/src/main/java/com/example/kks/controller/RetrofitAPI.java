@@ -1,6 +1,15 @@
 package com.example.kks.controller;
 
+import com.example.kks.info.follow.Follow;
+import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
+import com.example.kks.record.Record;
+import com.example.kks.search.Recommend;
+import com.example.kks.search.Search;
+import com.example.kks.search.SearchTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.List;
 
@@ -20,6 +29,7 @@ public interface RetrofitAPI {
     @GET("/api/login/get")
     Call<PostUser> getUser(@Query("userId") String userId);
 
+
     @GET("/api/record/countall")
     Call<String> getcountall(@Query("userId") String userId);
 
@@ -29,4 +39,33 @@ public interface RetrofitAPI {
     @GET("/api/archive/category")
     Call<List<CatImg>> getcatimg(@Query("userId") String userId, @Query("categoryId") int categoryId);
 
+
+    //검색
+    @GET("/api/record/search/keyword")
+    Call<ArrayList<Search>> getSearchResult(@Query("keyword") String keyword);
+
+    @GET("/api/record/search/keywordtest")
+    Call<ArrayList<SearchTest>> getSearchResultTest(@Query("keyword") String keyword, @Query("loginUserId") String loginUserId, @Query("sort") int sort);
+
+
+    //사용자 추천
+    @GET("api/record/recommend")
+    Call<ArrayList<Recommend>> getRecommend(@Query("userId") String userId);
+
+
+    //프로필
+    @GET("api/info/follower")
+    Call<ArrayList<Follow>> getFollower(@Query("userId") String userId);
+
+    @GET("api/info/following")
+    Call<ArrayList<Follow>> getFollowing(@Query("userId") String userId);
+
+    @GET("api/info/myrecord")
+    Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);
+
+    @GET("api/info/liked")
+    Call<ArrayList<MyRecord>> getLikedRecords(@Query("userId") String userId);
+
+    @POST("api/info/withdrawal")
+    Call<String> postWithdrawalUser(@Body String userId);
 }

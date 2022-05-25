@@ -22,18 +22,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".info.pattern.PatternContent"
+            android:exported="false" />
+        <activity
+            android:name=".info.pattern.SpendpatternActivity"
+            android:noHistory="false"
+            android:exported="false" />
+        <activity
             android:name=".archive.SearchResultActivity"
             android:exported="false" />
         <activity
             android:name=".archive.GridActivity"
             android:exported="false" />
-        <activity
-            android:name=".info.pattern.PatternContent"
-            android:exported="false" />
-        <activity
-            android:name=".info.pattern.SpendpatternActivity"
-            android:exported="false"
-            android:noHistory="false" /> <!-- 사진 촬영을 위한 provide -->
+
+        <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.kks.provider"
@@ -49,7 +51,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -60,10 +61,16 @@
             android:name=".MainActivity"
             android:exported="true"
             android:noHistory="false" />
+
+
         <activity
             android:name=".record.WriteActivity"
             android:exported="false" />
-        <activity android:name=".record.DetailRecordActivity" /> <!-- android:theme="@style/Theme.Kks" -->
+
+        <!-- android:theme="@style/Theme.Kks" -->
+
+        <activity android:name=".record.DetailRecordActivity" /> 
+        <!-- android:theme="@style/Theme.Kks" -->
         <activity
             android:name=".login.LoginPageActivity"
             android:exported="true" />
@@ -87,8 +94,10 @@
                     android:scheme="kakao7afffc6d5513e685abc067fe17f07310" />
             </intent-filter>
         </activity>
-        <activity android:name=".record.ModifyActivity" />
-        <activity android:name=".info.follow.FollowActivity" />
+        <activity android:name=".record.ModifyActivity"/>
+        <activity android:name=".info.follow.FollowActivity"/>
+        <activity android:name=".info.myrecord.MyRecordActivity"/>
+        <activity android:name=".info.liked.LikedActivity"/>
     </application>
 
 </manifest>

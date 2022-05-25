@@ -6,12 +6,11 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,18 +36,15 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kks.MainActivity;
 import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.FragmentInfoBinding;
-import com.example.kks.info.follow.FollowActivity;
+import com.example.kks.info.liked.LikedActivity;
+import com.example.kks.info.myrecord.MyRecordActivity;
 import com.example.kks.info.pattern.SpendpatternActivity;
-import com.example.kks.login.LoginPageActivity;
 import com.example.kks.login.PostUser;
-import com.example.kks.login.myDBAdapter;
-import com.example.kks.login.myDBHelper;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -70,12 +67,12 @@ public class InfoFragment extends Fragment {
     String prefId;
 
     /*
-     * 유경 - 프로필 사진 설정
-     * */
+    * 유경 - 프로필 사진 설정
+    * */
     private ImageView profile_imv;
     private EditText editName_edt;
-    private Button niknamechange_btn, kakao_img_btn;
-    private ImageButton profile_imb;
+    private Button niknamechange_btn;
+    private ImageButton profile_imb, kakao_img_btn;
 
     private File tempFile;
 
@@ -93,11 +90,9 @@ public class InfoFragment extends Fragment {
     Handler handler = new Handler();
 
     /*
-     * 예슬
-     * */
-    private ImageButton following_btn, follower_btn;
-    private TextView following_txt, follower_txt;
-    private Button liked_btn, analysis_btn, withdrawal_btn, logout_btn;
+    * 예슬
+    * */
+    private Button myrecord_btn, liked_btn, analysis_btn, withdrawal_btn;
 
     private LinearLayout layout;
 
@@ -110,18 +105,13 @@ public class InfoFragment extends Fragment {
         profile_imv = root.findViewById(R.id.imgbtn_profilepicture);
         editName_edt = root.findViewById(R.id.edt_nikname);
         niknamechange_btn = root.findViewById(R.id.btn_niknamechange);
-        kakao_img_btn = root.findViewById(R.id.kakao_img_btn);
+        kakao_img_btn = root.findViewById(R.id.photokakaobtn);
         profile_imb = root.findViewById(R.id.photochangebtn);
 
+        myrecord_btn = root.findViewById(R.id.btn_myrecord);
         analysis_btn = root.findViewById(R.id.btn_analysis);
-
-        following_btn = root.findViewById(R.id.imgbtn_following);
-        follower_btn = root.findViewById(R.id.imgbtn_follower);
-        following_txt = root.findViewById(R.id.tv_followingcount);
-        follower_txt = root.findViewById(R.id.tv_followercount);
         liked_btn = root.findViewById(R.id.btn_likedlist);
         withdrawal_btn = root.findViewById(R.id.btn_withdrawal);
-        logout_btn = root.findViewById(R.id.btn_logout);
         layout = root.findViewById(R.id.info_fragment);
 
         //서버에서 닉네임, 이미지 가져오기
@@ -130,8 +120,8 @@ public class InfoFragment extends Fragment {
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
         /*
-         * 유경 - 프로필 이미지 닉네임 설정
-         * */
+        * 유경 - 프로필 이미지 닉네임 설정
+        * */
         Call<PostUser> call = retrofitAPI.getUser(prefId);
         call.enqueue(new Callback<PostUser>() {
             @Override
@@ -206,7 +196,7 @@ public class InfoFragment extends Fragment {
                 isRun = true;;
                 binding = FragmentInfoBinding.inflate(inflater, container, false);
                 root = binding.getRoot();
-                editName_edt = root.findViewById(R.id.edt_nikname);
+                editName_edt = root.findViewById(R.id.editName);
                     while ((isRun)) {
                         value += 1;
                         handler.post(new Runnable() {
@@ -240,67 +230,57 @@ public class InfoFragment extends Fragment {
 
 
         /*
-         * 예슬 - 팔로워 팔로잉, 공감글 모아보기, 회원 탈퇴
+         * 예슬 - 내 정보, 공감글 모아보기, 알림 설정, 회원 탈퇴
          * */
-        //팔로워 팔로이 숫자 셋팅(미완 - 서버연결)
-        int followeing = 3;
-        int follower = 3;
-        following_txt.setText(Integer.toString(followeing));
-        follower_txt.setText(Integer.toString(follower));
 
-        //팔로잉 버튼 클릭 시
-        following_btn.setOnClickListener(new View.OnClickListener() {
+        myrecord_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FollowActivity.follow_num = 0;//사용자를 팔로우 하는 List 띄워야 함
-                Intent intent = new Intent(root.getContext(), FollowActivity.class);
+                MyRecordActivity.userId = userId;
+                MyRecordActivity.prefImg = prefId;
+                Intent intent = new Intent(root.getContext(), MyRecordActivity.class);
                 startActivity(intent);
             }
         });
 
-        //팔로워 버튼 클릭 시
-        follower_btn.setOnClickListener(new View.OnClickListener() {
+        liked_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FollowActivity.follow_num = 1;//사용자를 팔로우 하는 List 띄워야 함
-                Intent intent = new Intent(root.getContext(), FollowActivity.class);
+                Intent intent = new Intent(root.getContext(), LikedActivity.class);
                 startActivity(intent);
             }
         });
 
-        //유경
-        //로그아웃 버튼 클릭시
-        logout_btn.setOnClickListener(new View.OnClickListener() {
+        withdrawal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(root.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_delete);
+                dialog.show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-                builder.setTitle("로그아웃");
-                builder.setMessage("로그아웃 하시겠습니까?");
-                builder.setCancelable(false);
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        myDBAdapter adapter = new myDBAdapter(root.getContext());
-                        //adapter.clear();
-                        adapter.open();
-                        adapter.delete("userId");
-                        adapter.close();
-
-                        Intent intent = new Intent(root.getContext(), LoginPageActivity.class);
-                        startActivity(intent);
+                TextView title = dialog.findViewById(R.id.dialog_title_tv);
+                TextView subtitle = dialog.findViewById(R.id.dialog_content_tv);
+                title.setText("회원 탈퇴하시겠습니까?");
+                subtitle.setText("회원 탈퇴는 돌이킬 수 없습니다.");
+                dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO 회원탈퇴
                     }
                 });
-                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //((Activity)root.getContext()).finish();
+                dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-                builder.create().show();
             }
         });
 
         return root;
     }
+
     //이미지 변경 클릭 시 실행 함수
     public void changePhoto(){
         AlertDialog.Builder dlg = new AlertDialog.Builder(root.getContext());
@@ -317,7 +297,7 @@ public class InfoFragment extends Fragment {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                         }
                         else {
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
                         }
                     }
@@ -447,7 +427,7 @@ public class InfoFragment extends Fragment {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
                 Toast.makeText(root.getContext(), "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
             }
             else

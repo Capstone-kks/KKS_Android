@@ -12,13 +12,20 @@
         android:layout_marginHorizontal="20dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:id="@+id/follow_user_id"
         android:text="사용자 이름"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_marginRight="20dp"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/follow_imgbtn"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_baseline_favorite_24"/>
 
 </LinearLayout>

@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -20,19 +19,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.load.engine.Resource
-import com.example.kks.*
+import com.example.kks.MainActivity
+import com.example.kks.R
 import com.example.kks.databinding.ActivityWriteBinding
 import com.example.kks.feed.FeedFragment
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import com.example.kks.getUserIdx
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.net.URL
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 
 class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
@@ -44,6 +38,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private var rate :Float= 0.0F
     lateinit var currentImageURL:Uri
     private var profileImageBase64 : String =""
+    private  var bitmapString:String=""
 
 
     // bitmap 변수
@@ -100,7 +95,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 //        }
 
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
+      //      Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
          //   rate=rating.toInt()
         }
 //
@@ -160,7 +155,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
             }else if(content==""){
               //  Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text = "내용을 입력해주세요"
-            }else if(selectedUri==null){
+            }else if(bitmapString==""){
                 binding.warningTv.text = "사진을 선택해주세요"
 
             }else if(categoryIdx==-1){
@@ -170,7 +165,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                 binding.warningTv.text=""
 
 
-          //   writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,selectedUri.toString(),0))
+             writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"https://cdn.pixabay.com/photo/2020/05/02/07/00/landscape-5120075_960_720.jpg",0))
             }
 
 
@@ -214,7 +209,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                     val option = BitmapFactory.Options()
                     option.inSampleSize = 4
                     val bitmap = BitmapFactory.decodeStream(inputStream,null,option)
-
+                     bitmapString=BitmapToString(bitmap!!)
+                     Log.d("bitmapstring",bitmapString.toString())
 
 
                 }
@@ -230,6 +226,16 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
 
     }// end of onCreate
+
+    /*
+     * Bitmap을 String형으로 변환
+     * */
+    fun BitmapToString(bitmap: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos)
+        val bytes = baos.toByteArray()
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -322,12 +328,15 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     override fun onGetWriteRecordSuccess(result: String) {
         Log.d("글작성/API","성공")
         Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
+//        val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
+//        startActivity(intent)
+//        finish()
+//        supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,FeedFragment())
+//            .commitAllowingStateLoss()
+        val intent = Intent(this,DetailRecordActivity::class.java)
+     //   intent.putExtra("recordIdx",)
         startActivity(intent)
         finish()
-        supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,FeedFragment())
-            .commitAllowingStateLoss()
-
 
 
     }
