@@ -92,7 +92,9 @@ public class PhotoListAdapter extends BaseAdapter {
 
                 //기록 확인 activity intent하기
                 Intent intent = new Intent(context, DetailRecordActivity.class);
-                //intent.putExtra("recordIdx", recordIdx);
+                int recordIdx = mData.get(position).getRecordIdx();
+                intent.putExtra("recordIdx", recordIdx);
+                Log.d("레코드", Integer.toString(recordIdx));
                 //intent.putExtra("categoryId", categoryId);
                 //입력받은 text 넘기기
                 context.startActivity(intent);
