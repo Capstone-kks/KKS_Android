@@ -179,7 +179,7 @@ public class SearchFragment extends Fragment {
                     for(int i = 0; i < data.size();i++)
                         SearchList.add(data.get(i));
 
-                    SearchAdapter = new SearchResultAdapter(root.getContext(), SearchList);
+                    SearchAdapter = new SearchResultAdapter(root.getContext(), SearchList, userId);
                     recyclerView.setAdapter(SearchAdapter);
 
                 }

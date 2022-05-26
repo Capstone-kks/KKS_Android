@@ -1,11 +1,11 @@
-package com.example.kks.record
+package com.example.kks.calendar
 
 import com.google.gson.annotations.SerializedName
 
-data class PostRecordResponse(
+data class CalendarResponse(
 
     @SerializedName("isSuccess") val isSuccess: Boolean, // 요청 성공 여부
     @SerializedName("code") val code:Int, // 응답코드
     @SerializedName("message") val message:String, // 응답 메세지
-    @SerializedName("result") val result: Int // 방금 작성한 글의 idx
+    @SerializedName("result") val result: ArrayList<CalendarContent> // 댓글을 업로드한 결과
 )

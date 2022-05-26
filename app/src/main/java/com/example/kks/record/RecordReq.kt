@@ -10,6 +10,6 @@ data class RecordReq(
     @SerializedName("content") val content : String, // 레코드 내용
     @SerializedName("postPublic") val postPublic : Int, // 공개 여부
     @SerializedName("imgUrl") val recordImgUrl : String, // 이미지
- //   @SerializedName("postDate") val postDate : String, // 작성한 날짜
+    @SerializedName("postDate") val postDate : String, // 작성한 날짜
     @SerializedName("commentCount") val commentCount : Int, // 댓글 수
 )

@@ -1,6 +1,7 @@
 package com.example.kks.controller;
 
 import com.example.kks.info.follow.Follow;
+import com.example.kks.info.liked.RecordLike;
 import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
 import com.example.kks.record.Record;
@@ -69,9 +70,11 @@ public interface RetrofitAPI {
     @POST("api/info/withdrawal")
     Call<String> postWithdrawalUser(@Body String userId);
 
+
     //아카이브
     @GET("/api/archive/search")
     Call<ArrayList<Records>> getArchiveSearch(@Query("userId") String userId, @Query("categoryId") int categoryId, @Query("keyword") String keyword);
+
 
     //for 아카이브 검색 - 좋아요 개수 반환
     @GET("/api/likes/countlike")
@@ -80,5 +83,9 @@ public interface RetrofitAPI {
     //for 아카이브 검색 = 좋아요 여부 반환
     @GET("/api/likes/getstatus")
     Call<String> getLikeStatus(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
+
+    //예슬 - 아카이브 검색 좋아요 test
+    @GET("/api/likes/getliketest")
+    Call<ArrayList<RecordLike>> getRecordLiked(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
 
 }
