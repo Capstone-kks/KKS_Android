@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
 import com.example.kks.controller.GlideApp;
 import com.example.kks.controller.Records;
+
 import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
@@ -47,7 +48,6 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        //Log.e("search getView 호출이 안됨",holder.toString());
         Glide.with(context).load(datalist.get(position).getImgUrl()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(holder.img);
         holder.title.setText(datalist.get(position).getTitle());
         holder.userNickName.setText(name);
@@ -104,7 +104,6 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
             rate = itemView.findViewById(R.id.search_result_recyclerview_item_rate);
             text = itemView.findViewById(R.id.search_result_recyclerview_item_text);
             date = itemView.findViewById(R.id.search_result_recyclerview_item_date);
-
         }
 
     }
