@@ -39,6 +39,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     lateinit var currentImageURL:Uri
     private var profileImageBase64 : String =""
     private  var bitmapString:String=""
+    private lateinit var postDate:String
 
 
     // bitmap 변수
@@ -54,6 +55,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
         writeRecordService.setWriteRecordView(this)
 
 
+        postDate=intent.getStringExtra("clickDate")!!
 
         binding.backIv.setOnClickListener {
             finish()
@@ -98,10 +100,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
       //      Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
          //   rate=rating.toInt()
         }
-//
-//        binding.publicRadioGroup.setOnClickListener {
-//            radioSelect=1 // 라디오 버튼 클릭 체크
-//        }
+
 
         binding.publicRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
@@ -165,7 +164,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                 binding.warningTv.text=""
 
 
-             writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"https://cdn.pixabay.com/photo/2020/05/02/07/00/landscape-5120075_960_720.jpg",0))
+             writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"https://cdn.pixabay.com/photo/2020/05/02/07/00/landscape-5120075_960_720.jpg",postDate,0))
             }
 
 
@@ -325,7 +324,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
         Log.d("글작성/API","로딩중...")
     }
 
-    override fun onGetWriteRecordSuccess(result: String) {
+    override fun onGetWriteRecordSuccess(result: Int) {
         Log.d("글작성/API","성공")
         Toast.makeText(this,"글 작성을 완료했습니다.",Toast.LENGTH_SHORT).show()
 //        val intent = Intent(this,MainActivity::class.java) // 메인 화면으로 이동 (캘린더)
@@ -334,7 +333,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 //        supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout,FeedFragment())
 //            .commitAllowingStateLoss()
         val intent = Intent(this,DetailRecordActivity::class.java)
-     //   intent.putExtra("recordIdx",)
+        intent.putExtra("recordIdx",result)
         startActivity(intent)
         finish()
 

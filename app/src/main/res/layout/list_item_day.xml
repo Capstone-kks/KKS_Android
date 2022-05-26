@@ -18,8 +18,8 @@
         android:visibility="gone"
         android:scaleType="centerCrop"
         android:id="@+id/item_image"
-        android:background="@drawable/sample"
         android:layout_width="60dp"
+        android:background="#009688"
         android:layout_height="match_parent" />
 
 </LinearLayout>
