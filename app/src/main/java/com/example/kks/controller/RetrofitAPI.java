@@ -72,4 +72,13 @@ public interface RetrofitAPI {
     //아카이브
     @GET("/api/archive/search")
     Call<ArrayList<Records>> getArchiveSearch(@Query("userId") String userId, @Query("categoryId") int categoryId, @Query("keyword") String keyword);
+
+    //for 아카이브 검색 - 좋아요 개수 반환
+    @GET("/api/likes/countlike")
+    Call<String> getCountLike(@Query("recordIdx") int recordIdx);
+
+    //for 아카이브 검색 = 좋아요 여부 반환
+    @GET("/api/likes/getstatus")
+    Call<String> getLikeStatus(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
+
 }

@@ -97,6 +97,8 @@
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/background_input.xml" value="0.3175" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/bg_dialog_outline.xml" value="0.3175" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.3175" />
+        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/ic_baseline_folder_24.xml" value="0.1" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/record_list_background.xml" value="0.3175" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/drawable/switch_thumb.xml" value="0.185" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/activity_grid.xml" value="0.275" />
@@ -119,6 +121,7 @@
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/fragment_search.xml" value="0.11499493414387031" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/item_spinner.xml" value="0.15217391304347827" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/list_recyclerview_item.xml" value="0.26403985507246375" />
+        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/list_recyclerview_item2.xml" value="0.26403985507246375" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/pattern_content.xml" value="0.1879432624113475" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/photo_box.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/xml/network_security_config.xml" value="0.1" />

@@ -119,6 +119,8 @@ public class SearchResultActivity extends AppCompatActivity {
         //이전 검색어로 검색
         SearchList = new ArrayList<Records>();
         NewSearchResult(exentered, view);
+        //binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+
 
         new Thread(new Runnable() {
             boolean isRun = false;
@@ -132,7 +134,6 @@ public class SearchResultActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            //그리드뷰 넣어주기
                             //adapter = new PhotoListAdapter(GridActivity.this, arr);
                             binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
 
@@ -145,6 +146,8 @@ public class SearchResultActivity extends AppCompatActivity {
                 }
             }
         }).start(); //start()붙이면 바로실행시킨다.
+
+
 
 
     }
@@ -166,6 +169,8 @@ public class SearchResultActivity extends AppCompatActivity {
         //SearchList = new ArrayList<SearchTest>();
         SearchList = new ArrayList<Records>();
         NewSearchResult(keyword, view);
+
+        //binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
 
         new Thread(new Runnable() {
             boolean isRun = false;
@@ -193,6 +198,10 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         }).start();
 
+
+
+
+
     }
 
     private void NewSearchResult(String keyword, View view){
@@ -208,7 +217,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     for(int i = 0; i < data.size();i++)
                         SearchList.add(data.get(i));
 
-                    aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname);
+                    aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname, userId);
                     recyclerView.setAdapter(aSearchAdapter);
 
                 }
