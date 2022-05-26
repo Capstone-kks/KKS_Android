@@ -39,7 +39,9 @@ public class myDBAdapter {
 
     //행 삭제
     public void delete(String key) {
-        myDB.execSQL("DELETE FROM groupTBL WHERE gName=" + "\"" + key + "\"");
+        //myDB.execSQL("DELETE FROM groupTBL WHERE gName=" + "\"" + key + "\"");
+        //myDB.execSQL("DELETE FROM groupTBL");
+        myDB.delete("groupTBL", null, null);
     }
 
     //닫기

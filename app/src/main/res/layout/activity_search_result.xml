@@ -60,11 +60,40 @@
         android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/searchlayout">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_result_recyclerview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"/>
+            android:orientation="vertical"
+            android:id="@+id/search_layout"
+            android:layout_marginHorizontal="20dp">
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_gravity="end"
+                android:id="@+id/search_sort_rg">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_sort_date_rb"
+                    android:text="최신순"
+                    android:checked="true"
+                    android:buttonTint="@color/main_mint"
+                    android:layout_marginRight="10dp"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_sort_like_rb"
+                    android:text="인기순"
+                    android:buttonTint="@color/main_mint"/>
+            </RadioGroup>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_result_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

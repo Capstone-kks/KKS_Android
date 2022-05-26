@@ -42,14 +42,15 @@ class MainActivity : AppCompatActivity(){
         Log.d("Hash",keyHash)
 
 
+
         //yk code
         val intent = intent
- //       userId = intent.getStringExtra("user_id")
+        userId = intent.getStringExtra("user_id")
         //nickname = intent.getStringExtra("nickname")
         //userImg = intent.getStringExtra("userImage")
-//        checking = intent.extras!!.getBoolean("checking")
+        checking = intent.extras!!.getBoolean("checking")
 
- //       maintainId(userId!!, checking)
+        maintainId(userId!!, checking)
 
         /*
         //sharedpreference
@@ -110,13 +111,13 @@ class MainActivity : AppCompatActivity(){
     //yk code
     fun maintainId(userId: String, checking: Boolean) {
         myDBAdapter = myDBAdapter(this)
-        if (checking == true) {
+        if (checking) {
             //id 정보 db에 저장
             myDBAdapter!!.open()
-            myDBAdapter!!.clear()
+            //myDBAdapter!!.clear()
             myDBAdapter!!.insert(userId)
             myDBAdapter!!.close()
-            Toast.makeText(applicationContext, "db에 log정보 추가 : $userId", Toast.LENGTH_LONG).show()
+            //Toast.makeText(applicationContext, "db에 log정보 추가 : $userId", Toast.LENGTH_LONG).show()
         }
     }
 

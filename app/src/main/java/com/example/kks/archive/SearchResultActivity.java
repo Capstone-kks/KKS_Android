@@ -9,32 +9,55 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.example.kks.R;
+import com.example.kks.controller.Records;
+import com.example.kks.controller.RetrofitAPI;
+import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.ActivityGridBinding;
 import com.example.kks.databinding.ActivitySearchResultBinding;
+import com.example.kks.login.PostUser;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchResultAdapter;
+import com.example.kks.search.SearchTest;
+
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class SearchResultActivity extends AppCompatActivity {
 
     public static Activity act;
     int recordIdx=0;
-    int categoryId;
+    static int categoryId;
     static String exentered;
-    static String entered;
-    String userId;
+    static String userId;
+    static String nickname;
 
     private ActivitySearchResultBinding binding;
     private RecyclerView recyclerView;
-    private SearchResultAdapter adapter;
 
-    private ArrayList<Search> SearchList;
+    private RadioGroup Sort_rg;
+    //private ArrayList<SearchTest> SearchList;
+    private ArrayList<Records> SearchList;
+    private aSearchResultAdapter aSearchAdapter;
+
+    //retrofit
+    RetrofitClient client = new RetrofitClient();
+    Retrofit retrofit = client.setRetrofit();
+    RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+    Handler handler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +81,8 @@ public class SearchResultActivity extends AppCompatActivity {
         //이전 검색어 띄워주기
         binding.edtSearch.setText(Editable.Factory.getInstance().newEditable(exentered));
 
+        //검색화면 뷰
+        Sort_rg = view.findViewById(R.id.search_sort_rg);
         recyclerView = view.findViewById(R.id.search_result_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
 
@@ -65,21 +90,62 @@ public class SearchResultActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","");
 
-        //검색 결과 - 미완 (더미 데이터 셋팅)
-        //검색 더미 데이터 추가
-        //BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_launcher_background);
-        //Bitmap bitmap = getBitmapFromVectorDrawable(root.getContext(), R.drawable.ic_launcher_background);
-        //SearchList = new ArrayList<Search>();
-        //SearchList.add(new Search(1, "나른한 제주도","lolla44", userId, 5, 3, 0, "", "2021-08-05-23-27"));
-        //SearchList.add(new Search(2, "능력보다 더 인정받는 일잘러의 DNA","capst0ne", userId, 4, 6, 1, "직장 생활이 그렇게 버겁지만은 않다. 버겁다고 생각하면 한없이 버겁기도 하다. 밑 줄 그어가며 꼼꼼히 읽었으니 가까운 지인에게 도움이 될 거야,라며 툭 건네고 싶다. 직장 생활 까짓것 별거 아닌데 말이지. 그래도 혹시 모르니 한 번 읽어봐,라면서.", "2022-04-05-16-35"));
-        //SearchList.add(new Search(3, "봄날의 조기축구","dbms456", userId, 5, 37, 0, "", "2022-04-05-03-20"));
-        //SearchList.add(new Search(4, "최악의 공포연극 괴담","jupiter", userId, 1, 2, 1, "배우들이.. 목소리는 참 큰데... 감정이 없이 책을 읽고 있습니다.", "2021-09-25-18-03"));
-        //SearchList.add(new Search(5, "신비한 동물들과 덤블도어의 비밀","2133211949", userId, 3, 1, 0, "그린델왈드 외모는 멋져지고 능력은 찐따됨 ", "2022-04-28-01-18"));
-        //SearchList.add(new Search(6, "BOAT","2133211949", userId, 5, 14, 0, "반복이지만 띵곡임", "2022-03-29-01-21"));
-        //SearchList.add(new Search(7, "LOVE DIVE","2133211949", userId, 4, 92, 1, "아이돌 노래스럽지 않고 매력적임. 춤도 좋아.", "2022-04-30-01-22"));
-        //SearchList.add(new Search(8, "또오해영","2133211949", userId, 4, 78, 1, "오해영을 보면 마음이 아프다.", "2022-04-15-12-00"));
-        //adapter = new SearchResultAdapter(view.getContext(), SearchList);
-        recyclerView.setAdapter(adapter);
+        //서버에서 닉네임 가져오기
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<PostUser> call = retrofitAPI.getUser(userId);
+        call.enqueue(new Callback<PostUser>() {
+            @Override
+            public void onResponse(Call<PostUser> call, Response<PostUser> response) {
+                if(response.isSuccessful()){
+                    PostUser data = response.body();
+                    nickname = data.getNickName();
+                    //userImg = data.getUserImg();
+                    Log.d("이름", nickname);
+                    //Log.d("이미지", userImg);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostUser> call, Throwable t) {
+                Log.d("실패", userId);
+                t.printStackTrace();
+            }
+        });
+
+
+        //이전 검색어로 검색
+        SearchList = new ArrayList<Records>();
+        NewSearchResult(exentered, view);
+
+        new Thread(new Runnable() {
+            boolean isRun = false;
+            int value = 0;
+
+            @Override
+            public void run() {
+                isRun = true;
+                while ((isRun)) {
+                    value += 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //그리드뷰 넣어주기
+                            //adapter = new PhotoListAdapter(GridActivity.this, arr);
+                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start(); //start()붙이면 바로실행시킨다.
+
 
     }
 
@@ -94,14 +160,65 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     public void searchResult(View view){
-        Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
-        intent.putExtra("recordIdx", recordIdx);
-        intent.putExtra("categoryId", categoryId);
-        //입력받은 text 넘기기
-        entered = binding.edtSearch.getText().toString();
-        Log.i("입력", entered);
-        intent.putExtra("entered", entered);
-        startActivity(intent);
-        act.finish();
+        String keyword = binding.edtSearch.getText().toString();
+        Log.d("검색 버튼 클릭",keyword);
+
+        //SearchList = new ArrayList<SearchTest>();
+        SearchList = new ArrayList<Records>();
+        NewSearchResult(keyword, view);
+
+        new Thread(new Runnable() {
+            boolean isRun = false;
+            int value = 0;
+
+            @Override
+            public void run() {
+                isRun = true;
+                while ((isRun)) {
+                    value += 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //그리드뷰 넣어주기
+                            //adapter = new PhotoListAdapter(GridActivity.this, arr);
+                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    private void NewSearchResult(String keyword, View view){
+        //retrofitAPI.getSearchResultTest(keyword, userId, 1).enqueue(new Callback<ArrayList<SearchTest>>() {
+        retrofitAPI.getArchiveSearch(userId, categoryId, keyword).enqueue(new Callback<ArrayList<Records>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Records>> call, Response<ArrayList<Records>> response) {
+                Log.e("서버아이디",userId);
+                if(response.isSuccessful()){
+                    ArrayList<Records> data = response.body();
+                    SearchList.clear();
+
+                    for(int i = 0; i < data.size();i++)
+                        SearchList.add(data.get(i));
+
+                    aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname);
+                    recyclerView.setAdapter(aSearchAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Records>> call, Throwable t) {
+                Log.e("검색 결과 가져오기 실패",keyword);
+                t.printStackTrace();
+            }
+        });
     }
 }

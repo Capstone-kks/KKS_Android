@@ -23,6 +23,7 @@ import com.example.kks.databinding.ActivityGridBinding;
 import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchResultAdapter;
+import com.example.kks.search.SearchTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +47,14 @@ public class GridActivity extends AppCompatActivity {
     private ActivityGridBinding binding;
 
     public static Activity act;
+
+    private ArrayList<SearchTest> SearchList;
+    private SearchResultAdapter SearchAdapter;
+
+    //retrofit
+    RetrofitClient client = new RetrofitClient();
+    Retrofit retrofit = client.setRetrofit();
+    RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
     //public static ArrayList<CatImg> list = new ArrayList<>();
     PhotoListAdapter adapter;

@@ -1,5 +1,7 @@
 package com.example.kks.controller;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Records {
@@ -41,5 +43,27 @@ public class Records {
 
     public String getTitle(){return title;}
     public void setTitle(){this.title=title;}
+
+    public String getImgUrl(){return imgUrl;}
+    public void setImgUrl(Bitmap img) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+    public String getPostDate() { return postDate;}
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
 
 }
