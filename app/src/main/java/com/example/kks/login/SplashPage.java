@@ -49,7 +49,8 @@ public class SplashPage extends AppCompatActivity {
 
 
         if (!userId.equals("")){
-            Toast.makeText(getApplicationContext(), "login됨 : "+userId, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "login됨 : "+userId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "자동로그인 되었습니다.", Toast.LENGTH_SHORT).show();
             //SharedPreference.saveString(context, "userId", userId);
             //String prefId = SharedPreference.getString(context, "userId");
             //Log.d("저장된", prefId);

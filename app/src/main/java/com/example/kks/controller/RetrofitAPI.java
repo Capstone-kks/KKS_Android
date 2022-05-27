@@ -20,6 +20,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -89,4 +90,12 @@ public interface RetrofitAPI {
     Call<Integer> getRecordLikeCntTest(@Query("recordIdx") int recordIdx);
     @GET("/api/likes/getlikeactivetest")
     Call<String> getRecordLikeActiveTest(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
+
+    //닉네임 수정
+    @PUT("/api/login/updatename/userId={userId}")
+    Call<Name> editName(@Path("userId") String userId, @Body Name name);
+
+    //프사 수정
+    //@PUT("/api/login/updatimage/userId={userId}")
+    //Call<Name> editImage(@Path("userId") String userId, @Body profImage profimgae);
 }
