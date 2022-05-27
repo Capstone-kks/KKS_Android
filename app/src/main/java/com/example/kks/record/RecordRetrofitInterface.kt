@@ -25,11 +25,13 @@ interface RecordRetrofitInterface {
 
 
     // 글 수정 API
+    @Multipart
     @PATCH("/api/record/modify/{userId}/{recordIdx}")
     fun getModifyRecord(
         @Path("userId") userId : String,
         @Path("recordIdx") recordIdx : Int,
-        @Body modifyRecordReq:ModifyRecordReq
+        @Part("ModifyRecordReq") modifyRecordReq:ModifyRecordReq,
+        @Part images:MultipartBody.Part?
     ):Call<ModifyRecordResponse>
 
 
