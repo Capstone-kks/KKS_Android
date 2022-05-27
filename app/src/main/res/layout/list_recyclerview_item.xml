@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/search_result_recyclerview_item_likeCount"
-                    android:text="35234"
+                    android:text=""
                     android:layout_gravity="center"/>
                 <ImageView
                     android:layout_width="40dp"

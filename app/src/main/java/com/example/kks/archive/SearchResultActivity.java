@@ -56,9 +56,6 @@ public class SearchResultActivity extends AppCompatActivity {
     Retrofit retrofit = client.setRetrofit();
     RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-    Handler handler = new Handler();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,46 +116,11 @@ public class SearchResultActivity extends AppCompatActivity {
         //이전 검색어로 검색
         SearchList = new ArrayList<Records>();
         NewSearchResult(exentered, view);
-        //binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
-
-
-        new Thread(new Runnable() {
-            boolean isRun = false;
-            int value = 0;
-
-            @Override
-            public void run() {
-                isRun = true;
-                while ((isRun)) {
-                    value += 1;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //adapter = new PhotoListAdapter(GridActivity.this, arr);
-                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
-
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }).start(); //start()붙이면 바로실행시킨다.
-
-
-
+        binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
 
     }
 
     public void finish(View view){
-        //Fragment fragment = new ArchiveFolderFragment();
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
-
-        //Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
-        //startActivity(intent);
         act.finish();
     }
 
@@ -170,38 +132,7 @@ public class SearchResultActivity extends AppCompatActivity {
         SearchList = new ArrayList<Records>();
         NewSearchResult(keyword, view);
 
-        //binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
-
-        new Thread(new Runnable() {
-            boolean isRun = false;
-            int value = 0;
-
-            @Override
-            public void run() {
-                isRun = true;
-                while ((isRun)) {
-                    value += 1;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //그리드뷰 넣어주기
-                            //adapter = new PhotoListAdapter(GridActivity.this, arr);
-                            binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
-
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }).start();
-
-
-
-
-
+        binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
     }
 
     private void NewSearchResult(String keyword, View view){
