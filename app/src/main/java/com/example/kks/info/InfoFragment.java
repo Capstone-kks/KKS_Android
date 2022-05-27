@@ -38,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
 import com.example.kks.controller.Name;
+import com.example.kks.controller.ProfImg;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
@@ -205,7 +206,30 @@ public class InfoFragment extends Fragment {
                 Glide.with(root.getContext()).load(prefImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_imv);
 
                 //db api 적용
-                //filepath는 String 변수로 갤러리에서 이미지를 가져올 때 photoUri.getPath()를 통해 받아온다.
+                RetrofitClient client = new RetrofitClient();
+                Retrofit retrofit = client.setRetrofit();
+                RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+                ProfImg pimg = new ProfImg();
+                pimg.setUserImg(prefImg);
+
+                Call<ProfImg> call = retrofitAPI.editImage(prefId, pimg);
+                call.enqueue(new Callback<ProfImg>() {
+                    @Override
+                    public void onResponse(Call<ProfImg> call, Response<ProfImg> response) {
+                        if (response.isSuccessful()) {
+                            //Toast.makeText(root.getContext(), "'" + nickname + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
+                        }
+
+                        ProfImg imgResponse = response.body();
+                        Log.d("이미지 변경 성공", imgResponse.getUserImg());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfImg> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
         });
 

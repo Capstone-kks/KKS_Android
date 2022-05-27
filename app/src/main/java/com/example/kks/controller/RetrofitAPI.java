@@ -96,6 +96,6 @@ public interface RetrofitAPI {
     Call<Name> editName(@Path("userId") String userId, @Body Name name);
 
     //프사 수정
-    //@PUT("/api/login/updatimage/userId={userId}")
-    //Call<Name> editImage(@Path("userId") String userId, @Body profImage profimgae);
+    @PUT("/api/login/updateimage/userId={userId}")
+    Call<ProfImg> editImage(@Path("userId") String userId, @Body ProfImg profimgae);
 }
