@@ -39,9 +39,8 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
     private Context context;
     private ArrayList<Records> datalist = null;
     static String name, user;
-    private String result, result2;
-
-    String counts, status = "";
+    private String result;
+    private String status;
 
     Handler handler = new Handler();
 
@@ -63,8 +62,8 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        counts = getLikeCount(datalist.get(position).getRecordIdx());
-        status = getLikeStatus(datalist.get(position).getRecordIdx(), user);
+        //counts = getLikeCount(datalist.get(position).getRecordIdx());
+        //status = getLikeStatus(datalist.get(position).getRecordIdx(), user);
 
         Glide.with(context).load(datalist.get(position).getImgUrl()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(holder.img);
         holder.title.setText(datalist.get(position).getTitle());
@@ -73,43 +72,61 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
         holder.text.setText(datalist.get(position).getContent());
         holder.date.setText(datalist.get(position).getPostDate());
 
-        new Thread(new Runnable() {
-            boolean isRun = false;
-            int value = 0;
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<String> call = retrofitAPI.getCountLike(datalist.get(position).getRecordIdx());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()) {
+                    String getstr = response.body().toString();
+                    result = "" + getstr;
+                    holder.counting.setText(result);
+                    Log.d("좋아요카운트", result);
+                    //System.out.println(getstr);
+                }
+
+            }
 
             @Override
-            public void run() {
-                isRun = true;
-                while ((isRun)) {
-                    value += 1;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
+            public void onFailure(Call<String> call, Throwable t) {
+                //Log.d("카운트 실패", Integer.toString(recordIdx));
+                holder.counting.setText("0");
+                t.printStackTrace();
+            }
+        });
 
-                            //holder.counting.setText(getLikeCount(datalist.get(position).getRecordIdx()));
-                            holder.counting.setText(counts);
-
-                            if (status != null) {
-                                if (status.equals("1")) {
-                                    holder.heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_24));
-                                    //Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_24)).into(holder.heart);
-                                }
-                                else{
-                                    holder.heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_border_24));
-                                    //Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_border_24)).into(holder.heart);
-                                }
-                            }
-
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
+        Call<String> call2 = retrofitAPI.getLikeStatus(datalist.get(position).getRecordIdx(), user);
+        call2.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()) {
+                    if(response.body() != null) {
+                        status = response.body().toString();
+                        //result2 = "" + getstr;
+                        Log.d("좋아요 여부", status);
                     }
+                    else {
+                        status = "0";
+                    }
+
+                    if(status.equals("0"))
+                        holder.heart.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    else if(status.equals("1"))
+                        holder.heart.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        Log.d(String.valueOf(position)+"active : ",status);
                 }
             }
-        }).start(); //start()붙이면 바로실행시킨다.
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                //Log.d("확인 실패", Integer.toString(recordIdx));
+                status = "0";
+                t.printStackTrace();
+            }
+        });
 
 
         holder.img.setOnClickListener(new View.OnClickListener() {
@@ -164,63 +181,5 @@ public class aSearchResultAdapter extends RecyclerView.Adapter<aSearchResultAdap
             heart = itemView.findViewById(R.id.search_result_recyclerview_item_like);
         }
 
-    }
-
-    public String getLikeCount(int recordIdx){
-
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        Call<String> call = retrofitAPI.getCountLike(recordIdx);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()) {
-                    String getstr = response.body().toString();
-                    result = "" + getstr;
-                    Log.d("좋아요카운트", getstr);
-                    //System.out.println(getstr);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d("카운트 실패", Integer.toString(recordIdx));
-                result = "0";
-                t.printStackTrace();
-            }
-        });
-        return result;
-    }
-
-    public String getLikeStatus(int recordIdx, String userId){
-
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        Call<String> call = retrofitAPI.getLikeStatus(recordIdx, userId);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()) {
-                    String getstr = response.body().toString();
-                    result2 = "" + getstr;
-                    Log.d("좋아요 여부", getstr);
-                    //System.out.println(getstr);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d("확인 실패", Integer.toString(recordIdx));
-                result2 = "0";
-                t.printStackTrace();
-            }
-        });
-        return result2;
     }
 }
