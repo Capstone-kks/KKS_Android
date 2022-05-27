@@ -26,6 +26,9 @@ import com.example.kks.R
 import com.example.kks.databinding.ActivityWriteBinding
 import com.example.kks.feed.FeedFragment
 import com.example.kks.getUserIdx
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 
 class WriteActivity : AppCompatActivity() ,WriteRecordView{
@@ -40,6 +43,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private var profileImageBase64 : String =""
     private  var bitmapString:String=""
     private lateinit var postDate:String
+    // multipart 관련 변수
+    private  var multibody : MultipartBody.Part? = null
 
 
     // bitmap 변수
@@ -79,22 +84,6 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
         }
 
-//        binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//               Log.d("write-position: ",position.toString())
-//                selectCategory=true
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                selectCategory=false
-//
-//            }
-//        }
 
         binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
       //      Toast.makeText(this,rating.toInt().toString(),Toast.LENGTH_SHORT).show()
@@ -148,23 +137,27 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
 
             if(title==""){
-            //    Toast.makeText(this,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text="제목을 입력해주세요"
 
-            }else if(content==""){
-              //  Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
+            }else if(content=="") {
                 binding.warningTv.text = "내용을 입력해주세요"
-            }else if(bitmapString==""){
-                binding.warningTv.text = "사진을 선택해주세요"
-
             }else if(categoryIdx==-1){
                 binding.warningTv.text = "카테고리를 선택해주세요"
 
+            }else if(path==null){
+                binding.warningTv.text = "사진을 선택해주세요"
             }else{
                 binding.warningTv.text=""
 
+                val uploadBitmap = Bitmap.createScaledBitmap(path!!, path!!.width,path!!.height,true)
+                val stream = ByteArrayOutputStream()
+                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                val byteArray = stream.toByteArray()
+                val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+                multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
 
-             writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"https://cdn.pixabay.com/photo/2020/05/02/07/00/landscape-5120075_960_720.jpg",postDate,0))
+
+             writeRecordService.getWriteRecord(multibody!!,RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,postDate,0))
             }
 
 
@@ -175,42 +168,18 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
-//            if(result.resultCode==Activity.RESULT_OK){
-//                result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
-//                    uri->
-//                    path=null // 앨범에서 가져올때마다 초기화
-//                    val inputStream = uri.let{
-//                        contentResolver.openInputStream(
-//                            it
-//                        )
-//                    }
-//                    val bitmap=BitmapFactory.decodeStream(inputStream)
-//                    inputStream!!.close()
-//                  //  path=bitmap
-//                    selectedUri=result.data!!.data
-//                }
-//                if(result.data?.data==null){
-//                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
-//                }else{
-//                    binding.imageView.setImageURI(result.data!!.data)
-//                }
-//            }else return@registerForActivityResult
-
-
             if(result.resultCode==Activity.RESULT_OK){
                 result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
-                      uri->
+                    uri->
+                    path=null // 앨범에서 가져올때마다 초기화
                     val inputStream = uri.let{
                         contentResolver.openInputStream(
                             it
                         )
                     }
-                    val option = BitmapFactory.Options()
-                    option.inSampleSize = 4
-                    val bitmap = BitmapFactory.decodeStream(inputStream,null,option)
-                     bitmapString=BitmapToString(bitmap!!)
-                     Log.d("bitmapstring",bitmapString.toString())
-
+                    val bitmap=BitmapFactory.decodeStream(inputStream)
+                    inputStream!!.close()
+                    path=bitmap
 
                 }
                 if(result.data?.data==null){
@@ -219,6 +188,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                     binding.imageView.setImageURI(result.data!!.data)
                 }
             }else return@registerForActivityResult
+
+
         }
 
 
@@ -226,15 +197,6 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
     }// end of onCreate
 
-    /*
-     * Bitmap을 String형으로 변환
-     * */
-    fun BitmapToString(bitmap: Bitmap): String {
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos)
-        val bytes = baos.toByteArray()
-        return Base64.encodeToString(bytes, Base64.DEFAULT)
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -253,29 +215,9 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         resultLauncher.launch(intent)
-     //   startActivityForResult(intent,102)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(requestCode==102&&resultCode==Activity.RESULT_OK){
-//            currentImageURL = intent?.data!!
-//            // BASE64 인코딩
-//            val ins:InputStream?=currentImageURL?.let{
-//                applicationContext.contentResolver.openInputStream(
-//                    it
-//                )
-//            }
-//            val img:Bitmap = BitmapFactory.decodeStream(ins)
-//            ins?.close()
-//            val resized = Bitmap.createScaledBitmap(img,200,300,true)
-//            val byteArrayOutputStream= ByteArrayOutputStream()
-//            val byteArray:ByteArray = byteArrayOutputStream.toByteArray()
-//            val outStream = ByteArrayOutputStream()
-//         //   val res:Resource= resources
-//            profileImageBase64 = Base64.encodeToString(byteArray, Base64.NO_WRAP)
-//        }
-//    }
+
     private fun showPermissionContextPopup(){
         AlertDialog.Builder(this)
                 .setTitle("권한 팝업")

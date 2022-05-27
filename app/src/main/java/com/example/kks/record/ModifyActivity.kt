@@ -21,6 +21,10 @@ import com.bumptech.glide.Glide
 import com.example.kks.R
 import com.example.kks.databinding.ActivityModifyBinding
 import com.example.kks.getUserIdx
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
 
 class ModifyActivity:AppCompatActivity(),ModifyRecordView {// end of class
 
@@ -37,6 +41,7 @@ class ModifyActivity:AppCompatActivity(),ModifyRecordView {// end of class
     private var categoryName:String=""
     private lateinit var resultLauncher : ActivityResultLauncher<Intent>
     private var path: Bitmap?=null
+    private  var multibody : MultipartBody.Part? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,9 +122,20 @@ class ModifyActivity:AppCompatActivity(),ModifyRecordView {// end of class
             Log.d("modify-imgUrl",recordImgUrl.toString())
             Log.d("write-radioSelect: ",postPublic.toString())
 
+            if(path!=null){
+                val uploadBitmap = Bitmap.createScaledBitmap(path!!, path!!.width,path!!.height,true)
+                val stream = ByteArrayOutputStream()
+                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                val byteArray = stream.toByteArray()
+                val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+                multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
+            }else{
+                multibody=null
+            }
 
             //todo 서버 api 호출
             if(recordTitle!=""&&recordContent!=""){
+
                 getModifyRecord()
                 Toast.makeText(this,"수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
                 finish()
@@ -191,7 +207,7 @@ class ModifyActivity:AppCompatActivity(),ModifyRecordView {// end of class
         val modifyRecordService = ModifyRecordService()
         modifyRecordService.setModifyRecordView(this)
         modifyRecordService.getModifyRecord(userId,recordIdx,ModifyRecordReq(recordTitle!!,categoryId,recordRate,
-            recordContent!!,postPublic,recordImgUrl!!))
+            recordContent!!,postPublic,recordImgUrl!!),multibody)
 
     }
 

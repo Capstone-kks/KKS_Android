@@ -15,13 +15,13 @@ class ModifyRecordService {
         this.modifyRecordView = modifyRecordView
     }
 
-    fun getModifyRecord(userId:String,recordIdx:Int,modifyRecordReq: ModifyRecordReq){
+    fun getModifyRecord(userId:String,recordIdx:Int,modifyRecordReq: ModifyRecordReq,img:MultipartBody.Part?){
         val modifyRecordService = getRetrofit().create(RecordRetrofitInterface::class.java)
 
         modifyRecordView.onGetModifyRecordLoading()
 
 
-        modifyRecordService.getModifyRecord(userId,recordIdx,modifyRecordReq)
+        modifyRecordService.getModifyRecord(userId,recordIdx,modifyRecordReq,img)
             .enqueue(object :retrofit2.Callback<ModifyRecordResponse>{
                 override fun onResponse(call: Call<ModifyRecordResponse>, response: Response<ModifyRecordResponse>) {
 

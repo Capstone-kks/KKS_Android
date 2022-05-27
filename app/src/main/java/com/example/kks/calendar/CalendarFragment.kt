@@ -21,22 +21,9 @@ class CalendarFragment():Fragment() {
     ): View? {
         binding = FragmentCalendarBinding.inflate(inflater,container,false)
 
-//        binding.writeFb.setOnClickListener {
-//            startActivity(Intent(context,WriteActivity::class.java))
-//
-//        }
 
         val monthListManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         val monthListAdapter = AdapterMonth(requireContext())
-//
-//        binding.calendarRecyclerView.apply{
-//            layoutManager = monthListManager
-//            adapter = monthListAdapter
-//
-//                scrollToPosition(Int.MAX_VALUE/2)
-//
-//
-//        }
         binding.calendarRecyclerView.layoutManager = monthListManager
         binding.calendarRecyclerView.adapter= monthListAdapter
         binding.calendarRecyclerView.scrollToPosition(Int.MAX_VALUE/2)
@@ -49,6 +36,8 @@ class CalendarFragment():Fragment() {
 
     override fun onStart() {
         super.onStart()
+        binding.calendarRecyclerView.adapter?.notifyDataSetChanged()
+
     }
 
 

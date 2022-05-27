@@ -15,12 +15,12 @@ class WriteRecordService {
         this.writeRecordView = writeRecordView
     }
 
-    fun getWriteRecord(record:RecordReq){
+    fun getWriteRecord(image:MultipartBody.Part,record:RecordReq){
         val writeRecordService = getRetrofit().create(RecordRetrofitInterface::class.java)
 
         writeRecordView.onGetWriteRecordLoading()
 
-        writeRecordService.postRecord(record)
+        writeRecordService.postRecord(image,record)
             .enqueue(object:retrofit2.Callback<PostRecordResponse>{
                 override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>)
                 {
