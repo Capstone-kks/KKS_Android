@@ -14,13 +14,16 @@ import java.util.List;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -95,7 +98,13 @@ public interface RetrofitAPI {
     @PUT("/api/login/updatename/userId={userId}")
     Call<Name> editName(@Path("userId") String userId, @Body Name name);
 
-    //프사 수정
+    //카카오프사 수정
     @PUT("/api/login/updateimage/userId={userId}")
-    Call<ProfImg> editImage(@Path("userId") String userId, @Body ProfImg profimgae);
+    Call<ProfImg> editImage(@Path("userId") String userId, @Body ProfImg profimg);
+
+    //일반 사진 프사 수정
+    @Multipart
+    @PUT("/api/login/updateimagefile/userId={userId}")
+    Call<ProfImg> editImagefile(@Path("userId") String userId, @Part MultipartBody.Part images, @Part("ProfImg") ProfImg profimg);
+
 }

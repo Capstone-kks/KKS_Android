@@ -4,6 +4,8 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
+import static com.example.kks.info.myrecord.MyRecordActivity.prefImg;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -54,7 +56,9 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
@@ -96,6 +100,8 @@ public class InfoFragment extends Fragment {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     Handler handler = new Handler();
+
+    private MultipartBody.Part multibody = null;
 
     /*
     * 예슬
@@ -299,7 +305,7 @@ public class InfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MyRecordActivity.userId = userId;
-                MyRecordActivity.prefImg = prefId;
+                prefImg = prefId;
                 Intent intent = new Intent(root.getContext(), MyRecordActivity.class);
                 startActivity(intent);
             }
@@ -428,11 +434,39 @@ public class InfoFragment extends Fragment {
         // e.printStackTrace();
         // }
         // Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        originalBm .compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-        //MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("postImg", file.getName() ,requestBody);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        originalBm.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), byteArrayOutputStream.toByteArray());
+        multibody = MultipartBody.Part.createFormData("images","image.jpeg",requestBody);
+
+        Log.d("멀티", multibody.toString());
+
+        //db api 적용
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        ProfImg pimg = new ProfImg();
+        //pimg.setUserImg(prefImg);
+
+        Call<ProfImg> call = retrofitAPI.editImagefile(prefId, multibody, pimg);
+        call.enqueue(new Callback<ProfImg>() {
+            @Override
+            public void onResponse(Call<ProfImg> call, Response<ProfImg> response) {
+                if (response.isSuccessful()) {
+                    Log.d("이미지 변경 성공", multibody.toString());
+                    //Toast.makeText(root.getContext(), "'" + nickname + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
+                }
+                //ProfImg imgResponse = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ProfImg> call, Throwable t) {
+                Log.d("이미지 변경 실패", multibody.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void CameraPermissionCheck() {
@@ -483,7 +517,7 @@ public class InfoFragment extends Fragment {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(root.getContext(), "권한 허가", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(root.getContext(), "권한 허가", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -521,7 +555,36 @@ public class InfoFragment extends Fragment {
         //imageView.setImageBitmap(originalBm);
         Glide.with(this).load(originalBm).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_imv);
 
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        originalBm.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), byteArrayOutputStream.toByteArray());
+        multibody = MultipartBody.Part.createFormData("images","image.jpeg",requestBody);
+
         //set on the db
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        ProfImg pimg = new ProfImg();
+        //pimg.setUserImg(prefImg);
+
+        Call<ProfImg> call = retrofitAPI.editImagefile(prefId, multibody, pimg);
+        call.enqueue(new Callback<ProfImg>() {
+            @Override
+            public void onResponse(Call<ProfImg> call, Response<ProfImg> response) {
+                if (response.isSuccessful()) {
+                    Log.d("이미지 변경 성공", multibody.toString());
+                    //Toast.makeText(root.getContext(), "'" + nickname + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
+                }
+                //ProfImg imgResponse = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ProfImg> call, Throwable t) {
+                Log.d("이미지 변경 실패", multibody.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
