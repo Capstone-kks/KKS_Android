@@ -38,7 +38,7 @@ class RecordListAdapter(val context: Context?):RecyclerView.Adapter<RecordListAd
         //recyclerView 의 각 아이템을 클릭할때
         holder.itemView.setOnClickListener {
             recordClickListener.onItemClick(recordList[position])
-            Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show()
+     //       Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show()
 
         }
 

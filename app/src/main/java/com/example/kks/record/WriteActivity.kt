@@ -26,6 +26,9 @@ import com.example.kks.R
 import com.example.kks.databinding.ActivityWriteBinding
 import com.example.kks.feed.FeedFragment
 import com.example.kks.getUserIdx
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 
 class WriteActivity : AppCompatActivity() ,WriteRecordView{
@@ -40,6 +43,8 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
     private var profileImageBase64 : String =""
     private  var bitmapString:String=""
     private lateinit var postDate:String
+    // multipart 관련 변수
+    private  var multibody : MultipartBody.Part? = null
 
 
     // bitmap 변수
@@ -148,23 +153,27 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
 
             if(title==""){
-            //    Toast.makeText(this,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
                 binding.warningTv.text="제목을 입력해주세요"
 
-            }else if(content==""){
-              //  Toast.makeText(this,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
+            }else if(content=="") {
                 binding.warningTv.text = "내용을 입력해주세요"
-            }else if(bitmapString==""){
-                binding.warningTv.text = "사진을 선택해주세요"
-
             }else if(categoryIdx==-1){
                 binding.warningTv.text = "카테고리를 선택해주세요"
 
+            }else if(path==null){
+                binding.warningTv.text = "사진을 선택해주세요"
             }else{
                 binding.warningTv.text=""
 
+                val uploadBitmap = Bitmap.createScaledBitmap(path!!, path!!.width,path!!.height,true)
+                val stream = ByteArrayOutputStream()
+                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                val byteArray = stream.toByteArray()
+                val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+                multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
 
-             writeRecordService.getWriteRecord(RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,"https://cdn.pixabay.com/photo/2020/05/02/07/00/landscape-5120075_960_720.jpg",postDate,0))
+
+             writeRecordService.getWriteRecord(multibody!!,RecordReq(getUserIdx(this),title,categoryIdx,rate,content,radioSelect,postDate,0))
             }
 
 
@@ -175,42 +184,18 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
 
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
-//            if(result.resultCode==Activity.RESULT_OK){
-//                result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
-//                    uri->
-//                    path=null // 앨범에서 가져올때마다 초기화
-//                    val inputStream = uri.let{
-//                        contentResolver.openInputStream(
-//                            it
-//                        )
-//                    }
-//                    val bitmap=BitmapFactory.decodeStream(inputStream)
-//                    inputStream!!.close()
-//                  //  path=bitmap
-//                    selectedUri=result.data!!.data
-//                }
-//                if(result.data?.data==null){
-//                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
-//                }else{
-//                    binding.imageView.setImageURI(result.data!!.data)
-//                }
-//            }else return@registerForActivityResult
-
-
             if(result.resultCode==Activity.RESULT_OK){
                 result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
-                      uri->
+                    uri->
+                    path=null // 앨범에서 가져올때마다 초기화
                     val inputStream = uri.let{
                         contentResolver.openInputStream(
                             it
                         )
                     }
-                    val option = BitmapFactory.Options()
-                    option.inSampleSize = 4
-                    val bitmap = BitmapFactory.decodeStream(inputStream,null,option)
-                     bitmapString=BitmapToString(bitmap!!)
-                     Log.d("bitmapstring",bitmapString.toString())
-
+                    val bitmap=BitmapFactory.decodeStream(inputStream)
+                    inputStream!!.close()
+                    path=bitmap
 
                 }
                 if(result.data?.data==null){
@@ -219,6 +204,30 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
                     binding.imageView.setImageURI(result.data!!.data)
                 }
             }else return@registerForActivityResult
+
+
+//            if(result.resultCode==Activity.RESULT_OK){
+//                result.data?.data?.let{// 결과가 제대로 들어왔을때 (이미지 주소를 잘 가져왔을때) 실행
+//                      uri->
+//                    val inputStream = uri.let{
+//                        contentResolver.openInputStream(
+//                            it
+//                        )
+//                    }
+//                    val option = BitmapFactory.Options()
+//                    option.inSampleSize = 4
+//                    val bitmap = BitmapFactory.decodeStream(inputStream,null,option)
+//                     bitmapString=BitmapToString(bitmap!!)
+//                     Log.d("bitmapstring",bitmapString.toString())
+//
+//
+//                }
+//                if(result.data?.data==null){
+//                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
+//                }else{
+//                    binding.imageView.setImageURI(result.data!!.data)
+//                }
+//            }else return@registerForActivityResult
         }
 
 

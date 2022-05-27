@@ -1,14 +1,17 @@
 package com.example.kks.record
 
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface RecordRetrofitInterface {
 
     // 글 작성 API
+    @Multipart
     @POST("/api/record/save")
     fun postRecord(
-        @Body record: RecordReq
+        @Part images: MultipartBody.Part,
+        @Part("RecordSaveReq") record: RecordReq
     ): Call<PostRecordResponse>
 
 
