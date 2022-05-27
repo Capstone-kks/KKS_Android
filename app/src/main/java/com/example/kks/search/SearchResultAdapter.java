@@ -1,5 +1,6 @@
 package com.example.kks.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +33,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     private ArrayList<SearchTest> datalist = null;
     private String userId;
 
-    private String likeCnt;
-    private int status;
+    private String status;
+    private int likeCnt = -1;
 
     public SearchResultAdapter(Context c, ArrayList<SearchTest> list, String ui){
         context = c;
@@ -50,21 +51,54 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        getLikeTest(datalist.get(position).getRecordIdx());
-        Log.e("search getView 호출이 안됨",holder.toString());
+
         Glide.with(context).load(datalist.get(position).getImgUrl()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(holder.img);
         holder.title.setText(datalist.get(position).getTitle());
         holder.userNickName.setText(datalist.get(position).getNickName());
         holder.rate.setText(String.valueOf(datalist.get(position).getRate()));
         holder.text.setText(datalist.get(position).getContent());
         holder.date.setText(datalist.get(position).getPostDate());
-        holder.like.setText(likeCnt);
-        if(status == 0)
-            holder.likeiv.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-        else if(status == 1)
-            holder.likeiv.setImageResource(R.drawable.ic_baseline_favorite_24);
+
+        RetrofitClient client = new RetrofitClient();
+        Retrofit retrofit = client.setRetrofit();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        retrofitAPI.getRecordLikeCntTest(datalist.get(position).getRecordIdx()).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(response.body() != null)
+                    likeCnt = response.body();
+                else
+                    likeCnt = 0;
+                holder.like.setText(String.valueOf(likeCnt));
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) { holder.like.setText("0");}
+        });
+
+        retrofitAPI.getRecordLikeActiveTest(datalist.get(position).getRecordIdx(), userId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.body() != null)
+                    status = response.body();
+                else
+                    status = "INACTIVE";
+
+                if(status.equals("INACTIVE"))
+                    holder.likeiv.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                else if(status.equals("ACTIVE"))
+                    holder.likeiv.setImageResource(R.drawable.ic_baseline_favorite_24);Log.d(String.valueOf(position)+"active : ",status);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                holder.likeiv.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            }
+        });
+
     }
 
     @Override
@@ -88,29 +122,5 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             like = itemView.findViewById(R.id.search_result_recyclerview_item_likeCount);
             likeiv = itemView.findViewById(R.id.search_result_recyclerview_item_like);
         }
-    }
-
-    public void getLikeTest(int recordIdx){
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        retrofitAPI.getRecordLiked(recordIdx, userId).enqueue(new Callback<ArrayList<RecordLike>>() {
-            @Override
-            public void onResponse(Call<ArrayList<RecordLike>> call, Response<ArrayList<RecordLike>> response) {
-                ArrayList<RecordLike> data = response.body();
-                likeCnt = String.valueOf(data.get(0).getLikeCnt());
-                if(data.get(0).getStatus().equals("ACTIVE"))
-                    status = 1;
-                else status = 0;
-                Log.e("좋아요 테스트 결과 가져오기 성공",data.get(0).getStatus());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<RecordLike>> call, Throwable t) {
-                Log.e("좋아요 테스트 결과 가져오기 error",userId);
-                t.printStackTrace();
-            }
-        });
     }
 }
