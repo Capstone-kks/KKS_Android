@@ -85,7 +85,8 @@ public interface RetrofitAPI {
     Call<String> getLikeStatus(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
 
     //예슬 - 아카이브 검색 좋아요 test
-    @GET("/api/likes/getliketest")
-    Call<ArrayList<RecordLike>> getRecordLiked(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
-
+    @GET("/api/likes/getlikecnttest")
+    Call<Integer> getRecordLikeCntTest(@Query("recordIdx") int recordIdx);
+    @GET("/api/likes/getlikeactivetest")
+    Call<String> getRecordLikeActiveTest(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
 }
