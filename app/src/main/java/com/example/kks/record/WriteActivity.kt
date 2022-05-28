@@ -149,9 +149,9 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
             }else{
                 binding.warningTv.text=""
 
-                val uploadBitmap = Bitmap.createScaledBitmap(path!!, (path!!.width)/2,(path!!.height)/2,true)
+                val uploadBitmap = Bitmap.createScaledBitmap(path!!, path!!.width,path!!.height,true)
                 val stream = ByteArrayOutputStream()
-                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                uploadBitmap.compress(Bitmap.CompressFormat.JPEG,80,stream)
                 val byteArray = stream.toByteArray()
                 val sendImage = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
                 multibody = MultipartBody.Part.createFormData("images","image.jpeg",sendImage)
