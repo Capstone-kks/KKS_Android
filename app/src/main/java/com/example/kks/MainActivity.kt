@@ -7,14 +7,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kks.archive.ArchiveFolderFragment
 import com.example.kks.calendar.CalendarFragment
+import com.example.kks.controller.RetrofitAPI
 import com.example.kks.controller.SharedPreference
 import com.example.kks.databinding.ActivityMainBinding
 import com.example.kks.feed.FeedFragment
 import com.example.kks.info.InfoFragment
 import com.example.kks.login.LoginPageActivity
+import com.example.kks.login.PostUser
 import com.example.kks.login.myDBAdapter
 import com.example.kks.search.SearchFragment
 import com.kakao.sdk.common.util.Utility
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.create
 
 class MainActivity : AppCompatActivity(){
 
@@ -42,7 +47,8 @@ class MainActivity : AppCompatActivity(){
         Log.d("Hash",keyHash)
 
 
-
+        getUserNickname()
+        Log.d("nickName","메인 onCreate")
         //yk code
         val intent = intent
         userId = intent.getStringExtra("user_id")
@@ -101,6 +107,29 @@ class MainActivity : AppCompatActivity(){
             }
             false
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("nickName","메인 onStart")
+    }
+
+    private fun getUserNickname(){
+        val getUserNickname = getRetrofit().create(RetrofitAPI::class.java)
+
+        getUserNickname.getUser(getUserIdx(this))
+            .enqueue(object:retrofit2.Callback<PostUser>{
+                override fun onResponse(call: Call<PostUser>, response: Response<PostUser>) {
+                    val resp = response.body()!!
+                    saveNickname(this@MainActivity,resp.nickName)
+                    Log.d("nickName",resp.nickName)
+                }
+
+                override fun onFailure(call: Call<PostUser>, t: Throwable) {
+                    Log.d("nickName","네트워크 오류가 발생했습니다.")
+                }
+
+            })
     }
 
     private fun initNavigation(){

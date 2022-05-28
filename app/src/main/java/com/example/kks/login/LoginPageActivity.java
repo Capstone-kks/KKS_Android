@@ -124,8 +124,10 @@ public class LoginPageActivity extends AppCompatActivity {
                                     System.out.println("POST USER"+postUser.getUserId());
 
                                     // eunkyung
-                                    SharedPreferenceManagerKt.saveNickname(context,nickname);
+                                //    SharedPreferenceManagerKt.saveNickname(context,nickname);
                                     SharedPreferenceManagerKt.saveUserIdx(context,user_id);
+
+
 
 
 

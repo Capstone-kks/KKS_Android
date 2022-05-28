@@ -149,7 +149,7 @@ class WriteActivity : AppCompatActivity() ,WriteRecordView{
             }else{
                 binding.warningTv.text=""
 
-                val uploadBitmap = Bitmap.createScaledBitmap(path!!, path!!.width,path!!.height,true)
+                val uploadBitmap = Bitmap.createScaledBitmap(path!!, (path!!.width)/2,(path!!.height)/2,true)
                 val stream = ByteArrayOutputStream()
                 uploadBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
                 val byteArray = stream.toByteArray()
