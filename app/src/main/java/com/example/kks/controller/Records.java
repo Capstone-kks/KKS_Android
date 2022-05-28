@@ -18,7 +18,7 @@ public class Records {
     private int categoryId;
 
     @SerializedName("rate")
-    private int rate;
+    private float rate;
 
     @SerializedName("content")
     private String content;
@@ -42,20 +42,17 @@ public class Records {
     public void setUserId(String userId){this.userId = userId;}
 
     public String getTitle(){return title;}
-    public void setTitle(){this.title=title;}
+    public void setTitle(String title){this.title=title;}
 
     public String getImgUrl(){return imgUrl;}
     public void setImgUrl(Bitmap img) {
         this.imgUrl = imgUrl;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
+    public void setRate(float rate){this.rate = rate;}
 
     public String getContent() {
         return content;
