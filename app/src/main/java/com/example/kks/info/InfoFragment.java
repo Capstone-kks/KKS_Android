@@ -9,6 +9,7 @@ import static com.example.kks.info.myrecord.MyRecordActivity.prefImg;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,6 +40,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
+import com.example.kks.SharedPreferenceManagerKt;
 import com.example.kks.controller.Name;
 import com.example.kks.controller.ProfImg;
 import com.example.kks.controller.RetrofitAPI;
@@ -99,7 +101,8 @@ public class InfoFragment extends Fragment {
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
-    Handler handler = new Handler();
+    //Handler handler = new Handler();
+    static private Context context;
 
     private MultipartBody.Part multibody = null;
 
@@ -113,6 +116,8 @@ public class InfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInfoBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+
+        context = container.getContext();
 
         prefId = SharedPreference.getString(root.getContext(), "userId");
 
@@ -187,7 +192,7 @@ public class InfoFragment extends Fragment {
 
                         Name nameResponse = response.body();
                         Log.d("닉네임 변경 성공", nickname);
-                        Toast.makeText(root.getContext(), "'" + nameResponse.getNickName() + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(root.getContext(), "'" + nameResponse.getNickName() + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -196,6 +201,10 @@ public class InfoFragment extends Fragment {
                         t.printStackTrace();
                     }
                 });
+
+                //은경님 sharedpref에 닉네임 저장
+                SharedPreferenceManagerKt.saveNickname(context,nickname);
+                Toast.makeText(root.getContext(), "'" + nickname + "' 으로 변경되었습니다.", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -467,6 +476,7 @@ public class InfoFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+        Toast.makeText(root.getContext(), "프로필 사진이 변경되었습니다.", Toast.LENGTH_LONG).show();
     }
 
     private void CameraPermissionCheck() {
@@ -585,6 +595,7 @@ public class InfoFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+        Toast.makeText(root.getContext(), "프로필 사진이 변경되었습니다.", Toast.LENGTH_LONG).show();
     }
 
     @Override
