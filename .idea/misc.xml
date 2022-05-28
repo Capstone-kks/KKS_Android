@@ -38,13 +38,17 @@
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_feed.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/layout/fragment_info.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Capstone-kks/KKS_Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable-v24/background_calendar.xml" value="0.238" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/background_profile_img.xml" value="0.238" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/bg_dialog_outline.xml" value="0.1035" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/bg_dialog_selected.xml" value="0.1135" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2095" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_check_no.xml" value="0.115" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_check_ok.xml" value="0.115" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/ic_dot.xml" value="0.224" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/drawable/record_list_background.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_detail_record.xml" value="0.3541666666666667" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_detail_record.xml" value="0.6" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_follow.xml" value="0.34010416666666665" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_main.xml" value="0.221875" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_modify.xml" value="0.2" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/activity_record.xml" value="0.264" />
@@ -55,6 +59,8 @@
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/follow_list_recyclerview_item.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/fragment_calendar.xml" value="0.3385416666666667" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/fragment_feed.xml" value="0.264" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/fragment_go_profile_dialog.xml" value="0.34010416666666665" />
+        <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/fragment_info.xml" value="0.34010416666666665" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/item_spinner.xml" value="0.171875" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/list_item_day.xml" value="0.30925925925925923" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/list_item_month.xml" value="0.3385416666666667" />

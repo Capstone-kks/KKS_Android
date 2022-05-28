@@ -29,6 +29,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
     private var isLike = false
     private var recordIdx :Int =0
     private var userId:String=""
+    private var writerId : String =""
     private lateinit var _record:Record
 
     private lateinit var commentsForRecordAdapter: CommentsForRecordAdapter
@@ -130,6 +131,11 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
             binding.refreshLayout.isRefreshing=false
         }
 
+        binding.profileLayout.setOnClickListener {
+            val goProfileDialogFragment = GoProfileDialogFragment(writerId)
+            goProfileDialogFragment.show(supportFragmentManager,goProfileDialogFragment.tag)
+
+        }
 
     }// end of onCreate
 
@@ -164,6 +170,8 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
         _record= record
 
+        writerId = record.userId
+
         getCommentsForRecord(record.recordIdx)
         initRecyclerView()
 
@@ -187,6 +195,10 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
         binding.recordCategory.text = categoryName // 카테고리
         binding.recordTitle.text=record.title // 제목
         Glide.with(this).load(record.imgUrl).into(binding.recordPicture) // 사진
+
+        Glide.with(this).load(record.profileImg).into(binding.profileImg) // 작성자 프로필 사진
+        binding.userName.text = record.writerName // 작성자 이름
+
         binding.ratingBar.rating=record.rate // 평점
         binding.recordContent.text=record.content // 내용
 
