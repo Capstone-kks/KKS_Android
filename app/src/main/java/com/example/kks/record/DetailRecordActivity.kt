@@ -20,6 +20,7 @@ import com.example.kks.comment.*
 import com.example.kks.databinding.ActivityDetailRecordBinding
 
 import com.example.kks.getUserIdx
+import com.example.kks.saveCategoryId
 
 
 // 작성한 글을 볼수있는 화면
@@ -206,6 +207,8 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
             binding.likeImage.setImageResource(R.drawable.ic_liked)
             isLike=true
         }
+
+        saveCategoryId(this,record.categoryId)
 
 
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.kks.HomeActivity;
 import com.example.kks.MainActivity;
+import com.example.kks.SharedPreferenceManagerKt;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.ActivitySplashPageBinding;
 
@@ -44,6 +45,7 @@ public class SplashPage extends AppCompatActivity {
         //server와 연동 전 테스트 시 여기 주석처리 or 체크하지 말 것
         myDBAdapter.open();
         userId = myDBAdapter.openId();
+        SharedPreferenceManagerKt.saveUserIdx(context,userId);
         //userImg = myDBAdapter.openImg();
         myDBAdapter.close();
 

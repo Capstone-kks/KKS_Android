@@ -44,3 +44,16 @@ fun getNickname(context: Context): String {
 
     return spf.getString("nickname", "")!!
 }
+fun saveCategoryId(context: Context, categoryId: Int) {
+    val spf = context.getSharedPreferences("profile", AppCompatActivity.MODE_PRIVATE)
+    val editor = spf.edit()
+
+    editor.putInt("categoryId", categoryId)
+    editor.apply()
+}
+
+fun getCategoryId(context: Context): Int {
+    val spf = context.getSharedPreferences("profile", AppCompatActivity.MODE_PRIVATE)
+
+    return spf.getInt("categoryId", 0)!!
+}
