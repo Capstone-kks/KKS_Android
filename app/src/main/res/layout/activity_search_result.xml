@@ -66,6 +66,7 @@
             android:orientation="vertical"
             android:id="@+id/search_layout"
             android:layout_marginHorizontal="20dp">
+            <!--
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +89,7 @@
                     android:text="인기순"
                     android:buttonTint="@color/main_mint"/>
             </RadioGroup>
+            -->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_result_recyclerview"

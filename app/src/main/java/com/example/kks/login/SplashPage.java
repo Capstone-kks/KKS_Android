@@ -63,7 +63,7 @@ public class SplashPage extends AppCompatActivity {
                     //intent로 아이디 넘기기
                     intent.putExtra("user_id", userId);
                     //sharedpref로 아이디 저장하기
-                    //SharedPreference.saveString(context, "userImg", userImg);
+                    //SharedPreference.saveString(context, "userId", userId);
                     intent.putExtra("checking", false);
                     startActivity(intent);
                     finish();
