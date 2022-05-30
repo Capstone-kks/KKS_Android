@@ -11,18 +11,23 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
+import com.example.kks.SharedPreferenceManagerKt;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.info.follow.Follow;
 import com.example.kks.info.follow.FollowActivity;
+import com.example.kks.login.PostUser;
+import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
 
@@ -34,18 +39,18 @@ import retrofit2.Retrofit;
 
 public class MyRecordActivity extends AppCompatActivity {
 
-    public static String userId;
-    //TODO:userId로 서버에서 사용자 이미지 가져오기
-    public static String prefImg;
+    private String LoginUserId, LoginNickName, userId, nickName, prefImg;
 
-    private String prefId;
+    private int follow_status = 0;
 
     private ImageView profile_iv;
     private ImageButton follower_btn, following_btn, follow_btn;
-    private TextView follower_tv, following_tv, norecord_tv;
+    private TextView nickName_tv, follower_tv, following_tv, norecord_tv;
     private GridView records_gv;
 
-    private ArrayList<MyRecord> list;
+    private ArrayList<MyRecord> recordList;
+    private ArrayList<Follow> followerList;
+    private ArrayList<Follow> followingList;
     private MyRecordAdapter adapter;
 
     //retrofit
@@ -58,6 +63,7 @@ public class MyRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myrecord);
 
+        nickName_tv = findViewById(R.id.myrecord_nickName_tv);
         following_btn = findViewById(R.id.imgbtn_following);
         follower_btn = findViewById(R.id.imgbtn_follower);
         profile_iv = findViewById(R.id.myrecord_profile_iv);
@@ -67,29 +73,82 @@ public class MyRecordActivity extends AppCompatActivity {
         norecord_tv = findViewById(R.id.NoRecord_tv);
         records_gv = findViewById(R.id.myrecord_gv);
 
-        list = new ArrayList<MyRecord>();
+        recordList = new ArrayList<MyRecord>();
+        followerList = new ArrayList<Follow>();
+        followingList = new ArrayList<Follow>();
 
         //로그인한 사용자의 아이디 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
-        userId = sharedPreferences.getString("userId","");
+        LoginUserId = sharedPreferences.getString("userId","");
+        LoginNickName = SharedPreferenceManagerKt.getNickname(getApplicationContext());
 
-        //프로필 이미지 설정
-        prefImg = SharedPreference.getString(this, "userImg");
-        Glide.with(this).load(prefImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_iv);
+        //화면 사용자 정보 받아오기
+        Intent getintent = getIntent();
+        userId = getintent.getStringExtra("userId");
 
-        //팔로우 신청버튼 보이기 여부
-        prefId = SharedPreference.getString(this,"userId");
-        if(prefId.equals(userId))
+
+        if(userId.equals(LoginUserId)){//로그인 사용자의 개인 게시물
+            Log.d("개인 게시물 페이지","로그인 사용자 페이지");
+
+            //팔로우 버튼 없애기
             follow_btn.setVisibility(View.GONE);
-        else
+
+            //프로필 이미지 설정
+            prefImg = SharedPreference.getString(this, "userImg");
+            Glide.with(this).load(prefImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_iv);
+
+            //닉네임
+            Log.d("닉네임",LoginNickName);
+            nickName = LoginNickName;
+            nickName_tv.setText(nickName);
+        }
+        else{//다른 사용자의 개인 게시물 페이지
+            Log.d("개인 게시물 페이지","다른 사용자 페이지");
+
+            //팔로우 버튼 보이기
             follow_btn.setVisibility(View.VISIBLE);
 
-        //팔로워 리스트 가져오기 & 팔로워 숫자 셋팅
+            //프로필 이미지, 닉네임 설정
+            retrofitAPI.getUser(userId).enqueue(new Callback<PostUser>() {
+                @Override
+                public void onResponse(Call<PostUser> call, Response<PostUser> response) {
+                    PostUser data = response.body();
+
+                    nickName = data.getNickName();
+                    nickName_tv.setText(nickName);
+                    Glide.with(getApplicationContext()).load(data.getUserImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_iv);
+                }
+
+                @Override
+                public void onFailure(Call<PostUser> call, Throwable t) {  }
+            });
+        }
+
         retrofitAPI.getFollower(userId).enqueue(new Callback<ArrayList<Follow>>() {
             @Override
             public void onResponse(Call<ArrayList<Follow>> call, Response<ArrayList<Follow>> response) {
-                FollowActivity.followerList = response.body();
-                follower_tv.setText(String.valueOf(FollowActivity.followerList.size()));
+                ArrayList<Follow> data = response.body();
+
+                followerList.clear();
+                follow_status = 0;
+
+                //TODO 갑자기 아이디랑 닉네임 못받아옴. 이미지는 받아옴. 왜....?
+
+                for(int i = 0; i< data.size(); i++) {
+                    followerList.add(data.get(i));
+                    //Log.e("왜",data.get(i).getNickname());
+                    if(!(userId.equals(LoginUserId)) && data.get(i).getUserId().equals(LoginUserId))
+                        follow_status = 1;
+                }
+
+                if(!(userId.equals(LoginUserId)))
+                    if(follow_status == 0)
+                        follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                    else if(follow_status == 1)
+                        follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+
+                FollowActivity.followerList = followerList;
+                follower_tv.setText(String.valueOf(followerList.size()));
             }
 
             @Override
@@ -98,26 +157,37 @@ public class MyRecordActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+
         //팔로잉 리스트 가져오기 & 팔로잉 숫자 셋팅
         retrofitAPI.getFollowing(userId).enqueue(new Callback<ArrayList<Follow>>() {
             @Override
             public void onResponse(Call<ArrayList<Follow>> call, Response<ArrayList<Follow>> response) {
-                FollowActivity.followingList = response.body();
-                following_tv.setText(String.valueOf(FollowActivity.followingList.size()));
+                ArrayList<Follow> data = response.body();
+
+                followingList.clear();
+                for(int i = 0; i< data.size(); i++) {
+                    followingList.add(data.get(i));
+                    followingList.get(i).setFollowstatus(1);
+                }
+                FollowActivity.followingList = followingList;
+                following_tv.setText(String.valueOf(followingList.size()));
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Follow>> call, Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<Follow>> call, Throwable t) {
                 Log.e("팔로잉 결과 가져오기 실패",userId);
                 t.printStackTrace();
             }
         });
+
         //팔로잉 버튼 클릭 시
         following_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FollowActivity.follow_num = 0;//사용자가 팔로우 하는 List 띄워야 함
                 Intent intent = new Intent(getApplicationContext(), FollowActivity.class);
+                intent.putExtra("userId",userId);
+                intent.putExtra("nickName",nickName);
                 startActivity(intent);
             }
         });
@@ -127,15 +197,57 @@ public class MyRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FollowActivity.follow_num = 1;//사용자를 팔로우 하는 List 띄워야 함
                 Intent intent = new Intent(getApplicationContext(), FollowActivity.class);
+                intent.putExtra("userId",userId);
+                intent.putExtra("nickName",nickName);
                 startActivity(intent);
             }
         });
 
-        //다른 사용자 팔로우 버튼 클릭 시
         follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 팔로우 요청 POST retrofit2
+                if(follow_status == 0){//팔로우 신청
+                    Log.d("팔로우 신청 버튼 클릭","실행");
+                    follow_status = 1;
+                    //이미지뷰 변경
+                    follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+                    //서버 변경
+                    retrofitAPI.requestFollow(LoginUserId, userId).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.d("팔로우 신청 결과",response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("팔로우 신청 오류",call.toString());
+                        }
+                    });
+                    //토스트 메세지 띄우기
+                    Toast.makeText(getApplicationContext(), userId + "님을 팔로우", Toast.LENGTH_LONG).show();
+
+                }
+                else if(follow_status == 1){//팔로우 취소
+                    Log.d("팔로우 취소 버튼 클릭","실행");
+                    follow_status = 0;
+                    //이미지뷰 변경
+                    follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                    //서버 변경
+                    retrofitAPI.cancelFollow(LoginUserId, userId).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.d("팔로우 취소 결과",response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("팔로우 취소 오류",call.toString());
+                        }
+                    });
+                    //토스트 메세지 띄우기
+                    Toast.makeText(getApplicationContext(), userId + "님 팔로우 취소", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -157,8 +269,9 @@ public class MyRecordActivity extends AppCompatActivity {
                         norecord_tv.setVisibility(View.VISIBLE);
                     }
                     else{
-                        Log.e("데이터 받아옴",data.get(0).getImg());
-                        adapter = new MyRecordAdapter(getApplicationContext(), data);
+                        for(int i = 0; i < data.size();i++)
+                            recordList.add(data.get(i));
+                        adapter = new MyRecordAdapter(getApplicationContext(), recordList);
                         records_gv.setAdapter(adapter);
                     }
                 }
@@ -171,13 +284,23 @@ public class MyRecordActivity extends AppCompatActivity {
             }
         });
 
-        //그리드뷰 클릭 시
+        //그리드뷰 클릭 시 -> 게시물 상세페이지로 이동
         records_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int recordIdx = list.get(position).getRecordIdx();
-                //TODO: 게시물 상세화면으로 넘기기
+                int recordIdx = recordList.get(position).getRecordIdx();
+                Intent intent = new Intent(getApplicationContext(), DetailRecordActivity.class);
+                intent.putExtra("recordIdx", recordIdx);
+                startActivity(intent);
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //팔로워 리스트 가져오기 & 팔로워 숫자 셋팅
+
+    }
+
 }

@@ -120,9 +120,9 @@ class MainActivity : AppCompatActivity(){
         getUserNickname.getUser(getUserIdx(this))
             .enqueue(object:retrofit2.Callback<PostUser>{
                 override fun onResponse(call: Call<PostUser>, response: Response<PostUser>) {
-                    val resp = response.body()!!
-                    saveNickname(this@MainActivity,resp.nickName)
-                    Log.d("nickName",resp.nickName)
+                    //val resp = response.body()!!
+                    //saveNickname(this@MainActivity,resp.nickName)
+                    //Log.d("nickName",resp.nickName)
                 }
 
                 override fun onFailure(call: Call<PostUser>, t: Throwable) {

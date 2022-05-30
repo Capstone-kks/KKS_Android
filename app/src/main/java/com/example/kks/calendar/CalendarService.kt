@@ -24,13 +24,15 @@ class CalendarService {
                 override fun onResponse(call: Call<CalendarResponse>, response: Response<CalendarResponse>) {
 
                     Log.d("why",response.toString());
-                    val resp = response.body()!!
+                    /*val resp = response.body()!!
 
                     when(resp.code){
                         1000->{
                             calendarView.onGetCalendarSuccess(resp.result)
                         }else->calendarView.onGetCalendarFailure(resp.code, resp.message)
                     }
+
+                     */
                 }
 
                 override fun onFailure(call: Call<CalendarResponse>, t: Throwable) {

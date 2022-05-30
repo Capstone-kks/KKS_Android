@@ -17,7 +17,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
-import com.example.kks.info.liked.RecordLike;
 
 import java.util.ArrayList;
 

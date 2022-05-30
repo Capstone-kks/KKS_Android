@@ -4,8 +4,6 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-import static com.example.kks.info.myrecord.MyRecordActivity.prefImg;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -313,9 +311,8 @@ public class InfoFragment extends Fragment {
         myrecord_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyRecordActivity.userId = userId;
-                prefImg = prefId;
                 Intent intent = new Intent(root.getContext(), MyRecordActivity.class);
+                intent.putExtra("userId",prefId);
                 startActivity(intent);
             }
         });
@@ -343,7 +340,19 @@ public class InfoFragment extends Fragment {
                 dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO 회원탈퇴
+                        retrofitAPI.WithdrawalUser(userId).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Intent intent = new Intent(getContext(), LoginPageActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
                 dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {

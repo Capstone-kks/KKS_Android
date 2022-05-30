@@ -1,6 +1,8 @@
 package com.example.kks.info.myrecord;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kks.controller.GlideApp;
+import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,7 @@ public class MyRecordAdapter extends BaseAdapter {
     public MyRecordAdapter(Context m, ArrayList<MyRecord> d){
         c = m;
         list = d;
+
     }
 
     @Override
@@ -36,18 +41,18 @@ public class MyRecordAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return list.get(position).getRecordIdx();
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView = new ImageView(c);
-        //imageView.setPadding(5, 5, 5, 5);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
-        //TODO 그리드뷰 이미지 셋팅
-        //Glide.with(c).load(list.get(position).getImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(imageView);
+        imageView.setPadding(1, 1, 1, 1);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setLayoutParams(new GridView.LayoutParams(350,350));
+        GlideApp.with(c).load(list.get(position).getImg()).into(imageView);
+
         return imageView;
     }
 }

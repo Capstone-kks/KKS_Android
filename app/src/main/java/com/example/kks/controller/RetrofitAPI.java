@@ -1,10 +1,8 @@
 package com.example.kks.controller;
 
 import com.example.kks.info.follow.Follow;
-import com.example.kks.info.liked.RecordLike;
 import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
-import com.example.kks.record.Record;
 import com.example.kks.search.Recommend;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchTest;
@@ -12,13 +10,9 @@ import com.example.kks.search.SearchTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.List;
-
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -65,6 +59,15 @@ public interface RetrofitAPI {
     @GET("api/info/following")
     Call<ArrayList<Follow>> getFollowing(@Query("userId") String userId);
 
+    @GET("api/info/follow/apply")
+    Call<String> requestFollow(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
+    @GET("api/info/follow/cancel")
+    Call<String> cancelFollow(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
+    @GET("api/info/follow/getfollowstatus")
+    Call<String> getFollowStatus(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
     @GET("api/info/myrecord")
     Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);
 
@@ -72,13 +75,12 @@ public interface RetrofitAPI {
     Call<ArrayList<MyRecord>> getLikedRecords(@Query("userId") String userId);
 
     @POST("api/info/withdrawal")
-    Call<String> postWithdrawalUser(@Body String userId);
+    Call<String> WithdrawalUser(@Body String userId);
 
 
     //아카이브
     @GET("/api/archive/search")
     Call<ArrayList<Records>> getArchiveSearch(@Query("userId") String userId, @Query("categoryId") int categoryId, @Query("keyword") String keyword);
-
 
     //for 아카이브 검색 - 좋아요 개수 반환
     @GET("/api/likes/countlike")
@@ -88,11 +90,12 @@ public interface RetrofitAPI {
     @GET("/api/likes/getstatus")
     Call<String> getLikeStatus(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
 
-    //예슬 - 아카이브 검색 좋아요 test
+    //예슬 - 검색 좋아요
     @GET("/api/likes/getlikecnttest")
     Call<Integer> getRecordLikeCntTest(@Query("recordIdx") int recordIdx);
     @GET("/api/likes/getlikeactivetest")
     Call<String> getRecordLikeActiveTest(@Query("recordIdx") int recordIdx, @Query("userId") String userId);
+
 
     //닉네임 수정
     @PUT("/api/login/updatename/userId={userId}")

@@ -7,20 +7,41 @@ import com.google.gson.annotations.SerializedName;
 
 public class Follow {
 
-    @SerializedName("img") @Expose
-    private Bitmap img;
-    @SerializedName("userid") @Expose
+    @SerializedName("userId") @Expose
     private String userId;
+    @SerializedName("userImg") @Expose
+    private String img;
+    @SerializedName("nickName") @Expose
+    private String nickname;
 
-    public Follow(String ui){
-        userId = ui;
+    private int followstatus;
+    public int getFollowstatus() {
+        return followstatus;
+    }
+    public void setFollowstatus(int followstatus) {
+        this.followstatus = followstatus;
     }
 
-    public Bitmap getImg() {
+
+    public Follow(String userId, String img, String nickname) {
+        this.userId = userId;
+        this.img = img;
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getImg() {
         return img;
     }
 
-    public void setImg(Bitmap img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
