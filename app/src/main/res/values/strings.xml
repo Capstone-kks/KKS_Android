@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kks</string>
+    <string name="app_name">culture record</string>
 
     <string-array name="pick_category">
         <item>공연</item>
