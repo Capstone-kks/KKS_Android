@@ -57,3 +57,10 @@ fun getCategoryId(context: Context): Int {
 
     return spf.getInt("categoryId", 0)!!
 }
+fun removeSpfAll(context:Context){
+    val spf = context.getSharedPreferences("profile",AppCompatActivity.MODE_PRIVATE)
+    val editor = spf.edit()
+
+    editor.clear()
+    editor.commit()
+}

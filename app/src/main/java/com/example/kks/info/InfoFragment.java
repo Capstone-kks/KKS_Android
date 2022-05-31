@@ -372,7 +372,7 @@ public class InfoFragment extends Fragment {
                         adapter.open();
                         adapter.delete("userId");
                         adapter.close();
-
+                        SharedPreferenceManagerKt.removeSpfAll(context);
                         Intent intent = new Intent(root.getContext(), LoginPageActivity.class);
                         startActivity(intent);
                     }
