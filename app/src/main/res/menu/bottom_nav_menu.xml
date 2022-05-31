@@ -26,8 +26,8 @@
     <item
         android:id="@+id/archiveFragment"
         android:icon="@drawable/ic_baseline_folder_24"
-        app:showAsAction="always"
-        android:title="archive" />
+        android:title="아카이브"
+        app:showAsAction="always" />
     <item
         android:id="@+id/info_fragment"
         android:icon="@drawable/bottom_menu_profile_selector"

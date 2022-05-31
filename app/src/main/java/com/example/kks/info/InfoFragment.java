@@ -151,7 +151,7 @@ public class InfoFragment extends Fragment {
                     nickname = data.getNickName();
                     userImg = data.getUserImg();
                     Log.d("이름", nickname);
-                    //Log.d("이미지", userImg);
+                    Log.d("이미지", userImg);
                     editName_edt.setText(nickname);
                     if (((Activity)root.getContext()).isFinishing())
                         return;
