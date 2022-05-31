@@ -10,7 +10,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitClient {
     //private static final String BASE_URL = "http://localhost:8080";;
     //private static final String BASE_URL = "http://10.0.2.2:8080";
-    private static final String BASE_URL = "http://ec2-54-180-169-133.ap-northeast-2.compute.amazonaws.com:8080";
+    //private static final String BASE_URL = "http://ec2-54-180-169-133.ap-northeast-2.compute.amazonaws.com:8080";
+    private static final String BASE_URL = "http://devkks.shop";
 
     public Retrofit setRetrofit() {
 
