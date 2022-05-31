@@ -125,7 +125,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
                                     // eunkyung
                                     //SharedPreferenceManagerKt.saveNickname(context,nickname);
-                                    SharedPreferenceManagerKt.saveUserIdx(context,user_id);
+                                 //   SharedPreferenceManagerKt.saveUserIdx(context,user_id);
 
 
 

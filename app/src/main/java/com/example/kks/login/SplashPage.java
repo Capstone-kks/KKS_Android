@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.kks.HomeActivity;
 import com.example.kks.MainActivity;
-import com.example.kks.controller.SharedPreference;
+import com.example.kks.SharedPreferenceManagerKt;
 import com.example.kks.databinding.ActivitySplashPageBinding;
 
 import java.util.Timer;
@@ -44,6 +42,7 @@ public class SplashPage extends AppCompatActivity {
         //server와 연동 전 테스트 시 여기 주석처리 or 체크하지 말 것
         myDBAdapter.open();
         userId = myDBAdapter.openId();
+    //    SharedPreferenceManagerKt.saveUserIdx(context,userId);
         //userImg = myDBAdapter.openImg();
         myDBAdapter.close();
 

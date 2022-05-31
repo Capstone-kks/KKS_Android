@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity(){
         //nickname = intent.getStringExtra("nickname")
         //userImg = intent.getStringExtra("userImage")
         checking = intent.extras!!.getBoolean("checking")
+        saveUserIdx(this,userId!!)
 
         maintainId(userId!!, checking)
 
