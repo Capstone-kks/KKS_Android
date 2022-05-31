@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initNavigation()
+
 
         // 해쉬값 구하기
         val keyHash = Utility.getKeyHash(this)
@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity(){
         saveUserIdx(this,userId!!)
 
         maintainId(userId!!, checking)
+
+        initNavigation()
 
         /*
         //sharedpreference
