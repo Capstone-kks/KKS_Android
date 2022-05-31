@@ -71,11 +71,14 @@
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/list_recyclerview_item.xml" value="0.4" />
         <entry key="..\:/AndroidProject/Capstone_2022/KKS_Android/app/src/main/res/layout/record_list_item.xml" value="0.264" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1" />
+        <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/activity_alarm.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/activity_follow.xml" value="0.1" />
+        <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/activity_myrecord.xml" value="0.18" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/follow_list_recyclerview_item.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/fragment_archive_folder.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/fragment_info.xml" value="0.1" />
-        <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/fragment_search.xml" value="0.11203703703703703" />
+        <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/fragment_search.xml" value="0.21" />
+        <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/list_recommend_item.xml" value="0.22" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/list_recyclerview_item.xml" value="0.17" />
         <entry key="..\:/Users/User/Documents/GitHub/KKS_Android/app/src/main/res/layout/list_recyclerview_item2.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/user/AndroidStudioProjects/kks/app/src/main/res/drawable/ic_back.xml" value="0.227" />
@@ -142,7 +145,6 @@
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/list_recyclerview_item2.xml" value="0.26403985507246375" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/pattern_content.xml" value="0.1879432624113475" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/layout/photo_box.xml" value="0.24114583333333334" />
-        <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2786458333333333" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/xml/network_security_config.xml" value="0.1" />
         <entry key="..\:/Users/user/Desktop/kks_android/KKS_Android/app/src/main/res/xml/provider_paths.xml" value="0.259963768115942" />
       </map>

@@ -1,50 +1,51 @@
 package com.example.kks.search;
 
-import android.graphics.Bitmap;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Search {
-    @SerializedName("key") @Expose
-    private int key;
-    @SerializedName("imgUrl") @Expose private Bitmap img;
+    @SerializedName("recordIdx") @Expose private int recordIdx;
+    @SerializedName("userId") @Expose private String userId;
+    @SerializedName("nickName") @Expose private String nickName;
     @SerializedName("title") @Expose private String title;
-    @SerializedName("userid") @Expose private String userId;
-    @SerializedName("id") @Expose private String id;
-    @SerializedName("rate") @Expose private int rate;
-    @SerializedName("likedcnt") @Expose private int likedCnt;
-    @SerializedName("liked") @Expose private int liked;
-    @SerializedName("text") @Expose private String text;
-    @SerializedName("date") @Expose private String date;
+    @SerializedName("rate") @Expose private float rate;
+    @SerializedName("content") @Expose private String content;
+    @SerializedName("postDate") @Expose private String postDate;
+    @SerializedName("imgUrl") @Expose private String imgUrl;
 
-    public Search(int k,  String t, String ui, String id, int r, int lc, int l, String c, String d){
-        key = k;
-        //img = i;
-        title = t;
-        userId = ui;
-        this.id = id;
-        rate = r;
-        likedCnt = lc;
-        liked = l;
-        text = c;
-        date = d;
+    public Search(int recordIdx, String userId, String nickName, String title, float rate, String content, String postDate, String imgUrl) {
+        this.recordIdx = recordIdx;
+        this.userId = userId;
+        this.nickName = nickName;
+        this.title = title;
+        this.rate = rate;
+        this.content = content;
+        this.postDate = postDate;
+        this.imgUrl = imgUrl;
     }
 
-    public int getKey() {
-        return key;
+    public int getRecordIdx() {
+        return recordIdx;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setRecordIdx(int recordIdx) {
+        this.recordIdx = recordIdx;
     }
 
-    public Bitmap getImg() {
-        return img;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setImg(Bitmap img) {
-        this.img = img;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getTitle() {
@@ -55,57 +56,35 @@ public class Search {
         this.title = title;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 
-    public int getLikedCnt() {
-        return likedCnt;
+    public String getContent() {
+        return content;
     }
 
-    public void setLikedCnt(int likedCnt) {
-        this.likedCnt = likedCnt;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public int getLiked() {
-        return liked;
+    public String getPostDate() {
+        return postDate;
     }
 
-    public void setLiked(int liked) {
-        this.liked = liked;
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
     }
 
-    public String getText() {
-        return text;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

@@ -1,9 +1,12 @@
 package com.example.kks.info.liked;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +16,8 @@ import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.info.myrecord.MyRecord;
+import com.example.kks.info.myrecord.MyRecordAdapter;
+import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
 
@@ -27,7 +32,7 @@ public class LikedActivity extends AppCompatActivity {
 
     private GridView liked_gv;
     private ArrayList<MyRecord> list;
-    private LikedRecordAdapter adapter;
+    private MyRecordAdapter adapter;
 
     //retrofit
     RetrofitClient client = new RetrofitClient();
@@ -40,25 +45,37 @@ public class LikedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_liked);
 
         liked_gv = findViewById(R.id.liked_gv);
+        list = new ArrayList<MyRecord>();
 
         //로그인한 사용자의 아이디 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","");
 
-        //TODO 이미지 처리 후 -> 그리드뷰 연결
-
         retrofitAPI.getLikedRecords(userId).enqueue(new Callback<ArrayList<MyRecord>>() {
             @Override
             public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
-                list = response.body();
+                ArrayList<MyRecord> data = response.body();
 
-                //TODO 그리드뷰 연결
+                for(int i=0; i<data.size(); i++)
+                    list.add(data.get(i));
+                adapter = new MyRecordAdapter(getApplicationContext(), list);
+                liked_gv.setAdapter(adapter);
             }
 
             @Override
             public void onFailure(Call<ArrayList<MyRecord>> call, Throwable t) {
                 Log.e("좋아요 목록 결과 가져오기 실패",userId);
                 t.printStackTrace();
+            }
+        });
+
+        liked_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int recordIdx = list.get(position).getRecordIdx();
+                Intent intent = new Intent(getApplicationContext(), DetailRecordActivity.class);
+                intent.putExtra("recordIdx", recordIdx);
+                startActivity(intent);
             }
         });
     }

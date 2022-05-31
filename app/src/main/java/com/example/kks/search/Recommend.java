@@ -5,19 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class Recommend {
     @SerializedName("recordIdx") @Expose private int recordIdx;
-    @SerializedName("userId") @Expose private String userId;
-    @SerializedName("nickName") @Expose private String nickName;
     @SerializedName("title") @Expose private String title;
-    @SerializedName("rate") @Expose private float rate;//////////////
+    @SerializedName("rate") @Expose private float rate;
     @SerializedName("content") @Expose private String content;
     @SerializedName("postDate") @Expose private String postDate;
     @SerializedName("imgUrl") @Expose private String imgUrl;
-    //@SerializedName("likeCnt") @Expose private int likeCnt;
 
-    public Recommend(int recordIdx, String userId, String nickName, String title, float rate, String content, String postDate, String imgUrl) {
+    public Recommend(int recordIdx, String title, float rate, String content, String postDate, String imgUrl) {
         this.recordIdx = recordIdx;
-        this.userId = userId;
-        this.nickName = nickName;
         this.title = title;
         this.rate = rate;
         this.content = content;
@@ -31,22 +26,6 @@ public class Recommend {
 
     public void setRecordIdx(int recordIdx) {
         this.recordIdx = recordIdx;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getTitle() {

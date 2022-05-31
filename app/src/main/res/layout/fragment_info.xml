@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_myrecord"
-            android:text="내 게시물"
+            android:text="내 게시물 및 팔로우"
             android:textAlignment="viewStart"
             android:textStyle="bold"
             android:textColor="@color/DarkGray"

@@ -1,8 +1,6 @@
 package com.example.kks.archive;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.kks.R;
@@ -20,13 +17,10 @@ import com.example.kks.controller.CatImg;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.ActivityGridBinding;
-import com.example.kks.databinding.ActivityLoginPageBinding;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchResultAdapter;
-import com.example.kks.search.SearchTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,7 +42,7 @@ public class GridActivity extends AppCompatActivity {
 
     public static Activity act;
 
-    private ArrayList<SearchTest> SearchList;
+    private ArrayList<Search> SearchList;
     private SearchResultAdapter SearchAdapter;
 
     //retrofit

@@ -72,22 +72,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/recommend_layout"
-        android:layout_marginHorizontal="20dp">
-
+        android:layout_marginHorizontal="20dp"
+        android:padding="15dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recommend_tv"
-            android:text="사용자 님 이런 게시물은 어떠세요?"
+            android:text="김예슬 님!"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="1dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이런 게시물은 어떠세요?"
+            android:textSize="15dp"
+            android:layout_marginBottom="10dp"/>
         <Gallery
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recommend_gr"
-            android:layout_marginVertical="20dp"
             android:spacing="10dp"/>
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.example.kks.search;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
-import com.example.kks.info.liked.RecordLike;
+import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
 
@@ -30,13 +31,13 @@ import retrofit2.Retrofit;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchViewHolder> {
 
     private Context context;
-    private ArrayList<SearchTest> datalist = null;
+    private ArrayList<Search> datalist = null;
     private String userId;
 
     private String status;
     private int likeCnt = -1;
 
-    public SearchResultAdapter(Context c, ArrayList<SearchTest> list, String ui){
+    public SearchResultAdapter(Context c, ArrayList<Search> list, String ui){
         context = c;
         datalist = list;
         userId = ui;
@@ -121,6 +122,17 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             date = itemView.findViewById(R.id.search_result_recyclerview_item_date);
             like = itemView.findViewById(R.id.search_result_recyclerview_item_likeCount);
             likeiv = itemView.findViewById(R.id.search_result_recyclerview_item_like);
+
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    Intent intent = new Intent(context, DetailRecordActivity.class);
+                    intent.putExtra("recordIdx",datalist.get(pos).getRecordIdx());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
