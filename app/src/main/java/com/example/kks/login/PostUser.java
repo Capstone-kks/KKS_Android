@@ -3,6 +3,9 @@ package com.example.kks.login;
 import com.google.gson.annotations.SerializedName;
 
 public class PostUser {
+    //@SerializedName("userIndex")
+    //private int userIndex;
+
     @SerializedName("userId")
     private String userId;
 
@@ -11,6 +14,9 @@ public class PostUser {
 
     @SerializedName("userImg")
     private String userImg;
+
+    //public int getUserIndex() { return userIndex;}
+    //public void setUserIndex(int userIndex) {this.userIndex = userIndex;}
 
     public String getUserId(){
         return userId;
