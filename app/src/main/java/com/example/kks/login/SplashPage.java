@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -35,8 +36,12 @@ public class SplashPage extends AppCompatActivity {
         setContentView(view);
         //setContentView(R.layout.activity_splash_page);
 
-
-
+        SharedPreferences preferences = getSharedPreferences("AlarmInfo", MODE_PRIVATE);
+        if(preferences.getString("Time","") == null || preferences.getString("Time","").equals("")){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("AlarmStatus",false);
+            editor.commit();
+        }
 
         //자동로그인 확인 -> 확인되면 바로 홈으로 넘어감
         //server와 연동 전 테스트 시 여기 주석처리 or 체크하지 말 것

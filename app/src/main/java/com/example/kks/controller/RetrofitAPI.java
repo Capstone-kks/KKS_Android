@@ -1,24 +1,17 @@
 package com.example.kks.controller;
 
 import com.example.kks.info.follow.Follow;
-import com.example.kks.info.liked.RecordLike;
 import com.example.kks.info.myrecord.MyRecord;
 import com.example.kks.login.PostUser;
-import com.example.kks.record.Record;
 import com.example.kks.search.Recommend;
 import com.example.kks.search.Search;
-import com.example.kks.search.SearchTest;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -46,16 +39,13 @@ public interface RetrofitAPI {
 
 
     //검색
-    @GET("/api/record/search/keyword")
-    Call<ArrayList<Search>> getSearchResult(@Query("keyword") String keyword);
-
     @GET("/api/record/search/keywordtest")
-    Call<ArrayList<SearchTest>> getSearchResultTest(@Query("keyword") String keyword, @Query("loginUserId") String loginUserId, @Query("sort") int sort);
+    Call<ArrayList<Search>> getSearchResultTest(@Query("keyword") String keyword, @Query("loginUserId") String loginUserId, @Query("sort") int sort);
 
 
     //사용자 추천
     @GET("api/record/recommend")
-    Call<ArrayList<Recommend>> getRecommend(@Query("userId") String userId);
+    Call<ArrayList<Recommend>> getRecommend(@Query("categoryId") int categoryId, @Query("userId") String userId);
 
 
     //프로필
@@ -65,6 +55,15 @@ public interface RetrofitAPI {
     @GET("api/info/following")
     Call<ArrayList<Follow>> getFollowing(@Query("userId") String userId);
 
+    @GET("api/info/follow/apply")
+    Call<String> requestFollow(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
+    @GET("api/info/follow/cancel")
+    Call<String> cancelFollow(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
+    @GET("api/info/follow/getfollowstatus")
+    Call<String> getFollowStatus(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
+
     @GET("api/info/myrecord")
     Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);
 
@@ -72,7 +71,7 @@ public interface RetrofitAPI {
     Call<ArrayList<MyRecord>> getLikedRecords(@Query("userId") String userId);
 
     @POST("api/info/withdrawal")
-    Call<String> postWithdrawalUser(@Body String userId);
+    Call<String> WithdrawalUser(@Body String userId);
 
 
     //아카이브

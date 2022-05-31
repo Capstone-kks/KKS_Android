@@ -1,12 +1,14 @@
 package com.example.kks.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageButton;
@@ -21,11 +23,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kks.R;
+import com.example.kks.SharedPreferenceManagerKt;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.FragmentSearchBinding;
+import com.example.kks.record.DetailRecordActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,8 +45,9 @@ public class SearchFragment extends Fragment {
 
 
     //정보
-    private String userId, keyword;
+    private String userId, keyword, nickName;
     private int sort = 1;
+    private int categoryId;
 
     //UI
     private ImageButton search_btn;
@@ -57,7 +63,7 @@ public class SearchFragment extends Fragment {
     private SearchResultAdapter SearchAdapter;
 
     private ArrayList<Recommend> RecommendList;
-    private ArrayList<SearchTest> SearchList;
+    private ArrayList<Search> SearchList;
 
 
     //retrofit
@@ -87,14 +93,15 @@ public class SearchFragment extends Fragment {
         //로그인한 사용자의 아이디 가져오기
         SharedPreferences sharedPreferences = root.getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","");
-
-        //TODO 사용자 닉네임 설정 - sharedPref사용하면?
-        recommend_ment.setText("사용자 님 이런 게시물은 어떠세요?");
+        nickName = SharedPreferenceManagerKt.getNickname(getContext());
+        recommend_ment.setText(nickName + " 님!");
+        categoryId = SharedPreferenceManagerKt.getCategoryId(getContext());
 
         //사용자 추천 더미데이터
+
         RecommendList = new ArrayList<Recommend>();
-        RecommendList.add(new Recommend(1, "lolla44", "lolla44", "해리포터", 4.5f, "과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다.", "2022-03-21", "00"));
-        RecommendList.add(new Recommend(2, "lolla44", "jupiter", "숨참고 럽 답", 3.5f, "네가 참 궁금해 그건 너도 마찬가지\n" +
+        RecommendList.add(new Recommend(1, "해리포터", 5.0f, "과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다.", "2022-06-01", "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/03/111063333.2.jpg"));
+        RecommendList.add(new Recommend(2, "숨참고 럽 답", 4.5f, "네가 참 궁금해 그건 너도 마찬가지\n" +
                 "이거면 충분해 쫓고 쫓는 이런 놀이\n" +
                 "참을 수 없는 이끌림과 호기심\n" +
                 "묘한 너와 나 두고 보면 알겠지\n" +
@@ -106,7 +113,7 @@ public class SearchFragment extends Fragment {
                 "서로를 비춘 밤\n" +
                 "아름다운 까만 눈빛 더 빠져 깊이\n" +
                 "(넌 내게로 난 네게로)\n" +
-                "숨 참고 love dive", "2022-04-5", "00"));
+                "숨 참고 love dive", "2020-05-06", "https://pbs.twimg.com/media/FPlUqUpVQAM6DAc?format=jpg&name=small"));
         recommendAdapter = new RecommendAdapter(galleryView.getContext(), RecommendList);
         galleryView.setAdapter(recommendAdapter);
 
@@ -114,7 +121,10 @@ public class SearchFragment extends Fragment {
         //사용자 추천 서버연결
         /*
         RecommendList = new ArrayList<Recommend>();
-        retrofitAPI.getRecommend(userId).enqueue(new Callback<ArrayList<Recommend>>() {
+        if(categoryId == 0)
+            categoryId = randCategoryId();
+        Log.d("추천 카테고리",String.valueOf(categoryId));
+        retrofitAPI.getRecommend(categoryId, userId).enqueue(new Callback<ArrayList<Recommend>>() {
             @Override
             public void onResponse(Call<ArrayList<Recommend>> call, Response<ArrayList<Recommend>> response) {
                 if(response.isSuccessful()) {
@@ -134,8 +144,18 @@ public class SearchFragment extends Fragment {
                 Log.e("사용자 추천 데이터 가져오기 실패",userId);
                 t.printStackTrace();
             }
+        });*/
+
+        //사용자 추천 클릭 시 화면 전환
+        galleryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int recordIdx = RecommendList.get(position).getRecordIdx();
+                Intent intent = new Intent(root.getContext(), DetailRecordActivity.class);
+                intent.putExtra("recordIdx", recordIdx);
+                startActivity(intent);
+            }
         });
-        */
 
 
         //검색 결과
@@ -148,12 +168,13 @@ public class SearchFragment extends Fragment {
                 recommend_layout.setVisibility(View.GONE);
                 search_layout.setVisibility(View.VISIBLE);
 
-                SearchList = new ArrayList<SearchTest>();
+                SearchList = new ArrayList<Search>();
 
                 NewSearchResult();
             }
         });
 
+        //검색 결과 클릭 시 상세 화면
         Sort_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -168,12 +189,21 @@ public class SearchFragment extends Fragment {
         return root;
     }
 
+    private int randCategoryId(){
+        int i;
+        Random random = new Random();
+        i = random.nextInt(8) + 1;
+        if(i > 1)
+            i += 8;
+        return i;
+    }
+
     private void NewSearchResult(){
-        retrofitAPI.getSearchResultTest(keyword, userId, sort).enqueue(new Callback<ArrayList<SearchTest>>() {
+        retrofitAPI.getSearchResultTest(keyword, userId, sort).enqueue(new Callback<ArrayList<Search>>() {
             @Override
-            public void onResponse(Call<ArrayList<SearchTest>> call, Response<ArrayList<SearchTest>> response) {
+            public void onResponse(Call<ArrayList<Search>> call, Response<ArrayList<Search>> response) {
                 if(response.isSuccessful()){
-                    ArrayList<SearchTest> data = response.body();
+                    ArrayList<Search> data = response.body();
                     SearchList.clear();
 
                     for(int i = 0; i < data.size();i++)
@@ -186,29 +216,13 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<SearchTest>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Search>> call, Throwable t) {
                 Log.e("검색 결과 가져오기 실패",keyword);
                 t.printStackTrace();
             }
         });
     }
 
-/*
-    public static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
-        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            drawable = (DrawableCompat.wrap(drawable)).mutate();
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
-*/
     @Override
     public void onDestroyView() {
         super.onDestroyView();

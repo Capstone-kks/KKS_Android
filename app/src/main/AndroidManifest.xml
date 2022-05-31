@@ -97,4 +97,5 @@
         <activity android:name=".info.liked.LikedActivity"/>
     </application>
 
+
 </manifest>

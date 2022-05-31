@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +18,8 @@ import com.example.kks.R;
 import com.example.kks.controller.Records;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
-import com.example.kks.databinding.ActivityGridBinding;
 import com.example.kks.databinding.ActivitySearchResultBinding;
 import com.example.kks.login.PostUser;
-import com.example.kks.search.Search;
-import com.example.kks.search.SearchResultAdapter;
-import com.example.kks.search.SearchTest;
 
 
 import java.util.ArrayList;
