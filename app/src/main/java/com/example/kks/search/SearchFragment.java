@@ -98,7 +98,7 @@ public class SearchFragment extends Fragment {
         categoryId = SharedPreferenceManagerKt.getCategoryId(getContext());
 
         //사용자 추천 더미데이터
-
+        /*
         RecommendList = new ArrayList<Recommend>();
         RecommendList.add(new Recommend(1, "해리포터", 5.0f, "과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다.", "2022-06-01", "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/03/111063333.2.jpg"));
         RecommendList.add(new Recommend(2, "숨참고 럽 답", 4.5f, "네가 참 궁금해 그건 너도 마찬가지\n" +
@@ -116,10 +116,9 @@ public class SearchFragment extends Fragment {
                 "숨 참고 love dive", "2020-05-06", "https://pbs.twimg.com/media/FPlUqUpVQAM6DAc?format=jpg&name=small"));
         recommendAdapter = new RecommendAdapter(galleryView.getContext(), RecommendList);
         galleryView.setAdapter(recommendAdapter);
-
+        */
 
         //사용자 추천 서버연결
-        /*
         RecommendList = new ArrayList<Recommend>();
         if(categoryId == 0)
             categoryId = randCategoryId();
@@ -144,7 +143,7 @@ public class SearchFragment extends Fragment {
                 Log.e("사용자 추천 데이터 가져오기 실패",userId);
                 t.printStackTrace();
             }
-        });*/
+        });
 
         //사용자 추천 클릭 시 화면 전환
         galleryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

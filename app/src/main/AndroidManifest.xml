@@ -95,6 +95,14 @@
         <activity android:name=".info.follow.FollowActivity"/>
         <activity android:name=".info.myrecord.MyRecordActivity"/>
         <activity android:name=".info.liked.LikedActivity"/>
+        <activity android:name=".info.alarm.AlarmActivity"/>
+        <receiver android:name=".info.alarm.AlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 
