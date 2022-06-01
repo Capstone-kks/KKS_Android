@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.GridView;
 
@@ -82,6 +83,18 @@ public class GridActivity extends AppCompatActivity {
         gridView = (ExpandableHeightGridView) findViewById(R.id.grid);
         gridView.setExpanded(true);
 
+//        binding.edtSearch.setOnKeyListener(new View.OnKeyListener(){
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if(keyCode==KeyEvent.KEYCODE_ENTER){
+//                    searchResult(binding.edtSearch);
+//
+//                    return true;
+//                }else
+//                    return false;
+//            }
+//        });
         //gridView1 = findViewById(R.id.grid);
 
         /*

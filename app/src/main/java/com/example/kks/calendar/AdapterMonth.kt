@@ -72,7 +72,7 @@ class AdapterMonth(val context: Context): RecyclerView.Adapter<AdapterMonth.Mont
     inner class MonthView(val binding:ListItemMonthBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(calendar: Calendar){
             binding.itemMonthText.text="${calendar.get(Calendar.YEAR)}년 ${calendar.get(Calendar.MONTH) + 1}월"
-            val tempMonth = calendar.get(Calendar.MONTH) // 현재위치의 월
+            val tempMonth = calendar.get(Calendar.MONTH)-1 // 현재위치의 월
             val tempYearMonth =  format1.format(calendar.time)
 
 //            val dayList: MutableList<Date> = MutableList(6 * 7) { Date() } // 현재 위치의 월에대한 일들을 구함.
