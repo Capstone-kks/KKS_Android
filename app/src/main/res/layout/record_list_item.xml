@@ -32,6 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="요시고 사진전"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintTop_toBottomOf="@+id/itemRecordWriterTv"
         app:layout_constraintStart_toEndOf="@+id/itemRecordIv"
         android:textSize="18sp"
