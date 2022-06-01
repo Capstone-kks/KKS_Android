@@ -14,7 +14,7 @@
             android:id="@+id/actionbarRl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#009688"
+            android:background="@color/main_mint"
             android:paddingStart="20dp"
             android:paddingTop="20dp"
             android:paddingEnd="25dp"
