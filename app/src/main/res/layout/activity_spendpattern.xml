@@ -131,4 +131,30 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/nopattern2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/second_brown"
+                android:textSize="16sp"
+                android:text="\n\n\n아직 기록된 문화 생활이 없어요 :(\n\n 첫 기록을 작성해주세요!\n\n\n" />
+
+    </LinearLayout>
+
+
+
     </LinearLayout>

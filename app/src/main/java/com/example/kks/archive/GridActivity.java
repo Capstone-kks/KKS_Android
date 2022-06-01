@@ -82,6 +82,9 @@ public class GridActivity extends AppCompatActivity {
         //gridView1.setAdapter(adapter);
 
 
+        //binding.grid.setAdapter(adapter);
+
+/*
         new Thread(new Runnable() {
             boolean isRun = false;
             int value = 0;
@@ -109,6 +112,8 @@ public class GridActivity extends AppCompatActivity {
         }).start(); //start()붙이면 바로실행시킨다.
 
 
+ */
+
 
     }
 
@@ -135,9 +140,9 @@ public class GridActivity extends AppCompatActivity {
 
     public void getServer(){
         //rrayList<CatImg> list = new ArrayList<>();
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        //RetrofitClient client = new RetrofitClient();
+        //Retrofit retrofit = client.setRetrofit();
+        //RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
         Call<List<CatImg>> call = retrofitAPI.getcatimg(userId, categoryId);
         call.enqueue(new Callback<List<CatImg>>() { 
@@ -155,18 +160,14 @@ public class GridActivity extends AppCompatActivity {
                         i++;
                     }
 
-                    for(int j=0; j<i; j++){
-                        Log.d("이미지", list.get(j).getImgUrl());
+                    if (i == 0){
+                        binding.gridlayout.setVisibility(View.GONE);
+                        binding.noresult.setVisibility(View.VISIBLE);
                     }
-
-                    //int arrListSize = list.size();
-                    //ArrayList<CatImg> arr = new ArrayList<>(arrListSize);
-                    //arr.addAll(list);
-
-                    //adapter = new PhotoListAdapter(list);
-                    adapter = new PhotoListAdapter(GridActivity.this, list);
-                    //binding.grid.setAdapter(adapter);
-                    //gridView1.setAdapter(adapter);
+                    else {
+                        adapter = new PhotoListAdapter(GridActivity.this, list);
+                        binding.grid.setAdapter(adapter);
+                    }
 
                 }
             }

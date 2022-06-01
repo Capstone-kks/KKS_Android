@@ -50,7 +50,7 @@ public class SpendpatternActivity extends AppCompatActivity {
     int[] numlist1 = new int[8];
     int[] numlist2 = new int[8];
 
-    LinearLayout nopattern;
+    LinearLayout nopattern, nopattern2;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -65,6 +65,7 @@ public class SpendpatternActivity extends AppCompatActivity {
 
         username_txt = findViewById(R.id.fornameview);
         nopattern = findViewById(R.id.nopattern);
+        nopattern2 = findViewById(R.id.nopattern2);
 
         //서버에서 닉네임 받아오기기
         RetrofitClient client = new RetrofitClient();
@@ -236,6 +237,7 @@ public class SpendpatternActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
+                    int sum = 0;
                     String str = response.body().toString();
                     Log.d("카운트", str);
                     str += "";
@@ -244,8 +246,14 @@ public class SpendpatternActivity extends AppCompatActivity {
 
                     for (int i=0; i<8;i++){
                         numlist[i] = Integer.parseInt(arr[i]);
+                        sum += numlist[i];
                     }
                     System.out.println(Arrays.toString(numlist));
+
+                    if (sum == 0){
+                        pie2.setVisibility(View.GONE);
+                        nopattern2.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

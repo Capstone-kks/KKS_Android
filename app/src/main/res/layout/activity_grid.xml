@@ -55,6 +55,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/gridlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -87,6 +88,30 @@
 
 
         </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noresult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/second_brown"
+            android:textSize="18sp"
+            android:text="\n\n\n해당 카테고리에\n기록된 문화 생활이 없어요 :(\n\n\n" />
+
     </LinearLayout>
 
 

@@ -127,7 +127,7 @@ public class SearchResultActivity extends AppCompatActivity {
         SearchList = new ArrayList<Records>();
         NewSearchResult(keyword, view);
 
-        binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+        //binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
     }
 
     private void NewSearchResult(String keyword, View view){
@@ -140,12 +140,20 @@ public class SearchResultActivity extends AppCompatActivity {
                     ArrayList<Records> data = response.body();
                     SearchList.clear();
 
-                    for(int i = 0; i < data.size();i++)
+                    int i;
+                    for (i = 0; i < data.size(); i++)
                         SearchList.add(data.get(i));
 
-                    aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname, userId);
-                    recyclerView.setAdapter(aSearchAdapter);
-
+                    if (i == 0) {
+                        binding.searchLayout.setVisibility(View.GONE);
+                        binding.noresult.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        binding.searchLayout.setVisibility(View.VISIBLE);
+                        binding.noresult.setVisibility(View.GONE);
+                        aSearchAdapter = new aSearchResultAdapter(view.getContext(), SearchList, nickname, userId);
+                        recyclerView.setAdapter(aSearchAdapter);
+                    }
                 }
             }
 
