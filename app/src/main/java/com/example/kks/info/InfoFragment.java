@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -107,7 +108,7 @@ public class InfoFragment extends Fragment {
     private MultipartBody.Part multibody = null;
 
     //예슬
-    private Button myrecord_btn, liked_btn, analysis_btn, alarm_btn, withdrawal_btn, logout_btn;
+    private ConstraintLayout myrecord_btn, liked_btn, analysis_btn, alarm_btn, withdrawal_btn, logout_btn;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInfoBinding.inflate(inflater, container, false);

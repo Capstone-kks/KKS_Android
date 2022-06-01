@@ -66,6 +66,7 @@
                 android:text="닉네임"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_marginLeft="10dp"/>
 
             <EditText
@@ -81,112 +82,262 @@
                 android:text="변경"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:textColor="@color/main_mint"
+                android:textColor="@color/teal_700"
                 android:backgroundTint="@color/white"
                 style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"/>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="3dp"-->
+<!--            android:background="@color/LightGray"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:layout_marginBottom="10dp"/>-->
 
-        <Button
+        <LinearLayout
+            android:background="@drawable/bg_dialog_outline"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_myrecord"
-            android:text="내 게시물 및 팔로우"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/DarkGray"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginVertical="10dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_myrecord"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/profile_setting_1_iv"
+                    android:layout_marginStart="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_myrecord"
+                    app:layout_constraintTop_toTopOf="@id/btn_myrecord"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_myrecord"/>
+                <TextView
+                    android:id="@+id/profile_setting_1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="내 게시물 및 팔로우"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_1_iv"
+                    app:layout_constraintTop_toTopOf="@id/btn_myrecord"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_myrecord"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_likedlist"
-            android:text="공감한 글 모아보기"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/DarkGray"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+                <ImageView
+                    android:id="@+id/profile_setting_1_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_myrecord"
+                    app:layout_constraintTop_toTopOf="@id/btn_myrecord"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_myrecord"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginVertical="10dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_likedlist"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_analysis"
-            android:text="문화 패턴 분석"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/DarkGray"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+                <ImageView
+                    android:id="@+id/profile_setting_2_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_likedlist"
+                    app:layout_constraintTop_toTopOf="@id/btn_likedlist"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_likedlist"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginVertical="10dp"/>
+                <TextView
+                    android:id="@+id/profile_setting_2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="공감한 글 모아보기"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_2_iv"
+                    app:layout_constraintTop_toTopOf="@id/btn_likedlist"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_likedlist"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_alarm"
-            android:text="알림 설정"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/DarkGray"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+                <ImageView
+                    android:id="@+id/profile_setting_2_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_likedlist"
+                    app:layout_constraintTop_toTopOf="@id/btn_likedlist"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_likedlist"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginVertical="10dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_analysis"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_logout"
-            android:text="로그아웃"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/DarkGray"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+                <ImageView
+                    android:id="@+id/profile_setting_3_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_analysis"
+                    app:layout_constraintTop_toTopOf="@id/btn_analysis"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_analysis"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/LightGray"
-            android:layout_marginVertical="10dp"/>
+                <TextView
+                    android:id="@+id/profile_setting_3_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="문화 패턴 분석"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_3_iv"
+                    app:layout_constraintTop_toTopOf="@id/btn_analysis"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_analysis"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_withdrawal"
-            android:text="회원 탈퇴"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
-            android:textColor="@color/red"
-            android:backgroundTint="@color/white"
-            style="?android:attr/borderlessButtonStyle"/>
+                <ImageView
+                    android:id="@+id/profile_setting_3_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_analysis"
+                    app:layout_constraintTop_toTopOf="@id/btn_analysis"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_analysis"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <ImageView
+                    android:id="@+id/profile_setting_4_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_alarm"
+                    app:layout_constraintTop_toTopOf="@id/btn_alarm"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_alarm"/>
+
+                <TextView
+                    android:id="@+id/profile_setting_4_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="알림 설정"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_4_iv"
+                    app:layout_constraintTop_toTopOf="@id/btn_alarm"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_alarm"/>
+
+                <ImageView
+                    android:id="@+id/profile_setting_4_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_alarm"
+                    app:layout_constraintTop_toTopOf="@id/btn_alarm"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_alarm"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <ImageView
+                    android:id="@+id/profile_setting_5_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_logout"
+                    app:layout_constraintTop_toTopOf="@id/btn_logout"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_logout"/>
+
+                <TextView
+                    android:id="@+id/profile_setting_5_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="로그아웃"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_5_iv"
+                    app:layout_constraintTop_toTopOf="@id/profile_setting_5_iv"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_setting_5_iv"/>
+
+                <ImageView
+                    android:id="@+id/profile_setting_5_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_logout"
+                    app:layout_constraintTop_toTopOf="@id/btn_logout"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_logout"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_withdrawal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <ImageView
+                    android:id="@+id/profile_setting_6_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/ic_profile_notice"
+                    app:layout_constraintStart_toStartOf="@id/btn_withdrawal"
+                    app:layout_constraintTop_toTopOf="@id/btn_withdrawal"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_withdrawal"/>
+
+                <TextView
+                    android:id="@+id/profile_setting_6_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="회원탈퇴"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    app:layout_constraintStart_toEndOf="@id/profile_setting_6_iv"
+                    app:layout_constraintTop_toTopOf="@id/profile_setting_6_iv"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_setting_6_iv"/>
+
+                <ImageView
+                    android:id="@+id/profile_setting_6_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_arrow_next"
+                    app:layout_constraintEnd_toEndOf="@id/btn_withdrawal"
+                    app:layout_constraintTop_toTopOf="@id/btn_withdrawal"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_withdrawal"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

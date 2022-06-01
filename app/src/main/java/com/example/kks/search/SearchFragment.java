@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,25 @@ public class SearchFragment extends Fragment {
         nickName = SharedPreferenceManagerKt.getNickname(getContext());
         recommend_ment.setText(nickName + " 님!");
         categoryId = SharedPreferenceManagerKt.getCategoryId(getContext());
+
+        search_edt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    keyword = search_edt.getText().toString();
+                    Log.d("검색 버튼 클릭",keyword);
+
+                    recommend_layout.setVisibility(View.GONE);
+                    search_layout.setVisibility(View.VISIBLE);
+
+                    SearchList = new ArrayList<Search>();
+
+                    NewSearchResult();
+                    return true;
+                }else
+                    return false;
+            }
+        });
 
         //사용자 추천 더미데이터
         /*

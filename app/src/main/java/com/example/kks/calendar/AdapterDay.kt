@@ -98,8 +98,10 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>,val context: 
             else-> Color.BLACK
         })
 
-        if(tempMonth!=dayList[position].month){
-            holder.binding.itemDayLayout.alpha = 0.4F
+        if(tempMonth!=dayList[position].month-1){
+            holder.binding.itemDayText.alpha = 0.4F
+        }else{
+            holder.binding.itemDayText.alpha = 1F
         }
 
     }
