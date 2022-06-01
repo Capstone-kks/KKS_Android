@@ -25,6 +25,7 @@ class CommentsForRecordAdapter(val context: Context):RecyclerView.Adapter<Commen
 
     interface CommentsItemClickListener{
         fun onDeleteButton(recordIdx:Int)
+        fun goProfileActivity(recordIdx: String)
 
     }
     private lateinit var commentsItemClickListener: CommentsItemClickListener
@@ -71,8 +72,14 @@ class CommentsForRecordAdapter(val context: Context):RecyclerView.Adapter<Commen
 
             // 삭제버튼 클릭시
             binding.deleteCommentTv.setOnClickListener {
-                //TODO API 재호출
+
                 commentsItemClickListener.onDeleteButton(comment.commentIdx)
+            }
+
+            binding.commentNickName.setOnClickListener {
+                var userId = comment.userId
+                commentsItemClickListener.goProfileActivity(userId)
+
             }
 
 

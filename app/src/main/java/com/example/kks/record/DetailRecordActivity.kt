@@ -278,6 +278,11 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
 
             }
 
+            override fun goProfileActivity(recordIdx: String) {
+                val goProfileDialogFragment = GoProfileDialogFragment(this@DetailRecordActivity,recordIdx)
+                goProfileDialogFragment.show(supportFragmentManager,goProfileDialogFragment.tag)
+            }
+
         })
     }
 
