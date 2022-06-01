@@ -14,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -305,6 +307,7 @@ public class InfoFragment extends Fragment {
                 Dialog dialog = new Dialog(root.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_delete);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
                 TextView title = dialog.findViewById(R.id.dialog_title_tv);
@@ -346,6 +349,7 @@ public class InfoFragment extends Fragment {
                 Dialog dialog = new Dialog(root.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_delete);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
                 TextView title = dialog.findViewById(R.id.dialog_title_tv);
@@ -354,15 +358,9 @@ public class InfoFragment extends Fragment {
                 title.setText("로그아웃");
                 subtitle.setText("로그아웃 하시겠습니까?");
 
-                //AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-                //builder.setTitle("로그아웃");
-                //builder.setMessage("로그아웃 하시겠습니까?");
-                //builder.setCancelable(false);
-                //builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                 dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    //public void onClick(DialogInterface dialog, int id) {
                         myDBAdapter adapter = new myDBAdapter(root.getContext());
                         //adapter.clear();
                         adapter.open();
@@ -379,12 +377,6 @@ public class InfoFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                //builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                //    public void onClick(DialogInterface arg0, int arg1) {
-                        //((Activity)root.getContext()).finish();
-                //    }
-                //});
-                //builder.create().show();
             }
         });
 
