@@ -343,13 +343,26 @@ public class InfoFragment extends Fragment {
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog dialog = new Dialog(root.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_delete);
+                dialog.show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-                builder.setTitle("로그아웃");
-                builder.setMessage("로그아웃 하시겠습니까?");
-                builder.setCancelable(false);
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                TextView title = dialog.findViewById(R.id.dialog_title_tv);
+                TextView subtitle = dialog.findViewById(R.id.dialog_content_tv);
+
+                title.setText("로그아웃");
+                subtitle.setText("로그아웃 하시겠습니까?");
+
+                //AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+                //builder.setTitle("로그아웃");
+                //builder.setMessage("로그아웃 하시겠습니까?");
+                //builder.setCancelable(false);
+                //builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    //public void onClick(DialogInterface dialog, int id) {
                         myDBAdapter adapter = new myDBAdapter(root.getContext());
                         //adapter.clear();
                         adapter.open();
@@ -360,12 +373,18 @@ public class InfoFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //((Activity)root.getContext()).finish();
+                dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-                builder.create().show();
+                //builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                //    public void onClick(DialogInterface arg0, int arg1) {
+                        //((Activity)root.getContext()).finish();
+                //    }
+                //});
+                //builder.create().show();
             }
         });
 
