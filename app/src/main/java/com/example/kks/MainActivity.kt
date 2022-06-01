@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity(){
         Log.d("Hash",keyHash)
 
 
-        getUserNickname()
-        Log.d("nickName","메인 onCreate")
         //yk code
         val intent = intent
         userId = intent.getStringExtra("user_id")
@@ -58,6 +56,9 @@ class MainActivity : AppCompatActivity(){
         saveUserIdx(this,userId!!)
 
         maintainId(userId!!, checking)
+
+        getUserNickname()
+        Log.d("nickName","메인 onCreate")
 
         initNavigation()
 
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity(){
                     fragment2.arguments = bundle
 
                     supportFragmentManager.beginTransaction()
-                       .replace(R.id.mainFrameLayout, fragment2)
+                        .replace(R.id.mainFrameLayout, fragment2)
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
