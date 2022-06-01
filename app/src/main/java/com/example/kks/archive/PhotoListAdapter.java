@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.kks.R;
@@ -72,6 +73,10 @@ public class PhotoListAdapter extends BaseAdapter {
 
         //ImageView photo = new ImageView(context);
         ImageView photo = (ImageView) convertView.findViewById(R.id.miniphoto);
+
+        photo.setPadding(1, 1, 1, 1);
+        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        photo.setLayoutParams(new GridView.LayoutParams(350,350));
 
         /*
         for (int i=0; i<getCount(); i++) {

@@ -90,7 +90,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:horizontalSpacing="2dp"
                     android:isScrollContainer="false"
                     android:numColumns="3"
                     android:stretchMode="columnWidth"
