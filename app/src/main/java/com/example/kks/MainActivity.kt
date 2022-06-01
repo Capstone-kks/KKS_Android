@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(){
                     fragment2.arguments = bundle
 
                     supportFragmentManager.beginTransaction()
-                       .replace(R.id.mainFrameLayout, fragment2)
+                        .replace(R.id.mainFrameLayout, fragment2)
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
