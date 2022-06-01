@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -49,6 +50,8 @@ public class SpendpatternActivity extends AppCompatActivity {
     int[] numlist1 = new int[8];
     int[] numlist2 = new int[8];
 
+    LinearLayout nopattern;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class SpendpatternActivity extends AppCompatActivity {
         Log.d("저장된", userId);
 
         username_txt = findViewById(R.id.fornameview);
+        nopattern = findViewById(R.id.nopattern);
 
         //서버에서 닉네임 받아오기기
         RetrofitClient client = new RetrofitClient();
@@ -100,7 +104,6 @@ public class SpendpatternActivity extends AppCompatActivity {
         Log.d("오늘 연월", date);
 
         numlist2 = getMonthCount(userId, date);
-
 
         new Thread(new Runnable() {
             boolean isRun = false;
@@ -268,6 +271,7 @@ public class SpendpatternActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
+                    int sum = 0;
                     String getstr = response.body().toString();
                     Log.d("월카운트", getstr);
                     getstr += "";
@@ -276,8 +280,14 @@ public class SpendpatternActivity extends AppCompatActivity {
 
                     for (int i=0; i<8;i++){
                         numlist[i] = Integer.parseInt(arr[i]);
+                        sum += numlist[i];
                     }
                     System.out.println(Arrays.toString(numlist));
+
+                    if (sum == 0){
+                        pie1.setVisibility(View.GONE);
+                        nopattern.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
