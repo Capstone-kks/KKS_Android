@@ -4,8 +4,6 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-import static com.example.kks.info.myrecord.MyRecordActivity.prefImg;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -47,6 +45,7 @@ import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
 import com.example.kks.databinding.FragmentInfoBinding;
+import com.example.kks.info.alarm.AlarmActivity;
 import com.example.kks.info.liked.LikedActivity;
 import com.example.kks.info.myrecord.MyRecordActivity;
 import com.example.kks.info.pattern.SpendpatternActivity;
@@ -101,17 +100,12 @@ public class InfoFragment extends Fragment {
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
-    //Handler handler = new Handler();
     static private Context context;
 
     private MultipartBody.Part multibody = null;
 
-    /*
-    * 예슬
-    * */
-    private Button myrecord_btn, liked_btn, analysis_btn, withdrawal_btn, logout_btn;
-
-    private LinearLayout layout;
+    //예슬
+    private Button myrecord_btn, liked_btn, analysis_btn, alarm_btn, withdrawal_btn, logout_btn;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInfoBinding.inflate(inflater, container, false);
@@ -130,8 +124,8 @@ public class InfoFragment extends Fragment {
         myrecord_btn = root.findViewById(R.id.btn_myrecord);
         analysis_btn = root.findViewById(R.id.btn_analysis);
         liked_btn = root.findViewById(R.id.btn_likedlist);
+        alarm_btn = root.findViewById(R.id.btn_alarm);
         withdrawal_btn = root.findViewById(R.id.btn_withdrawal);
-        layout = root.findViewById(R.id.info_fragment);
         logout_btn = root.findViewById(R.id.btn_logout);
 
         //서버에서 닉네임, 이미지 가져오기
@@ -262,39 +256,6 @@ public class InfoFragment extends Fragment {
             }
         });
 
-        //유경 - 스레드 (사용안해도 될 것 같아 주석 처리. 혹시 사용하게 되신다면 주석 푸시고 사용하시면 됩니다.
-        /*
-        new Thread(new Runnable() {
-            boolean isRun = false;
-            int value = 0;
-
-            @Override
-            public void run() {
-                isRun = true;;
-                binding = FragmentInfoBinding.inflate(inflater, container, false);
-                root = binding.getRoot();
-                editName_edt = root.findViewById(R.id.editName);
-                    while ((isRun)) {
-                        value += 1;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                editName_edt.setText(nickname);
-                                //get image using Glid lib
-                                if (((Activity)root.getContext()).isFinishing())
-                                    return;
-                                Glide.with(root.getContext()).load(userImg).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_imv);
-                            }
-                        });
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                    }
-                }
-            }
-        }).start();
-        */
-
         //유경 - 사용자 문화 패턴 분석 버튼 클릭 시
         analysis_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,20 +267,20 @@ public class InfoFragment extends Fragment {
 
 
 
-        /*
+        /**
          * 예슬 - 내 정보, 공감글 모아보기, 알림 설정, 회원 탈퇴
          * */
-
+        //내 정보 버튼 클릭 시 페이지 이동
         myrecord_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyRecordActivity.userId = userId;
-                prefImg = prefId;
                 Intent intent = new Intent(root.getContext(), MyRecordActivity.class);
+                intent.putExtra("userId",prefId);
                 startActivity(intent);
             }
         });
 
+        //공감글 모아보기 버튼 클릭 시 페이지 이동
         liked_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,6 +289,16 @@ public class InfoFragment extends Fragment {
             }
         });
 
+        //알람 설정 버튼 클릭 시 페이지 이동
+        alarm_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(root.getContext(), AlarmActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //회원탈퇴 버튼 클릭 시 로그인 화면으로 돌아감
         withdrawal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -343,7 +314,19 @@ public class InfoFragment extends Fragment {
                 dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO 회원탈퇴
+                        retrofitAPI.WithdrawalUser(userId).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Intent intent = new Intent(getContext(), LoginPageActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
                 dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {

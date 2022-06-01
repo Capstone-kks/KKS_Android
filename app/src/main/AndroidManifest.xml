@@ -20,6 +20,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_calendar_round"
         android:supportsRtl="true"
+        android:windowSoftInputMode ="adjustNothing"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".info.pattern.PatternContent"
@@ -30,9 +31,11 @@
             android:exported="false" />
         <activity
             android:name=".archive.SearchResultActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".archive.GridActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
 
         <!-- 사진 촬영을 위한 provide -->
@@ -95,6 +98,15 @@
         <activity android:name=".info.follow.FollowActivity"/>
         <activity android:name=".info.myrecord.MyRecordActivity"/>
         <activity android:name=".info.liked.LikedActivity"/>
+        <activity android:name=".info.alarm.AlarmActivity"/>
+        <receiver android:name=".info.alarm.AlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
+
 
 </manifest>

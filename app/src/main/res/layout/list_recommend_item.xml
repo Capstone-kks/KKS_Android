@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="350dp"
-    android:layout_height="match_parent"
-    android:layout_marginVertical="20dp"
-    android:padding="15dp">
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="20dp">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:id="@+id/recommend_item_img"
-        android:background="@drawable/ic_launcher_background"/>
+        android:background="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,9 +54,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="60dp"
         android:id="@+id/recommend_item_content"
         android:text="과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다."
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:maxLines="3" />
 
 </LinearLayout>
