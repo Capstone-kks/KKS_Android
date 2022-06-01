@@ -14,6 +14,7 @@ import android.widget.GridView;
 
 import com.example.kks.R;
 import com.example.kks.controller.CatImg;
+import com.example.kks.controller.ExpandableHeightGridView;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.ActivityGridBinding;
@@ -37,6 +38,7 @@ public class GridActivity extends AppCompatActivity {
     int recordIdx=0;
     static String entered;
     static GridView gridView1;
+    static ExpandableHeightGridView gridView;
 
     private ActivityGridBinding binding;
 
@@ -77,14 +79,12 @@ public class GridActivity extends AppCompatActivity {
         //서버에서 이미지, recordidx 리스트 받아오기
         getServer();
 
-        gridView1 = findViewById(R.id.grid);
-        //adapter = new PhotoListAdapter(list);
-        //gridView1.setAdapter(adapter);
+        gridView = (ExpandableHeightGridView) findViewById(R.id.grid);
+        gridView.setExpanded(true);
 
+        //gridView1 = findViewById(R.id.grid);
 
-        //binding.grid.setAdapter(adapter);
-
-/*
+        /*
         new Thread(new Runnable() {
             boolean isRun = false;
             int value = 0;
@@ -110,20 +110,12 @@ public class GridActivity extends AppCompatActivity {
                 }
             }
         }).start(); //start()붙이면 바로실행시킨다.
-
-
- */
+        */
 
 
     }
 
     public void finish(View view){
-        //Fragment fragment = new ArchiveFolderFragment();
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit();
-
-        //Intent intent = new Intent(SpendpatternActivity.this, ActForFragmentArchiveFolderActivity.class);
-        //startActivity(intent);
         act.finish();
     }
 
@@ -139,13 +131,9 @@ public class GridActivity extends AppCompatActivity {
     }
 
     public void getServer(){
-        //rrayList<CatImg> list = new ArrayList<>();
-        //RetrofitClient client = new RetrofitClient();
-        //Retrofit retrofit = client.setRetrofit();
-        //RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
         Call<List<CatImg>> call = retrofitAPI.getcatimg(userId, categoryId);
-        call.enqueue(new Callback<List<CatImg>>() { 
+        call.enqueue(new Callback<List<CatImg>>() {
             @Override
             public void onResponse(Call<List<CatImg>> call, Response<List<CatImg>> response) {
                 if(response.isSuccessful()){
