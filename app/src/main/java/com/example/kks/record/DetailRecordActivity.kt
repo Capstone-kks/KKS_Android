@@ -133,7 +133,7 @@ class DetailRecordActivity : AppCompatActivity(),RecordView ,DeleteRecordView,Co
         }
 
         binding.profileLayout.setOnClickListener {
-            val goProfileDialogFragment = GoProfileDialogFragment(writerId)
+            val goProfileDialogFragment = GoProfileDialogFragment(this,writerId)
             goProfileDialogFragment.show(supportFragmentManager,goProfileDialogFragment.tag)
 
         }

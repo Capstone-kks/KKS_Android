@@ -1,5 +1,6 @@
 package com.example.kks.record
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.kks.databinding.FragmentBottomSheetBinding
+import com.example.kks.info.myrecord.MyRecord
+import com.example.kks.info.myrecord.MyRecordActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class GoProfileDialogFragment(var writerId:String) : BottomSheetDialogFragment() {
+class GoProfileDialogFragment(context: Context, var writerId:String) : BottomSheetDialogFragment() {
     lateinit var binding: FragmentBottomSheetBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,9 +23,9 @@ class GoProfileDialogFragment(var writerId:String) : BottomSheetDialogFragment()
         Log.d("bottomsheet:",writerId)
 
         binding.bottomSheetTv.setOnClickListener {
-           //todo profile activity로 이동.
-        //    intent.putExtra("writerId",)
-         //   startActivity(intent)
+            val intent = Intent(context,MyRecordActivity::class.java)
+            intent.putExtra("userId",writerId)
+            startActivity(intent)
         }
 
         return binding.root
