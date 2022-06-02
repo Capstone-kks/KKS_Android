@@ -69,17 +69,25 @@ public class PhotoListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.photo_box, parent, false);
         }
 
+        int pad = ConvertDPtoPX(context, 10);
+
         //ImageView photo = new ImageView(context);
-        ImageView photo = (ImageView) convertView.findViewById(R.id.miniphoto);
+        //ImageView photo = (ImageView) convertView.findViewById(R.id.miniphoto);
+        ImageView photo = new ImageView(context);
 
         photo.setPadding(1, 5, 1, 5);
         photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        photo.setLayoutParams(new GridView.LayoutParams((width - 30)/3,(width - 30)/3));
+        photo.setLayoutParams(new GridView.LayoutParams((width - 30 - 2*pad)/3,(width - 30)/3));
 
 
         GlideApp.with(context).load(mData.get(position).getImgUrl()).into(photo);
 
 
         return photo;
+    }
+
+    public static int ConvertDPtoPX(Context context, int dp) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 }
