@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kks.R;
+import com.example.kks.controller.ExpandableHeightGridView;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.info.myrecord.MyRecord;
@@ -30,7 +32,8 @@ public class LikedActivity extends AppCompatActivity {
 
     private String userId;
 
-    private GridView liked_gv;
+    private ImageButton back;
+    static ExpandableHeightGridView liked_gv;
     private ArrayList<MyRecord> list;
     private MyRecordAdapter adapter;
 
@@ -44,7 +47,8 @@ public class LikedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liked);
 
-        liked_gv = findViewById(R.id.liked_gv);
+        back = findViewById(R.id.liked_back_btn);
+        liked_gv = (ExpandableHeightGridView)findViewById(R.id.liked_grid);
         list = new ArrayList<MyRecord>();
 
         //로그인한 사용자의 아이디 가져오기
@@ -76,6 +80,13 @@ public class LikedActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), DetailRecordActivity.class);
                 intent.putExtra("recordIdx", recordIdx);
                 startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

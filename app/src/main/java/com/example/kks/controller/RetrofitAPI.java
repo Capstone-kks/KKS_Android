@@ -67,6 +67,9 @@ public interface RetrofitAPI {
     @GET("api/info/myrecord")
     Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);
 
+    @GET("api/info/otherrecord")
+    Call<ArrayList<MyRecord>> getotherRecords(@Query("userId") String userId);
+
     @GET("api/info/liked")
     Call<ArrayList<MyRecord>> getLikedRecords(@Query("userId") String userId);
 

@@ -37,7 +37,7 @@ public class FollowActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.follow_activity);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
-        followTitle=findViewById(R.id.followTitleTv);
+        followTitle=findViewById(R.id.follow_title_tv);
         backBtn=findViewById(R.id.followBackIv);
 
 
@@ -50,11 +50,11 @@ public class FollowActivity extends AppCompatActivity {
         LoginUserId = sharedPreferences.getString("userId","");
 
         if(follow_num == 0) {
-            followTitle.setText("내가 팔로우한 사용자 목록");
+            followTitle.setText(nickname + "님의 팔로잉 목록");
             adapter = new FollowAdapter(this, followingList, userId, LoginUserId);
             recyclerView.setAdapter(adapter);
         }else if(follow_num == 1) {
-            followTitle.setText("나를 팔로우한 사용자 목록");
+            followTitle.setText(nickname + "님의 팔로워 목록");
             adapter = new FollowAdapter(this, followerList, userId, LoginUserId);
             recyclerView.setAdapter(adapter);
         }

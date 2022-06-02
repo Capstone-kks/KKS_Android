@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kks.R;
 import com.example.kks.SharedPreferenceManagerKt;
+import com.example.kks.controller.ExpandableHeightGridView;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.controller.SharedPreference;
@@ -46,7 +47,7 @@ public class MyRecordActivity extends AppCompatActivity {
     private ImageView profile_iv;
     private ImageButton follower_btn, following_btn, follow_btn;
     private TextView nickName_tv, follower_tv, following_tv, norecord_tv;
-    private GridView records_gv;
+    static ExpandableHeightGridView records_gv;
 
     private ArrayList<MyRecord> recordList;
     private ArrayList<Follow> followerList;
@@ -71,7 +72,8 @@ public class MyRecordActivity extends AppCompatActivity {
         following_tv = findViewById(R.id.following_tv);
         follow_btn = findViewById(R.id.myrecord_follow_imb);
         norecord_tv = findViewById(R.id.NoRecord_tv);
-        records_gv = findViewById(R.id.myrecord_gv);
+        records_gv = (ExpandableHeightGridView) findViewById(R.id.myrecord_grid);
+        records_gv.setExpanded(true);
 
         recordList = new ArrayList<MyRecord>();
         followerList = new ArrayList<Follow>();
@@ -92,12 +94,78 @@ public class MyRecordActivity extends AppCompatActivity {
 
             //팔로우 버튼 없애기
             follow_btn.setVisibility(View.GONE);
+
+            //그리드뷰 셋팅
+            retrofitAPI.getMyRecords(userId).enqueue(new Callback<ArrayList<MyRecord>>() {
+                @Override
+                public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
+                    ArrayList<MyRecord> data = response.body();
+
+                    if(data == null) {
+                        Log.e("데이터 못받아옴",userId);
+                        records_gv.setVisibility(View.GONE);
+                        norecord_tv.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        if(data.size() == 0){
+                            Log.e("데이터 사이즈 0",userId);
+                            records_gv.setVisibility(View.GONE);
+                            norecord_tv.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            for(int i = 0; i < data.size();i++)
+                                recordList.add(data.get(i));
+                            adapter = new MyRecordAdapter(getApplicationContext(), recordList);
+                            records_gv.setAdapter(adapter);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<MyRecord>> call, Throwable t) {
+                    Log.e("내 기록 이미지 가져오기 실패",userId);
+                    t.printStackTrace();
+                }
+            });
         }
         else{//다른 사용자의 개인 게시물 페이지
             Log.d("개인 게시물 페이지","다른 사용자 페이지");
 
             //팔로우 버튼 보이기
             follow_btn.setVisibility(View.VISIBLE);
+
+            //그리드뷰 셋팅
+            retrofitAPI.getotherRecords(userId).enqueue(new Callback<ArrayList<MyRecord>>() {
+                @Override
+                public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
+                    ArrayList<MyRecord> data = response.body();
+
+                    if(data == null) {
+                        Log.e("데이터 못받아옴",userId);
+                        records_gv.setVisibility(View.GONE);
+                        norecord_tv.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        if(data.size() == 0){
+                            Log.e("데이터 사이즈 0",userId);
+                            records_gv.setVisibility(View.GONE);
+                            norecord_tv.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            for(int i = 0; i < data.size();i++)
+                                recordList.add(data.get(i));
+                            adapter = new MyRecordAdapter(getApplicationContext(), recordList);
+                            records_gv.setAdapter(adapter);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<MyRecord>> call, Throwable t) {
+                    Log.e("내 기록 이미지 가져오기 실패",userId);
+                    t.printStackTrace();
+                }
+            });
         }
 
         //프로필 이미지, 닉네임 설정
@@ -240,38 +308,7 @@ public class MyRecordActivity extends AppCompatActivity {
             }
         });
 
-        //그리드뷰 셋팅
-        retrofitAPI.getMyRecords(userId).enqueue(new Callback<ArrayList<MyRecord>>() {
-            @Override
-            public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
-                ArrayList<MyRecord> data = response.body();
 
-                if(data == null) {
-                    Log.e("데이터 못받아옴",userId);
-                    records_gv.setVisibility(View.GONE);
-                    norecord_tv.setVisibility(View.VISIBLE);
-                }
-                else {
-                    if(data.size() == 0){
-                        Log.e("데이터 사이즈 0",userId);
-                        records_gv.setVisibility(View.GONE);
-                        norecord_tv.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        for(int i = 0; i < data.size();i++)
-                            recordList.add(data.get(i));
-                        adapter = new MyRecordAdapter(getApplicationContext(), recordList);
-                        records_gv.setAdapter(adapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<MyRecord>> call, Throwable t) {
-                Log.e("내 기록 이미지 가져오기 실패",userId);
-                t.printStackTrace();
-            }
-        });
 
         //그리드뷰 클릭 시 -> 게시물 상세페이지로 이동
         records_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

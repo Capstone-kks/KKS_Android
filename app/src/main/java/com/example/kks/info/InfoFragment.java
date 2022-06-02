@@ -313,7 +313,7 @@ public class InfoFragment extends Fragment {
 
                 TextView title = dialog.findViewById(R.id.dialog_title_tv);
                 TextView subtitle = dialog.findViewById(R.id.dialog_content_tv);
-                title.setText("회원 탈퇴하시겠습니까?");
+                title.setText("탈퇴하시겠습니까?");
                 subtitle.setText("회원 탈퇴는 돌이킬 수 없습니다.");
                 dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
                     @Override

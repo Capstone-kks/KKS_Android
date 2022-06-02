@@ -15,13 +15,15 @@
         android:background="@drawable/round_border"
         android:layout_margin="20dp">
         <EditText
-
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/edt_search"
             android:backgroundTint="#FFFFFF"
             android:layout_weight="19"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionSearch"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="40dp"
