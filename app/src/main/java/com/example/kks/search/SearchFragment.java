@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Gallery;
@@ -76,6 +77,7 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
+
         //기본 뷰
         search_btn = root.findViewById(R.id.btn_search);
         search_edt = root.findViewById(R.id.edt_search);
@@ -101,9 +103,13 @@ public class SearchFragment extends Fragment {
         search_edt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+
                 if(keyCode==KeyEvent.KEYCODE_ENTER){
                     keyword = search_edt.getText().toString();
                     Log.d("검색 버튼 클릭",keyword);
+
+                    InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(search_edt.getWindowToken(),0);
 
                     recommend_layout.setVisibility(View.GONE);
                     search_layout.setVisibility(View.VISIBLE);
@@ -116,27 +122,6 @@ public class SearchFragment extends Fragment {
                     return false;
             }
         });
-
-        //사용자 추천 더미데이터
-        /*
-        RecommendList = new ArrayList<Recommend>();
-        RecommendList.add(new Recommend(1, "해리포터", 5.0f, "과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다.", "2022-06-01", "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/03/111063333.2.jpg"));
-        RecommendList.add(new Recommend(2, "숨참고 럽 답", 4.5f, "네가 참 궁금해 그건 너도 마찬가지\n" +
-                "이거면 충분해 쫓고 쫓는 이런 놀이\n" +
-                "참을 수 없는 이끌림과 호기심\n" +
-                "묘한 너와 나 두고 보면 알겠지\n" +
-                "Woo 눈동자 아래로\n" +
-                "Woo 감추고 있는 거\n" +
-                "Woo yeah It's so bad It's good\n" +
-                "난 그 맘을 좀 봐야겠어\n" +
-                "Narcissistic, my god I love it\n" +
-                "서로를 비춘 밤\n" +
-                "아름다운 까만 눈빛 더 빠져 깊이\n" +
-                "(넌 내게로 난 네게로)\n" +
-                "숨 참고 love dive", "2020-05-06", "https://pbs.twimg.com/media/FPlUqUpVQAM6DAc?format=jpg&name=small"));
-        recommendAdapter = new RecommendAdapter(galleryView.getContext(), RecommendList);
-        galleryView.setAdapter(recommendAdapter);
-        */
 
         //사용자 추천 서버연결
         RecommendList = new ArrayList<Recommend>();
@@ -183,6 +168,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 keyword = search_edt.getText().toString();
                 Log.d("검색 버튼 클릭",keyword);
+
+                InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(search_edt.getWindowToken(),0);
 
                 recommend_layout.setVisibility(View.GONE);
                 search_layout.setVisibility(View.VISIBLE);
