@@ -43,7 +43,6 @@ public class PhotoListAdapter extends BaseAdapter {
         this.mData = mData;
 
         inflater = LayoutInflater.from(context);
-        //inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -64,10 +63,8 @@ public class PhotoListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        //this.context = parent.getContext();
-        //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        if (null == convertView) {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.photo_box, parent, false);
         }
 
@@ -78,53 +75,10 @@ public class PhotoListAdapter extends BaseAdapter {
         photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
         photo.setLayoutParams(new GridView.LayoutParams(350,350));
 
-        /*
-        for (int i=0; i<getCount(); i++) {
-            Log.d("test", "recordid = " + mData.get(i).getRecordIdx());
-            Log.d("test", "resource = " + mData.get(i).getImgUrl());
 
-            GlideApp.with(context).load(mData.get(i).getImgUrl()).into(photo);
-            //Glide.with(context).load(mData.toArray()[position]).into(photo);
-        }
-        */
-        Log.d("test", "resource = " + mData.get(position).getImgUrl());
         GlideApp.with(context).load(mData.get(position).getImgUrl()).into(photo);
 
-        // 이미지를 클릭하는 경우
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                //기록 확인 activity intent하기
-                Intent intent = new Intent(context, DetailRecordActivity.class);
-                int recordIdx = mData.get(position).getRecordIdx();
-                intent.putExtra("recordIdx", recordIdx);
-                Log.d("레코드", Integer.toString(recordIdx));
-                //intent.putExtra("categoryId", categoryId);
-                //입력받은 text 넘기기
-                context.startActivity(intent);
-
-                /*
-                // dialog.xml 인플레이트
-                View dialogView = View.inflate(context, R.layout.photo_box, null);
-
-                // Dialog 생성
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                ImageView miniphoto = dialogView.findViewById(R.id.miniphoto);
-
-                Glide.with(context).load(mData.get(position)).into(miniphoto);
-
-                //miniphoto.setImageResource(mData.indexOf(position));
-                builder.setView(dialogView);
-
-                builder.setPositiveButton("닫기", null);
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                 */
-            }
-        });
-        //return convertView;
         return photo;
     }
 }

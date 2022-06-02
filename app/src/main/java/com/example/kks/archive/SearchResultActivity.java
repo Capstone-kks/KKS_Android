@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -112,6 +113,22 @@ public class SearchResultActivity extends AppCompatActivity {
         SearchList = new ArrayList<Records>();
         NewSearchResult(exentered, view);
         binding.searchResultRecyclerview.setAdapter(aSearchAdapter);
+
+        binding.edtSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    String keyword = binding.edtSearch.getText().toString();
+                    Log.d("검색 버튼 클릭",keyword);
+
+                    //SearchList = new ArrayList<SearchTest>();
+                    SearchList = new ArrayList<Records>();
+                    NewSearchResult(keyword, view);
+                    return true;
+                } else
+                    return false;
+            }
+        });
 
     }
 

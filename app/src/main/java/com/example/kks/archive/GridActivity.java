@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.kks.R;
@@ -19,6 +20,7 @@ import com.example.kks.controller.ExpandableHeightGridView;
 import com.example.kks.controller.RetrofitAPI;
 import com.example.kks.controller.RetrofitClient;
 import com.example.kks.databinding.ActivityGridBinding;
+import com.example.kks.record.DetailRecordActivity;
 import com.example.kks.search.Search;
 import com.example.kks.search.SearchResultAdapter;
 
@@ -125,6 +127,23 @@ public class GridActivity extends AppCompatActivity {
         }).start(); //start()붙이면 바로실행시킨다.
         */
 
+        binding.edtSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+                    intent.putExtra("recordIdx", recordIdx);
+                    intent.putExtra("categoryId", categoryId);
+                    //입력받은 text 넘기기
+                    entered = binding.edtSearch.getText().toString();
+                    Log.i("입력", entered);
+                    intent.putExtra("entered", entered);
+                    startActivity(intent);
+                    return true;
+                } else
+                    return false;
+            }
+        });
 
     }
 
@@ -168,6 +187,16 @@ public class GridActivity extends AppCompatActivity {
                     else {
                         adapter = new PhotoListAdapter(GridActivity.this, list);
                         binding.grid.setAdapter(adapter);
+
+                        binding.grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                int recordIdx = list.get(position).getRecordIdx();
+                                Intent intent = new Intent(getApplicationContext(), DetailRecordActivity.class);
+                                intent.putExtra("recordIdx", recordIdx);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                 }
