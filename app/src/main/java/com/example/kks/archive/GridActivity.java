@@ -127,6 +127,23 @@ public class GridActivity extends AppCompatActivity {
         }).start(); //start()붙이면 바로실행시킨다.
         */
 
+        binding.edtSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+                    intent.putExtra("recordIdx", recordIdx);
+                    intent.putExtra("categoryId", categoryId);
+                    //입력받은 text 넘기기
+                    entered = binding.edtSearch.getText().toString();
+                    Log.i("입력", entered);
+                    intent.putExtra("entered", entered);
+                    startActivity(intent);
+                    return true;
+                } else
+                    return false;
+            }
+        });
 
     }
 
