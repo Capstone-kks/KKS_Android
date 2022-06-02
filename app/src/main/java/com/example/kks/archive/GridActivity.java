@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,6 +49,9 @@ public class GridActivity extends AppCompatActivity {
 
     public static Activity act;
 
+    private Display display;
+    private int width;
+
     private ArrayList<Search> SearchList;
     private SearchResultAdapter SearchAdapter;
 
@@ -74,6 +79,12 @@ public class GridActivity extends AppCompatActivity {
         binding = ActivityGridBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        //화면 크기 받아오기
+        display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+        width = size.x;
 
         //로그인한 사용자의 아이디 가져오기
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
@@ -185,7 +196,7 @@ public class GridActivity extends AppCompatActivity {
                         binding.noresult.setVisibility(View.VISIBLE);
                     }
                     else {
-                        adapter = new PhotoListAdapter(GridActivity.this, list);
+                        adapter = new PhotoListAdapter(GridActivity.this, list, width);
                         binding.grid.setAdapter(adapter);
 
                         binding.grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

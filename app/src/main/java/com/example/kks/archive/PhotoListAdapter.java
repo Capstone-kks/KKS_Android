@@ -24,6 +24,7 @@ public class PhotoListAdapter extends BaseAdapter {
 
     Context context;
     private LayoutInflater inflater;
+    private int width;
 
     private ArrayList<CatImg> mData;
 
@@ -36,12 +37,12 @@ public class PhotoListAdapter extends BaseAdapter {
         void onItemClick(View v, int pos) throws JSONException;
     }
 
-    public PhotoListAdapter(Context context, ArrayList<CatImg> mData) {
+    public PhotoListAdapter(Context context, ArrayList<CatImg> mData, int w) {
         //super(context, R.layout.photo_box, mData);
 
         this.context = context;
         this.mData = mData;
-
+        width = w;
         inflater = LayoutInflater.from(context);
     }
 
@@ -71,9 +72,9 @@ public class PhotoListAdapter extends BaseAdapter {
         //ImageView photo = new ImageView(context);
         ImageView photo = (ImageView) convertView.findViewById(R.id.miniphoto);
 
-        photo.setPadding(1, 1, 1, 1);
+        photo.setPadding(1, 5, 1, 5);
         photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        photo.setLayoutParams(new GridView.LayoutParams(350,350));
+        photo.setLayoutParams(new GridView.LayoutParams((width - 30)/3,(width - 30)/3));
 
 
         GlideApp.with(context).load(mData.get(position).getImgUrl()).into(photo);
