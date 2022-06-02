@@ -13,11 +13,12 @@ public class MyRecordAdapter extends BaseAdapter {
 
     private ArrayList<MyRecord> list;
     private Context c;
+    private int width;
 
-    public MyRecordAdapter(Context m, ArrayList<MyRecord> d){
+    public MyRecordAdapter(Context m, ArrayList<MyRecord> d, int w){
         c = m;
         list = d;
-
+        width = w;
     }
 
     @Override
@@ -39,9 +40,9 @@ public class MyRecordAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView = new ImageView(c);
-        imageView.setPadding(1, 1, 1, 1);
+        imageView.setPadding(1, 5, 1, 5);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(350,350));
+        imageView.setLayoutParams(new GridView.LayoutParams((width - 30)/3,(width - 30)/3));
         GlideApp.with(c).load(list.get(position).getImg()).into(imageView);
 
         return imageView;

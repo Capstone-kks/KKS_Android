@@ -3,8 +3,10 @@ package com.example.kks.info.myrecord;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -54,6 +56,9 @@ public class MyRecordActivity extends AppCompatActivity {
     private ArrayList<Follow> followingList;
     private MyRecordAdapter adapter;
 
+    private Display display;
+    private int width;
+
     //retrofit
     RetrofitClient client = new RetrofitClient();
     Retrofit retrofit = client.setRetrofit();
@@ -78,6 +83,12 @@ public class MyRecordActivity extends AppCompatActivity {
         recordList = new ArrayList<MyRecord>();
         followerList = new ArrayList<Follow>();
         followingList = new ArrayList<Follow>();
+
+        //화면 크기 받아오기
+        display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+        width = size.x;
 
         //로그인한 사용자의 아이디 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
@@ -115,7 +126,7 @@ public class MyRecordActivity extends AppCompatActivity {
                         else{
                             for(int i = 0; i < data.size();i++)
                                 recordList.add(data.get(i));
-                            adapter = new MyRecordAdapter(getApplicationContext(), recordList);
+                            adapter = new MyRecordAdapter(getApplicationContext(), recordList, width);
                             records_gv.setAdapter(adapter);
                         }
                     }
@@ -154,7 +165,7 @@ public class MyRecordActivity extends AppCompatActivity {
                         else{
                             for(int i = 0; i < data.size();i++)
                                 recordList.add(data.get(i));
-                            adapter = new MyRecordAdapter(getApplicationContext(), recordList);
+                            adapter = new MyRecordAdapter(getApplicationContext(), recordList, width);
                             records_gv.setAdapter(adapter);
                         }
                     }
