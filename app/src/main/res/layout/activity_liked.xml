@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +57,7 @@
                 android:gravity="center"
                 android:isScrollContainer="false"
                 android:numColumns="3"
-                android:stretchMode="columnWidth"
-                android:horizontalSpacing="5dp"
-                android:verticalSpacing="5dp"/>
+                android:stretchMode="columnWidth"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

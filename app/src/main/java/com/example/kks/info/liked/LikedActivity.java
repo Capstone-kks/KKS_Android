@@ -73,7 +73,7 @@ public class LikedActivity extends AppCompatActivity {
 
                 for(int i=0; i<data.size(); i++)
                     list.add(data.get(i));
-                adapter = new MyRecordAdapter(getApplicationContext(), list, width);
+                adapter = new MyRecordAdapter(getApplicationContext(), list, width-100);
                 liked_gv.setAdapter(adapter);
             }
 
