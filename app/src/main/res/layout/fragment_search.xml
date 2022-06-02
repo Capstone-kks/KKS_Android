@@ -78,6 +78,25 @@
         android:layout_marginHorizontal="20dp"
         android:padding="15dp">
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="무얼 추천드려야할지 모르겠어요ㅠㅠ"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:id="@+id/recommend_norecord_tv"
+            android:layout_marginTop="250dp"
+            android:visibility="gone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="문화 생활을 조금 더 즐겨주세요~!"
+            android:layout_gravity="center"
+            android:id="@+id/recommend_norecord_sub_tv"
+            android:visibility="gone"/>
+
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recommend_tv"
@@ -85,13 +104,14 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:layout_marginBottom="1dp"/>
+            android:layout_marginBottom="1dp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/recommend_sub_tv"
             android:text="이런 게시물은 어떠세요?"
             android:textSize="15dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
         <Gallery
             android:layout_width="match_parent"
             android:layout_height="match_parent"

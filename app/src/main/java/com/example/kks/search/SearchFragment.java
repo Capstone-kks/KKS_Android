@@ -56,7 +56,7 @@ public class SearchFragment extends Fragment {
     private EditText search_edt;
     private LinearLayout search_layout, recommend_layout;
 
-    private TextView recommend_ment;
+    private TextView norecommend_ment, norecommend_sub_ment, recommend_ment, recommend_sub_ment;
     private Gallery galleryView;
     private RecommendAdapter recommendAdapter;
 
@@ -85,7 +85,10 @@ public class SearchFragment extends Fragment {
         recommend_layout = root.findViewById(R.id.recommend_layout);
 
         //사용자 추천 뷰
+        norecommend_ment = root.findViewById(R.id.recommend_norecord_tv);
+        norecommend_sub_ment = root.findViewById(R.id.recommend_norecord_sub_tv);
         recommend_ment = root.findViewById(R.id.recommend_tv);
+        recommend_sub_ment = root.findViewById(R.id.recommend_sub_tv);
         galleryView = root.findViewById(R.id.recommend_gr);
 
         //검색화면 뷰
@@ -135,11 +138,21 @@ public class SearchFragment extends Fragment {
                     ArrayList<Recommend> data = response.body();
                     RecommendList.clear();
 
-                    for(int i = 0; i < data.size(); i++)
-                        RecommendList.add(data.get(i));
+                    if(data.size() == 0){
+                        recommend_ment.setVisibility(View.GONE);
+                        recommend_sub_ment.setVisibility(View.GONE);
+                        galleryView.setVisibility(View.GONE);
+                        norecommend_ment.setVisibility(View.VISIBLE);
+                        norecommend_sub_ment.setVisibility(View.VISIBLE);
+                    }else{
+                        for(int i = 0; i < data.size(); i++)
+                            RecommendList.add(data.get(i));
 
-                    recommendAdapter = new RecommendAdapter(root.getContext(), RecommendList);
-                    galleryView.setAdapter(recommendAdapter);
+                        recommendAdapter = new RecommendAdapter(root.getContext(), RecommendList);
+                        galleryView.setAdapter(recommendAdapter);
+                    }
+
+
                 }
             }
 

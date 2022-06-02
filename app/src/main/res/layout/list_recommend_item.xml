@@ -20,7 +20,8 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="15dp"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:ellipsize="end" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
         android:id="@+id/recommend_item_content"
         android:text="과거 볼드모트의 악행으로부터 유일하게 생존한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7얼 31일이다."
         android:layout_marginTop="10dp"
-        android:maxLines="3" />
+        android:maxLines="3"
+        android:ellipsize="end" />
 
 </LinearLayout>

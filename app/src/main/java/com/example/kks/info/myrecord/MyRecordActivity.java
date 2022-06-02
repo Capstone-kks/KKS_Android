@@ -175,7 +175,7 @@ public class MyRecordActivity extends AppCompatActivity {
                 PostUser data = response.body();
 
                 nickName = data.getNickName();
-                nickName_tv.setText(nickName + " 님의 기록");
+                nickName_tv.setText(nickName + " 님의 프로필");
                 Glide.with(getApplicationContext()).load(data.getUserImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(profile_iv);
             }
 
@@ -281,7 +281,7 @@ public class MyRecordActivity extends AppCompatActivity {
                         }
                     });
                     //토스트 메세지 띄우기
-                    Toast.makeText(getApplicationContext(), userId + "님을 팔로우", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), nickName + "님을 팔로우", Toast.LENGTH_LONG).show();
 
                 }
                 else if(follow_status == 1){//팔로우 취소
@@ -302,7 +302,7 @@ public class MyRecordActivity extends AppCompatActivity {
                         }
                     });
                     //토스트 메세지 띄우기
-                    Toast.makeText(getApplicationContext(), userId + "님 팔로우 취소", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), nickName + "님 팔로우 취소", Toast.LENGTH_LONG).show();
 
                 }
             }
