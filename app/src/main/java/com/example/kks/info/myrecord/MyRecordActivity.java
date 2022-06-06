@@ -146,7 +146,8 @@ public class MyRecordActivity extends AppCompatActivity {
             follow_btn.setVisibility(View.VISIBLE);
 
             //그리드뷰 셋팅
-            retrofitAPI.getotherRecords(userId).enqueue(new Callback<ArrayList<MyRecord>>() {
+            String userIdTemp="'"+userId+"'";
+            retrofitAPI.getotherRecords(userIdTemp).enqueue(new Callback<ArrayList<MyRecord>>() {
                 @Override
                 public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
                     ArrayList<MyRecord> data = response.body();

@@ -54,6 +54,7 @@ public class LikedActivity extends AppCompatActivity {
 
         back = findViewById(R.id.liked_back_btn);
         liked_gv = (ExpandableHeightGridView)findViewById(R.id.liked_grid);
+        liked_gv.setExpanded(true);
         list = new ArrayList<MyRecord>();
 
         //화면 크기 받아오기
