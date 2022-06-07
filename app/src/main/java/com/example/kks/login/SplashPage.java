@@ -2,6 +2,7 @@ package com.example.kks.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,12 +24,14 @@ public class SplashPage extends AppCompatActivity {
     String userId = "";
     //String userImg = "";
     static private Context context;
+    static private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         context = this;
+        activity = this;
         myDBAdapter = new myDBAdapter(this);
 
         binding = ActivitySplashPageBinding.inflate(getLayoutInflater());
@@ -70,7 +73,7 @@ public class SplashPage extends AppCompatActivity {
                     //SharedPreference.saveString(context, "userId", userId);
                     intent.putExtra("checking", false);
                     startActivity(intent);
-                    finish();
+                    activity.finish();
                 }
             };
             timer.schedule(timerTask, 1000);
@@ -85,6 +88,7 @@ public class SplashPage extends AppCompatActivity {
                 public void run() {
                     Intent intent = new Intent(getApplicationContext(), LoginPageActivity.class);
                     startActivity(intent);
+                    activity.finish();
                 }
             };
             timer.schedule(timerTask, 2000);

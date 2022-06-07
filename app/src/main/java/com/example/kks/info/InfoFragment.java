@@ -104,6 +104,7 @@ public class InfoFragment extends Fragment {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     static private Context context;
+    private Activity activity;
 
     private MultipartBody.Part multibody = null;
 
@@ -115,6 +116,7 @@ public class InfoFragment extends Fragment {
         root = binding.getRoot();
 
         context = container.getContext();
+        activity = getActivity();
 
         prefId = SharedPreference.getString(root.getContext(), "userId");
 
@@ -370,6 +372,7 @@ public class InfoFragment extends Fragment {
                         SharedPreferenceManagerKt.removeSpfAll(context);
                         Intent intent = new Intent(root.getContext(), LoginPageActivity.class);
                         startActivity(intent);
+                        activity.finish();
                     }
                 });
                 dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
