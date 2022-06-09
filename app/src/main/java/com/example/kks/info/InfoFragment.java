@@ -380,14 +380,13 @@ public class InfoFragment extends Fragment {
     }
 
     private void UserWithdrawal(){
-        Log.d("회원탈퇴","버튼 클릭");
+
         retrofitAPI.WithdrawalUser(prefId).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.body() != null){
-                    String result = response.body();
-                    if(result.equals("1")){
-                        Log.e("회원 탈퇴","성공!");
+                    if(response.body().equals("success")){
+                        Log.d("회원 탈퇴","성공!");
                         SharedPreferenceManagerKt.removeSpfAll(context);
                         SharedPreferences preferences  = root.getContext().getSharedPreferences("AlarmInfo", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -397,7 +396,6 @@ public class InfoFragment extends Fragment {
                         startActivity(intent);
                         activity.finish();
                     }else Log.e("회원 탈퇴",response.body());
-
                 }
             }
 

@@ -73,8 +73,8 @@ public interface RetrofitAPI {
     @GET("api/info/liked")
     Call<ArrayList<MyRecord>> getLikedRecords(@Query("userId") String userId);
 
-    @POST("api/info/withdrawal")
-    Call<String> WithdrawalUser(@Body String userId);
+    @GET("api/info/withdrawal")
+    Call<String> WithdrawalUser(@Query("userId") String userId);
 
 
     //아카이브
