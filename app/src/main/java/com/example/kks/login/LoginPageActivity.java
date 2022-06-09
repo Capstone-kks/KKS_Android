@@ -3,6 +3,7 @@ package com.example.kks.login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class LoginPageActivity extends AppCompatActivity {
     private ActivityLoginPageBinding binding;
     static private boolean checking;
     static private Context context;
+    static private Activity activity;
 
     String user_id;
 
@@ -48,6 +50,7 @@ public class LoginPageActivity extends AppCompatActivity {
         //myDBAdapter = new myDBAdapter(this);
 
         context = this;
+        activity = this;
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -164,7 +167,7 @@ public class LoginPageActivity extends AppCompatActivity {
                                     //intent.putExtra("userImage", userImage);
                                     intent.putExtra("checking", checking);
                                     startActivity(intent);
-                                    finish();
+                                    activity.finish();
                                 }
                             }
                             return null;
