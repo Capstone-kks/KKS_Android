@@ -139,19 +139,21 @@ public class MyRecordActivity extends AppCompatActivity {
                 }
             });
         }
-        else{//다른 사용자의 개인 게시물 페이지
+        else{ //다른 사용자의 개인 게시물 페이지
             Log.d("개인 게시물 페이지","다른 사용자 페이지");
 
             //팔로우 버튼 보이기
             follow_btn.setVisibility(View.VISIBLE);
             //팔로우 버튼 셋팅
-            retrofitAPI.getFollowStatus(LoginUserId, userId).enqueue(new Callback<Integer>() {
+            String tempLoginUserId = "'" + LoginUserId + "'";
+            String tempUserId = "'" + userId + "'";
+            retrofitAPI.getFollowStatus(tempLoginUserId, tempUserId).enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     int result = -1;
                     if(response.body() != null) {
                         result = response.body();
-
+                        
                         if (result == 1)
                             follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                         else if (result == 0)

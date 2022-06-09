@@ -55,7 +55,10 @@ public class FollowActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }else if(follow_num == 1) {
             followTitle.setText(nickname + "님의 팔로워 목록");
-            adapter = new FollowAdapter(this, followerList, userId, LoginUserId, false);
+            if(userId.equals(LoginUserId))
+                adapter = new FollowAdapter(this, followerList, userId, LoginUserId, false);
+            else
+                adapter = new FollowAdapter(this, followerList, userId, LoginUserId, true);
             recyclerView.setAdapter(adapter);
         }
 
