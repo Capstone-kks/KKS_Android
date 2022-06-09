@@ -63,27 +63,32 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
         holder.nickName.setText(datalist.get(position).getNickname());
 
         if(check){
-            LoginUserId = "'" + LoginUserId + "'";
-            String uI = "'" + datalist.get(position).getUserId() + "'";
-            retrofitAPI.getFollowStatus(LoginUserId, uI).enqueue(new Callback<Integer>() {
-                @Override
-                public void onResponse(Call<Integer> call, Response<Integer> response) {
-                    int result = -1;
-                    if(response.body() != null) {
-                        result = response.body();
+            if(LoginUserId.equals(datalist.get(position).getUserId())) {
+                holder.like_imb.setVisibility(View.GONE);
+            }
+            else{
+                String tempLoginUserId = "'" + LoginUserId + "'";
+                String uI = "'" + datalist.get(position).getUserId() + "'";
+                retrofitAPI.getFollowStatus(tempLoginUserId, uI).enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        int result = -1;
+                        if(response.body() != null) {
+                            result = response.body();
 
-                        if (result == 1)
-                            holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
-                        else if (result == 0)
-                            holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                            if (result == 1)
+                                holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+                            else if (result == 0)
+                                holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Integer> call, Throwable t) {
-                    Log.e("followAdapter error", t.getMessage());
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+                        Log.e("followAdapter error", t.getMessage());
+                    }
+                });
+            }
         }
         else
             holder.like_imb.setVisibility(View.GONE);

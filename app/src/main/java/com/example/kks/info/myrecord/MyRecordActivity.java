@@ -153,7 +153,7 @@ public class MyRecordActivity extends AppCompatActivity {
                     int result = -1;
                     if(response.body() != null) {
                         result = response.body();
-                        
+
                         if (result == 1)
                             follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                         else if (result == 0)
