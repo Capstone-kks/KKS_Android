@@ -292,6 +292,8 @@ public class MyRecordActivity extends AppCompatActivity {
                     //이미지뷰 변경
                     follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                     //서버 변경
+                    LoginUserId = "'" + LoginUserId + "'";
+                    userId = "'" + userId + "'";
                     retrofitAPI.requestFollow(LoginUserId, userId).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {

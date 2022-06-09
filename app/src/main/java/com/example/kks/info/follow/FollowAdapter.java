@@ -63,7 +63,9 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
         holder.nickName.setText(datalist.get(position).getNickname());
 
         if(check){
-            retrofitAPI.getFollowStatus(LoginUserId, datalist.get(position).getUserId()).enqueue(new Callback<Integer>() {
+            LoginUserId = "'" + LoginUserId + "'";
+            String uI = "'" + datalist.get(position).getUserId() + "'";
+            retrofitAPI.getFollowStatus(LoginUserId, uI).enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     int result = -1;
