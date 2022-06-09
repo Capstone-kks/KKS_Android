@@ -3,6 +3,7 @@ package com.example.kks.info;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -323,9 +325,14 @@ public class InfoFragment extends Fragment {
                         retrofitAPI.WithdrawalUser(userId).enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
+                                SharedPreferenceManagerKt.removeSpfAll(context);
+                                SharedPreferences preferences  = root.getContext().getSharedPreferences("AlarmInfo", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putBoolean("AlarmStatus",false);
+                                editor.commit();
                                 Intent intent = new Intent(getContext(), LoginPageActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                                activity.finish();
                             }
 
                             @Override

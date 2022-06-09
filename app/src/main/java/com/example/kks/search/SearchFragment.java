@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.kks.R;
 import com.example.kks.SharedPreferenceManagerKt;
@@ -55,6 +56,7 @@ public class SearchFragment extends Fragment {
     private ImageButton search_btn;
     private EditText search_edt;
     private LinearLayout search_layout, recommend_layout;
+    private SwipeRefreshLayout recommend_swipe_layout;
 
     private TextView norecommend_ment, norecommend_sub_ment, recommend_ment, recommend_sub_ment;
     private Gallery galleryView;
@@ -83,6 +85,7 @@ public class SearchFragment extends Fragment {
         search_edt = root.findViewById(R.id.edt_search);
         search_layout = root.findViewById(R.id.search_layout);
         recommend_layout = root.findViewById(R.id.recommend_layout);
+        recommend_swipe_layout = root.findViewById(R.id.recommend_swipe_layout);
 
         //사용자 추천 뷰
         norecommend_ment = root.findViewById(R.id.recommend_norecord_tv);
@@ -103,22 +106,44 @@ public class SearchFragment extends Fragment {
         recommend_ment.setText(nickName + " 님!");
         categoryId = SharedPreferenceManagerKt.getCategoryId(getContext());
 
+
+        /**
+         * 사용자 추천
+         * */
+        //사용자 추천 서버연결
+        RecommendResult();
+
+        //사용자 추천 클릭 시 화면 전환
+        galleryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int recordIdx = RecommendList.get(position).getRecordIdx();
+                Intent intent = new Intent(root.getContext(), DetailRecordActivity.class);
+                intent.putExtra("recordIdx", recordIdx);
+                startActivity(intent);
+            }
+        });
+
+        //화면 스와이프시 갱신
+        recommend_swipe_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                RecommendResult();
+                recommend_swipe_layout.setRefreshing(false);
+            }
+        });
+
+
+
+        /**
+         * 검색
+         * */
+        //키보드 엔터키 클릭 시
         search_edt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if(keyCode==KeyEvent.KEYCODE_ENTER){
-                    keyword = search_edt.getText().toString();
-                    Log.d("검색 버튼 클릭",keyword);
-
-                    InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(search_edt.getWindowToken(),0);
-
-                    recommend_layout.setVisibility(View.GONE);
-                    search_layout.setVisibility(View.VISIBLE);
-
-                    SearchList = new ArrayList<Search>();
-
                     NewSearchResult();
                     return true;
                 }else
@@ -126,7 +151,31 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        //사용자 추천 서버연결
+        //검색 버튼 클릭 시
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewSearchResult();
+            }
+        });
+
+        //검색 결과 클릭 시 상세 화면
+        Sort_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.search_sort_date_rb)
+                    sort = 1;
+                else if(checkedId == R.id.search_sort_like_rb)
+                    sort = 2;
+                NewSearchResult();
+            }
+        });
+
+        return root;
+    }
+
+    //사용자 추천 띄우기
+    private void RecommendResult(){
         RecommendList = new ArrayList<Recommend>();
         if(categoryId == 0)
             categoryId = randCategoryId();
@@ -162,53 +211,9 @@ public class SearchFragment extends Fragment {
                 t.printStackTrace();
             }
         });
-
-        //사용자 추천 클릭 시 화면 전환
-        galleryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int recordIdx = RecommendList.get(position).getRecordIdx();
-                Intent intent = new Intent(root.getContext(), DetailRecordActivity.class);
-                intent.putExtra("recordIdx", recordIdx);
-                startActivity(intent);
-            }
-        });
-
-
-        //검색 결과
-        search_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                keyword = search_edt.getText().toString();
-                Log.d("검색 버튼 클릭",keyword);
-
-                InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(search_edt.getWindowToken(),0);
-
-                recommend_layout.setVisibility(View.GONE);
-                search_layout.setVisibility(View.VISIBLE);
-
-                SearchList = new ArrayList<Search>();
-
-                NewSearchResult();
-            }
-        });
-
-        //검색 결과 클릭 시 상세 화면
-        Sort_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.search_sort_date_rb)
-                    sort = 1;
-                else if(checkedId == R.id.search_sort_like_rb)
-                    sort = 2;
-                NewSearchResult();
-            }
-        });
-
-        return root;
     }
 
+    //랜덤 카테고리 숫자 반환
     private int randCategoryId(){
         int i;
         Random random = new Random();
@@ -218,7 +223,18 @@ public class SearchFragment extends Fragment {
         return i;
     }
 
+    //검색 결과 띄우기
     private void NewSearchResult(){
+        keyword = search_edt.getText().toString();
+
+        InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(search_edt.getWindowToken(),0);
+
+        recommend_layout.setVisibility(View.GONE);
+        search_layout.setVisibility(View.VISIBLE);
+
+        SearchList = new ArrayList<Search>();
+
         retrofitAPI.getSearchResultTest(keyword, userId, sort).enqueue(new Callback<ArrayList<Search>>() {
             @Override
             public void onResponse(Call<ArrayList<Search>> call, Response<ArrayList<Search>> response) {

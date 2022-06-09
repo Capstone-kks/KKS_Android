@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -62,6 +63,7 @@ public class AlarmActivity extends AppCompatActivity{
         preferences  = getSharedPreferences("AlarmInfo", MODE_PRIVATE);
         alarm_status = preferences.getBoolean("AlarmStatus",false);
 
+        Log.d("알람 온오프",String.valueOf(alarm_status));
         //알람 on off에 따라 초기화면 설정
         if(alarm_status) {
             alarm_time = preferences.getString("Time","");
@@ -92,6 +94,10 @@ public class AlarmActivity extends AppCompatActivity{
                     time_tv.setEnabled(false);
                     time_btn.setEnabled(false);
                     time_btn.setText("");
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("AlarmStatus",false);
+                    editor.commit();
 
                     if (pendingIntent != null && alarmManager != null) {
                         alarmManager.cancel(pendingIntent);
