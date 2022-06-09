@@ -144,9 +144,29 @@ public class MyRecordActivity extends AppCompatActivity {
 
             //팔로우 버튼 보이기
             follow_btn.setVisibility(View.VISIBLE);
+            //팔로우 버튼 셋팅
+            retrofitAPI.getFollowStatus(LoginUserId, userId).enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    int result = -1;
+                    if(response.body() != null) {
+                        result = response.body();
+
+                        if (result == 1)
+                            follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+                        else if (result == 0)
+                            follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.e("myrecord follow error", t.getMessage());
+                }
+            });
 
             //그리드뷰 셋팅
-            String userIdTemp="'"+userId+"'";
+            String userIdTemp = "'" + userId + "'";
             retrofitAPI.getotherRecords(userIdTemp).enqueue(new Callback<ArrayList<MyRecord>>() {
                 @Override
                 public void onResponse(Call<ArrayList<MyRecord>> call, Response<ArrayList<MyRecord>> response) {
@@ -205,16 +225,7 @@ public class MyRecordActivity extends AppCompatActivity {
 
                 for(int i = 0; i< data.size(); i++) {
                     followerList.add(data.get(i));
-                    //Log.e("왜",data.get(i).getNickname());
-                    if(!(userId.equals(LoginUserId)) && data.get(i).getUserId().equals(LoginUserId))
-                        follow_status = 1;
                 }
-
-                if(!(userId.equals(LoginUserId)))
-                    if(follow_status == 0)
-                        follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
-                    else if(follow_status == 1)
-                        follow_btn.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
 
                 FollowActivity.followerList = followerList;
                 follower_tv.setText(String.valueOf(followerList.size()));

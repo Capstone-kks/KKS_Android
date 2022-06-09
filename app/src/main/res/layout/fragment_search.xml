@@ -112,11 +112,16 @@
             android:text="이런 게시물은 어떠세요?"
             android:textSize="15dp"
             android:layout_marginBottom="10dp" />
-        <Gallery
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recommend_gr"
-            android:spacing="10dp"/>
+            android:id="@+id/recommend_swipe_layout">
+            <Gallery
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recommend_gr"
+                android:spacing="10dp"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </LinearLayout>

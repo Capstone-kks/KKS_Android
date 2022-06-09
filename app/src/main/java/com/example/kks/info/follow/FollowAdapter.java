@@ -35,16 +35,18 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
     private Context context;
     private ArrayList<Follow> datalist;
     private String userId, LoginUserId;
+    private boolean check;
 
     private RetrofitClient client = new RetrofitClient();
     private Retrofit retrofit = client.setRetrofit();
     private RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-    public FollowAdapter(Context c, ArrayList<Follow> list, String ui, String lui){
+    public FollowAdapter(Context c, ArrayList<Follow> list, String ui, String lui, boolean ch){
         context = c;
         datalist = list;
         userId = ui;
         LoginUserId = lui;
+        check = ch;
     }
 
     @NonNull
@@ -59,6 +61,31 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
     public void onBindViewHolder(@NonNull FollowViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(datalist.get(position).getImg()).apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(holder.img);
         holder.nickName.setText(datalist.get(position).getNickname());
+
+        if(check){
+            retrofitAPI.getFollowStatus(LoginUserId, datalist.get(position).getUserId()).enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    int result = -1;
+                    if(response.body() != null) {
+                        result = response.body();
+
+                        if (result == 1)
+                            holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+                        else if (result == 0)
+                            holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.e("followAdapter error", t.getMessage());
+                }
+            });
+        }
+        else
+            holder.like_imb.setVisibility(View.GONE);
+
 
         holder.like_imb.setOnClickListener(new View.OnClickListener() {
             @Override

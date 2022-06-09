@@ -51,11 +51,11 @@ public class FollowActivity extends AppCompatActivity {
 
         if(follow_num == 0) {
             followTitle.setText(nickname + "님의 팔로잉 목록");
-            adapter = new FollowAdapter(this, followingList, userId, LoginUserId);
+            adapter = new FollowAdapter(this, followingList, userId, LoginUserId, true);
             recyclerView.setAdapter(adapter);
         }else if(follow_num == 1) {
             followTitle.setText(nickname + "님의 팔로워 목록");
-            adapter = new FollowAdapter(this, followerList, userId, LoginUserId);
+            adapter = new FollowAdapter(this, followerList, userId, LoginUserId, false);
             recyclerView.setAdapter(adapter);
         }
 
