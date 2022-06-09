@@ -62,7 +62,7 @@ public interface RetrofitAPI {
     Call<String> cancelFollow(@Query("followerIdx") String followerIdx, @Query("followingIdx") String followingIdx);
 
     @GET("api/info/follow/status")
-    Call<Integer> getFollowStatus(@Query("userId") String userId, @Query("followId") String followId);
+    Call<String> getFollowStatus(@Query("userId") String userId, @Query("followId") String followId);
 
     @GET("api/info/myrecord")
     Call<ArrayList<MyRecord>> getMyRecords(@Query("userId") String userId);

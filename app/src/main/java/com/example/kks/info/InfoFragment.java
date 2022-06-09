@@ -113,6 +113,10 @@ public class InfoFragment extends Fragment {
     //예슬
     private ConstraintLayout myrecord_btn, liked_btn, analysis_btn, alarm_btn, withdrawal_btn, logout_btn;
 
+    private RetrofitClient client = new RetrofitClient();
+    private Retrofit retrofit = client.setRetrofit();
+    private RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInfoBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -136,9 +140,7 @@ public class InfoFragment extends Fragment {
         logout_btn = root.findViewById(R.id.btn_logout);
 
         //서버에서 닉네임, 이미지 가져오기
-        RetrofitClient client = new RetrofitClient();
-        Retrofit retrofit = client.setRetrofit();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
 
         /*
         * 유경 - 프로필 이미지 닉네임 설정
@@ -322,24 +324,7 @@ public class InfoFragment extends Fragment {
                 dialog.findViewById(R.id.dialog_approve_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        retrofitAPI.WithdrawalUser(userId).enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                SharedPreferenceManagerKt.removeSpfAll(context);
-                                SharedPreferences preferences  = root.getContext().getSharedPreferences("AlarmInfo", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putBoolean("AlarmStatus",false);
-                                editor.commit();
-                                Intent intent = new Intent(getContext(), LoginPageActivity.class);
-                                startActivity(intent);
-                                activity.finish();
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-
-                            }
-                        });
+                        UserWithdrawal();
                     }
                 });
                 dialog.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
@@ -392,6 +377,35 @@ public class InfoFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void UserWithdrawal(){
+        Log.d("회원탈퇴","버튼 클릭");
+        retrofitAPI.WithdrawalUser(prefId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.body() != null){
+                    String result = response.body();
+                    if(result.equals("1")){
+                        Log.e("회원 탈퇴","성공!");
+                        SharedPreferenceManagerKt.removeSpfAll(context);
+                        SharedPreferences preferences  = root.getContext().getSharedPreferences("AlarmInfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("AlarmStatus",false);
+                        editor.commit();
+                        Intent intent = new Intent(getContext(), LoginPageActivity.class);
+                        startActivity(intent);
+                        activity.finish();
+                    }else Log.e("회원 탈퇴",response.body());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("회원 탈퇴",t.getMessage());
+            }
+        });
     }
 
     //이미지 변경 클릭 시 실행 함수

@@ -69,22 +69,23 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
             else{
                 String tempLoginUserId = "'" + LoginUserId + "'";
                 String uI = "'" + datalist.get(position).getUserId() + "'";
-                retrofitAPI.getFollowStatus(tempLoginUserId, uI).enqueue(new Callback<Integer>() {
+                retrofitAPI.getFollowStatus(tempLoginUserId, uI).enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        int result = -1;
+                    public void onResponse(Call<String> call, Response<String> response) {
                         if(response.body() != null) {
-                            result = response.body();
-
-                            if (result == 1)
+                            if (response.body().equals("1")) {
                                 holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
-                            else if (result == 0)
+                                datalist.get(position).setFollowstatus(1);
+                            }
+                            else if (response.body().equals("0")) {
                                 holder.like_imb.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+                                datalist.get(position).setFollowstatus(0);
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         Log.e("followAdapter error", t.getMessage());
                     }
                 });
@@ -106,7 +107,11 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
                     retrofitAPI.cancelFollow(userId, datalist.get(position).getUserId()).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            Log.d("팔로우 취소 결과",response.body());
+                            if(response.body() != null) {
+                                int result = Integer.parseInt(response.body());
+                                if(result == 1)
+                                    Toast.makeText(context, datalist.get(position).getNickname() + "님 팔로우 취소", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                         @Override
@@ -125,7 +130,11 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.FollowView
                     retrofitAPI.requestFollow(userId, datalist.get(position).getUserId()).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            Log.d("팔로우 신청 결과",response.body());
+                            if(response.body() != null) {
+                                int result = Integer.parseInt(response.body());
+                                if(result == 1)
+                                    Toast.makeText(context, datalist.get(position).getNickname() + "님을 팔로우", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                         @Override
